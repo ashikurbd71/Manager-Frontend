@@ -1,16 +1,32 @@
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useTable } from "react-table";
-
+import axoissecure from "../../Share/Hooks/Axoisscure";
+import { FaEdit, FaTrashAlt, FaEye, FaBan } from 'react-icons/fa';
 const ProductList = () => {
+
+  const { data: items = [], refetch } = useQuery({
+    queryKey: ["productadded"],
+    queryFn: async () => {
+      try {
+        const res = await axoissecure.get(`/product`);
+        return res.data;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+      }
+    },
+  });
+
 
   const columns = React.useMemo(() => [
     {
       Header: "Sl.",
-      accessor: 'sl'
+      accessor: 'productSl'
     },
     {
       Header: "Product",
-      accessor: 'product'
+      accessor: 'productName'
     },
     {
       Header: "Date",
@@ -20,14 +36,44 @@ const ProductList = () => {
       Header: "Cost",
       accessor: 'cost'
     },
+    {
+      Header: "Action",
+      accessor: 'action',
+      Cell: ({ row }) => (
+        <>
+         <div className="flex w-full mx-auto  items-center gap-2 ">
+           {/* Edit Icon */}
+           <FaEdit onClick={() => handleEdit(row.original.id)} className=" hover:text-green-500 cursor-pointer" />
+          
+          {/* Delete Icon */}
+          <FaTrashAlt onClick={() => handleDelete(row.original.id)} className="  hover:text-red-500 cursor-pointer"  />
+          
+          {/* View Icon */}
+          <FaEye onClick={() => handleView(row.original.id)} className=" hover:text-yellow-500 cursor-pointer"  />
+          
+          {/* Disable Icon */}
+          <FaBan onClick={() => handleDisable(row.original.id)} className=" hover:text-red-600 cursor-pointer" />
+         </div>
+        </>
+      )
+    },
   ], []);
 
-  const data = React.useMemo(() => [
-    { sl: 1, product: "Apple", date: "2024-05-19", cost: 1.2 },
-    { sl: 2, product: "Banana", date: "2024-05-20", cost: 0.5 },
-    { sl: 3, product: "Orange", date: "2024-05-21", cost: 0.8 }
-  ], []);
+  const handleEdit = () => {
 
+  }
+  const handleDelete = () => {
+    
+  }
+  const handleView = () => {
+    
+  }
+  const handleDisable = () => {
+    
+  }
+
+
+  const data = React.useMemo(() => items, [items]);
   const {
     getTableProps,
     getTableBodyProps,
@@ -37,44 +83,31 @@ const ProductList = () => {
   } = useTable({ columns, data });
 
   return (
-    <>
-      {/* table rendering */}
-      <div>
-        <table {...getTableProps()}>
-          {/* head */}
-          <thead>
-            {
-              headerGroups.map(headerGroup => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                  {
-                    headerGroup.headers.map(column => (
-                      <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-                    ))
-                  }
-                </tr>
-              ))
-            }
-          </thead>
-          {/* body */}
-          <tbody {...getTableBodyProps()}>
-            {
-              rows.map(row => {
-                prepareRow(row);
-                return (
-                  <tr {...row.getRowProps()}>
-                    {
-                      row.cells.map(cell => (
-                        <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                      ))
-                    }
-                  </tr>
-                );
-              })
-            }
-          </tbody>
-        </table>
-      </div>
-    </>
+    <div className="p-6 bg-gray-100 rounded-lg">
+      <table {...getTableProps()} className="min-w-full  bg-white border border-gray-200">
+        <thead>
+          {headerGroups.map(headerGroup => (
+            <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-200">
+              {headerGroup.headers.map(column => (
+                <th {...column.getHeaderProps()} className="p-2 border-2 border-gray-300 text-center text-gray-700">{column.render('Header')}</th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map(row => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()} className="hover:bg-gray-100">
+                {row.cells.map(cell => (
+                  <td {...cell.getCellProps()} className="p-2 border-2 text-center border-gray-300">{cell.render('Cell')}</td>
+                ))}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

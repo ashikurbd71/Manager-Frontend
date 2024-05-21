@@ -43,7 +43,7 @@ const AddProduct = () => {
           productDetails: values.productnamedetails,
           cost: values.cost,
           sellAmount: values.sellamount,
-          date: new Date(),
+          date: new Date().split("T")[0],
         });
         console.log("Product added successfully:", values);
         toast.success("Product added successfully!");
