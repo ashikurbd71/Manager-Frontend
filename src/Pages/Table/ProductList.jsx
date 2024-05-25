@@ -3,13 +3,22 @@ import React from "react";
 import { useTable } from "react-table";
 import axoissecure from "../../Share/Hooks/Axoisscure";
 import { FaEdit, FaTrashAlt, FaEye, FaBan } from 'react-icons/fa';
+import Tablenav from "../../Share/Hooks/Tablenav";
+import useHelmet from './../../Share/Hooks/useHelmet';
+import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
+
+
+
+
+
 const ProductList = () => {
 
   const { data: items = [], refetch } = useQuery({
     queryKey: ["productadded"],
     queryFn: async () => {
       try {
-        const res = await axoissecure.get(`/product`);
+        const res = await axoissecure.get(`/members`);
         return res.data;
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -18,24 +27,34 @@ const ProductList = () => {
     },
   });
 
-
+console.log(items)
   const columns = React.useMemo(() => [
     {
       Header: "Sl.",
-      accessor: 'productSl'
+      accessor: 'sl'
     },
     {
-      Header: "Product",
-      accessor: 'productName'
+      Header: "Name",
+      accessor: 'name'
     },
     {
-      Header: "Date",
-      accessor: 'date'
+      Header: "Number",
+      accessor: 'number'
     },
     {
-      Header: "Cost",
-      accessor: 'cost'
+      Header: "Institute",
+      accessor: 'institute'
     },
+    {
+      Header: "Department",
+      accessor: 'department'
+    },
+   
+    {
+      Header: "Semister",
+      accessor: 'semister'
+    },
+
     {
       Header: "Action",
       accessor: 'action',
@@ -49,7 +68,10 @@ const ProductList = () => {
           <FaTrashAlt onClick={() => handleDelete(row.original.id)} className="  hover:text-red-500 cursor-pointer"  />
           
           {/* View Icon */}
-          <FaEye onClick={() => handleView(row.original.id)} className=" hover:text-yellow-500 cursor-pointer"  />
+          <Link to={`/dashboard/memberdetails/${row.original.id}`}>
+          <FaEye  className=" hover:text-yellow-500 cursor-pointer"  />
+          </Link>
+       
           
           {/* Disable Icon */}
           <FaBan onClick={() => handleDisable(row.original.id)} className=" hover:text-red-600 cursor-pointer" />
@@ -73,7 +95,20 @@ const ProductList = () => {
   }
 
 
-  const data = React.useMemo(() => items, [items]);
+  const data = React.useMemo(() => 
+    items.map((item, index) => ({
+      ...item,
+      sl: index + 1,
+      name : item?.name,
+      number : item?.number,
+      institute : item?.instituteName,
+      department : item?.department,
+      semister: item?.semister,
+      email: item?.email,
+      date: item?.joiningDate?.split('T')[0],
+
+    })), [items]
+  );
   const {
     getTableProps,
     getTableBodyProps,
@@ -83,8 +118,17 @@ const ProductList = () => {
   } = useTable({ columns, data });
 
   return (
-    <div className="p-6 bg-gray-100 rounded-lg">
-      <table {...getTableProps()} className="min-w-full  bg-white border border-gray-200">
+
+    <>
+
+    <useHelmet name={'Manager || Member list'} />
+
+    <Helmet><title>Manager || Member list</title></Helmet>
+
+    <Tablenav route={'/dashboard/addmember'}/>
+ 
+    <div className="px-6 bg-gray-100 rounded-lg">
+      <table {...getTableProps()} className="min-w-full overflow-x-auto bg-white border border-gray-200">
         <thead>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-200">
@@ -108,6 +152,8 @@ const ProductList = () => {
         </tbody>
       </table>
     </div>
+
+    </>
   );
 };
 
