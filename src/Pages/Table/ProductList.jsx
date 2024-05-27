@@ -62,19 +62,19 @@ console.log(items)
         <>
          <div className="flex w-full mx-auto  items-center gap-2 ">
            {/* Edit Icon */}
-           <FaEdit onClick={() => handleEdit(row.original.id)} className=" hover:text-green-500 cursor-pointer" />
+           <FaEdit title="Edit" onClick={() => handleEdit(row.original.id)} className=" hover:text-green-500 cursor-pointer" />
           
           {/* Delete Icon */}
-          <FaTrashAlt onClick={() => handleDelete(row.original.id)} className="  hover:text-red-500 cursor-pointer"  />
+          <FaTrashAlt title="Delete" onClick={() => handleDelete(row.original.id)} className="  hover:text-red-500 cursor-pointer"  />
           
           {/* View Icon */}
           <Link to={`/dashboard/memberdetails/${row.original.id}`}>
-          <FaEye  className=" hover:text-yellow-500 cursor-pointer"  />
+          <FaEye title="View Deatails"  className=" hover:text-yellow-500 cursor-pointer"  />
           </Link>
        
           
           {/* Disable Icon */}
-          <FaBan onClick={() => handleDisable(row.original.id)} className=" hover:text-red-600 cursor-pointer" />
+          <FaBan title="Disable" onClick={() => handleDisable(row.original.id)} className=" hover:text-red-600 cursor-pointer" />
          </div>
         </>
       )

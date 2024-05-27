@@ -156,14 +156,18 @@ const AddProduct = () => {
 
 
   return (
+    <>
+     <DashCustomNav name={"Add Member"} listroute={'/dashboard/memberlist'} />
+    
+  
     <div className="p-8">
        <Helmet><title>Manager || Add Member</title></Helmet>
       <useHelmet name={'Manager || Add Member'}/>
-      <DashCustomNav name={"Add Member"} listroute={'/dashboard/memberlist'} />
+     
       <div>
         <form
           onSubmit={formik.handleSubmit}
-          className="w-[700px] bg-white p-8 rounded-md"
+          className="w-[700px] bg-white p-8  rounded-md"
         >
           <div className="grid  grid-cols-1 gap-4">
 
@@ -447,6 +451,8 @@ const AddProduct = () => {
         </form>
       </div>
     </div>
+
+    </>
   );
 };
 

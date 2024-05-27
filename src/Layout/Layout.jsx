@@ -12,7 +12,7 @@ const Layout = () => {
       </aside>
       <main className="col-span-10 min-h-screen">
         <Navber/>
-        <Outlet  className="overflow-y-auto"/>
+        <Outlet  className="overflow-y-auto pb-10 px-10"/>
       </main>
     </div>
   );
