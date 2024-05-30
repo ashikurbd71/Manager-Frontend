@@ -62,7 +62,7 @@ const MemberDetails = () => {
           <div className=' bg-white min min-h-screen'>
 
   <div className='  justify-items-center items-center p-10 flex'>
-  <img src={img} alt=""  className=' w-[200px] h-[200px] border-2 rounded-lg '/>
+  <img src={image} alt=""  className=' w-[200px] h-[200px] border-2 rounded-lg '/>
   </div>
            
       <div className='flex mx-10 gap-1 items-center'>
