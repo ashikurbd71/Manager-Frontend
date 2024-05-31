@@ -420,7 +420,7 @@ const AddProduct = () => {
                 <img
                   src={imagePreview}
                   alt="Preview"
-                  className="mt-2 max-w-[200px] h-[150px]"
+                  className="mt-2 max-w-[200px] border-2 border-black  border-dashed h-[150px]"
                 />
               )}
               <button

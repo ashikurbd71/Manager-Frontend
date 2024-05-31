@@ -1,18 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useTable } from "react-table";
-import axoissecure from "../../Share/Hooks/Axoisscure";
 import { FaEdit, FaTrashAlt, FaEye, FaBan } from 'react-icons/fa';
-import Tablenav from "../../Share/Hooks/Tablenav";
-import useHelmet from './../../Share/Hooks/useHelmet';
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
+import axoissecure from "../../../Share/Hooks/Axoisscure";
+import Tablenav from "../../../Share/Hooks/Tablenav";
 
 
 
 
 
-const ProductList = () => {
+const SemisterList = () => {
 
   const { data: items = [], refetch } = useQuery({
     queryKey: ["productadded"],
@@ -34,26 +33,10 @@ console.log(items)
       accessor: 'sl'
     },
     {
-      Header: "Name",
-      accessor: 'name'
-    },
-    {
-      Header: "Number",
-      accessor: 'number'
-    },
-    {
-      Header: "Institute",
-      accessor: 'institute'
-    },
-    {
-      Header: "Department",
-      accessor: 'department'
-    },
-   
-    {
       Header: "Semister",
       accessor: 'semister'
     },
+ 
 
     {
       Header: "Action",
@@ -99,13 +82,7 @@ console.log(items)
     items.map((item, index) => ({
       ...item,
       sl: index + 1,
-      name : item?.name,
-      number : item?.number,
-      institute : item?.instituteName,
-      department : item?.department,
-      semister: item?.semister,
-      email: item?.email,
-      date: item?.joiningDate?.split('T')[0],
+    
 
     })), [items]
   );
@@ -121,14 +98,14 @@ console.log(items)
 
     <>
 
-    <useHelmet name={'Manager || Member list'} />
+    {/* <useHelmet name={'Manager || De list'} /> */}
 
-    <Helmet><title>Manager || Member list</title></Helmet>
+    <Helmet><title>Manager || Semister List</title></Helmet>
 
     
-    <h1 className="text-2xl font-medium text-gray-600 p-5">Member List</h1>
+    <h1 className="text-2xl font-medium text-gray-600 p-5">Semister List</h1>
 
-    <Tablenav route={'/dashboard/addmember'}/>
+    <Tablenav route={'/dashboard/setting/addsemister'}/>
 
  
     <div className="px-6 bg-gray-100 rounded-lg">
@@ -161,4 +138,4 @@ console.log(items)
   );
 };
 
-export default ProductList;
+export default SemisterList;
