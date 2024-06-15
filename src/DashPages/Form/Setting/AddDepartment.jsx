@@ -5,22 +5,27 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Helmet } from "react-helmet";
 import DashCustomNav from "../../../Share/Formnav";
-import axoissecure from "../../../Share/Hooks/Axoisscure";
+import axoissecure from './../../../Hooks/Axoisscure';
+
 
 // Validation Schema
 const Schema = Yup.object().shape({
-  bloodgroup: Yup.string()
-  .label('Blood Group')
+  department: Yup.string()
+  .label('Department')
   .required(),
 
+  shortname: Yup.string()
+  .label('Short Name')
+  .required(),
  
 });
 
-const AddBloodGroup = () => {
+const AddDepartment = () => {
   
   const formik = useFormik({
     initialValues: {
-        bloodgroup: "",
+      department: "",
+      shortname : ""
       
     },
     validationSchema: Schema,
@@ -28,15 +33,16 @@ const AddBloodGroup = () => {
       console.log(values)
       try {
         await axoissecure.post("/members", {
-          name: values.bloodgroup,
+          name: values.department,
+          shortName  : values.shortname,
           
         });
         console.log("Product added successfully:", values);
-        toast.success("Blood Group Added  successfully!");
+        toast.success("Department Added  successfully!");
         resetForm();
       } catch (error) {
-        toast.error("Error adding Blood Group");
-        console.error("Error adding Blood Group:", error);
+        toast.error("Error adding Department");
+        console.error("Error adding Department:", error);
       }
     },
   });
@@ -45,11 +51,11 @@ const AddBloodGroup = () => {
   
   return (
     <>
-     <DashCustomNav name={"Add Blood Group "} listroute={'/dashboard/setting/bloodgrouplist'} />
+     <DashCustomNav name={"Add Department "} listroute={'/dashboard/setting/departmentlist'} />
     
   
     <div className="p-8">
-       <Helmet><title>Manager || Add Blood Group </title></Helmet>
+       <Helmet><title>Manager || Add Department </title></Helmet>
       
       
      
@@ -62,25 +68,45 @@ const AddBloodGroup = () => {
 
             {/* Product SL */}
             <div className="flex flex-col">
-              <label htmlFor="bloodgroup">
-                1. Blood Group  {" "}
+              <label htmlFor="name">
+                1. Department{" "}
                 <span className="text-xl font-semibold text-red-500">*</span>
               </label>
               <input
-              placeholder="Blood Group"
-                id="bloodgroup"
-                name="bloodgroup"
+              placeholder="Department"
+                id="department"
+                name="department"
                 className="py-2 border-2 rounded-md border-[#0284C7] px-3 w-full"
                 type="text"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.bloodgroup}
+                value={formik.values.department}
               />
-              {formik.touched.bloodgroup && formik.errors.bloodgroup ? (
-                <div className="text-red-600">{formik.errors.bloodgroup}</div>
+              {formik.touched.department && formik.errors.department ? (
+                <div className="text-red-600">{formik.errors.department}</div>
               ) : null}
             </div>
                   
+                     {/* short name */}
+            <div className="flex flex-col">
+              <label htmlFor="name">
+                2. Short Name {" "}
+                <span className="text-xl font-semibold text-red-500">*</span>
+              </label>
+              <input
+              placeholder="Short Name"
+                id="shortname"
+                name="shortname"
+                className="py-2 border-2 rounded-md border-[#0284C7] px-3 w-full"
+                type="text"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.shortname}
+              />
+              {formik.touched.shortname && formik.errors.shortname ? (
+                <div className="text-red-600">{formik.errors.shortname}</div>
+              ) : null}
+            </div>
 
           </div>
 
@@ -108,4 +134,4 @@ const AddBloodGroup = () => {
   );
 };
 
-export default AddBloodGroup;
+export default AddDepartment;

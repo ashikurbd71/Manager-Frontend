@@ -1,24 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useTable } from "react-table";
-import axoissecure from "../../Share/Hooks/Axoisscure";
 import { FaEdit, FaTrashAlt, FaEye, FaBan } from 'react-icons/fa';
-import Tablenav from "../../Share/Hooks/Tablenav";
-import useHelmet from './../../Share/Hooks/useHelmet';
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 
+import axoissecure from "../../../Hooks/Axoisscure";
+import Tablenav from './../../../Share/Tablenav';
 
 
 
 
-const ProductList = () => {
+
+const DepartmnetList = () => {
 
   const { data: items = [], refetch } = useQuery({
     queryKey: ["productadded"],
     queryFn: async () => {
       try {
-        const res = await axoissecure.get(`/members`);
+        const res = await axoissecure.get(`/department`);
         return res.data;
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -34,26 +34,14 @@ console.log(items)
       accessor: 'sl'
     },
     {
-      Header: "Name",
-      accessor: 'name'
-    },
-    {
-      Header: "Number",
-      accessor: 'number'
-    },
-    {
-      Header: "Institute",
-      accessor: 'institute'
-    },
-    {
       Header: "Department",
       accessor: 'department'
     },
-   
     {
-      Header: "Semister",
-      accessor: 'semister'
+      Header: "Short Name",
+      accessor: 'shortname'
     },
+ 
 
     {
       Header: "Action",
@@ -99,13 +87,9 @@ console.log(items)
     items.map((item, index) => ({
       ...item,
       sl: index + 1,
-      name : item?.name,
-      number : item?.number,
-      institute : item?.instituteName,
-      department : item?.department,
-      semister: item?.semister,
-      email: item?.email,
-      date: item?.joiningDate?.split('T')[0],
+      department : item?.name,
+      shortname : item?.shortName,
+    
 
     })), [items]
   );
@@ -121,14 +105,14 @@ console.log(items)
 
     <>
 
-    <useHelmet name={'Manager || Member list'} />
+    {/* <useHelmet name={'Manager || De list'} /> */}
 
-    <Helmet><title>Manager || Member list</title></Helmet>
+    <Helmet><title>Manager || Departmentlist</title></Helmet>
 
     
-    <h1 className="text-2xl font-medium text-gray-600 p-5">Member List</h1>
+    <h1 className="text-2xl font-medium text-gray-600 p-5">Department List</h1>
 
-    <Tablenav route={'/dashboard/addmember'}/>
+    <Tablenav route={'/dashboard/setting/adddepartment'}/>
 
  
     <div className="px-6 bg-gray-100 rounded-lg">
@@ -161,4 +145,4 @@ console.log(items)
   );
 };
 
-export default ProductList;
+export default DepartmnetList;

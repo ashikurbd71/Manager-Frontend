@@ -4,14 +4,15 @@ import { useTable } from "react-table";
 import { FaEdit, FaTrashAlt, FaEye, FaBan } from 'react-icons/fa';
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-import axoissecure from "../../../Share/Hooks/Axoisscure";
-import Tablenav from "../../../Share/Hooks/Tablenav";
+
+import Tablenav from './../../Share/Tablenav';
+import axoissecure from './../../Hooks/Axoisscure';
 
 
 
 
 
-const BloodGroupList = () => {
+const ProductList = () => {
 
   const { data: items = [], refetch } = useQuery({
     queryKey: ["productadded"],
@@ -33,10 +34,26 @@ console.log(items)
       accessor: 'sl'
     },
     {
-      Header: "Blood Group",
-      accessor: 'blood'
+      Header: "Name",
+      accessor: 'name'
     },
- 
+    {
+      Header: "Number",
+      accessor: 'number'
+    },
+    {
+      Header: "Institute",
+      accessor: 'institute'
+    },
+    {
+      Header: "Department",
+      accessor: 'department'
+    },
+   
+    {
+      Header: "Semister",
+      accessor: 'semister'
+    },
 
     {
       Header: "Action",
@@ -82,7 +99,13 @@ console.log(items)
     items.map((item, index) => ({
       ...item,
       sl: index + 1,
-    
+      name : item?.name,
+      number : item?.number,
+      institute : item?.instituteName,
+      department : item?.department,
+      semister: item?.semister,
+      email: item?.email,
+      date: item?.joiningDate?.split('T')[0],
 
     })), [items]
   );
@@ -98,14 +121,14 @@ console.log(items)
 
     <>
 
-    {/* <useHelmet name={'Manager || De list'} /> */}
+    <useHelmet name={'Manager || Member list'} />
 
-    <Helmet><title>Manager || Blood Group List</title></Helmet>
+    <Helmet><title>Manager || Member list</title></Helmet>
 
     
-    <h1 className="text-2xl font-medium text-gray-600 p-5">Blood Group List </h1>
+    <h1 className="text-2xl font-medium text-gray-600 p-5">Member List</h1>
 
-    <Tablenav route={'/dashboard/setting/addbloodgroup'}/>
+    <Tablenav route={'/dashboard/addmember'}/>
 
  
     <div className="px-6 bg-gray-100 rounded-lg">
@@ -138,4 +161,4 @@ console.log(items)
   );
 };
 
-export default BloodGroupList;
+export default ProductList;

@@ -4,20 +4,20 @@ import { useTable } from "react-table";
 import { FaEdit, FaTrashAlt, FaEye, FaBan } from 'react-icons/fa';
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-import axoissecure from "../../../Share/Hooks/Axoisscure";
-import Tablenav from "../../../Share/Hooks/Tablenav";
+import axoissecure from "../../../Hooks/Axoisscure";
+import Tablenav from "../../../Share/Tablenav";
 
 
 
 
 
-const DepartmnetList = () => {
+const BloodGroupList = () => {
 
   const { data: items = [], refetch } = useQuery({
     queryKey: ["productadded"],
     queryFn: async () => {
       try {
-        const res = await axoissecure.get(`/members`);
+        const res = await axoissecure.get(`/blood`);
         return res.data;
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -33,8 +33,8 @@ console.log(items)
       accessor: 'sl'
     },
     {
-      Header: "Department",
-      accessor: 'department'
+      Header: "Blood Group",
+      accessor: 'blood'
     },
  
 
@@ -100,12 +100,12 @@ console.log(items)
 
     {/* <useHelmet name={'Manager || De list'} /> */}
 
-    <Helmet><title>Manager || Departmentlist</title></Helmet>
+    <Helmet><title>Manager || Blood Group List</title></Helmet>
 
     
-    <h1 className="text-2xl font-medium text-gray-600 p-5">Department List</h1>
+    <h1 className="text-2xl font-medium text-gray-600 p-5">Blood Group List </h1>
 
-    <Tablenav route={'/dashboard/setting/adddepartment'}/>
+    <Tablenav route={'/dashboard/setting/addbloodgroup'}/>
 
  
     <div className="px-6 bg-gray-100 rounded-lg">
@@ -138,4 +138,4 @@ console.log(items)
   );
 };
 
-export default DepartmnetList;
+export default BloodGroupList;

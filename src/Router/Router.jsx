@@ -1,27 +1,25 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../Layout/Layout";
-import AddProduct from "../Pages/Form/AddProduct";
-import ProductList from "../Pages/Table/ProductList";
-import ManagerList from "../Pages/Table/ManagerTable/ManagerList";
-import MemberDetails from "../DashComponent/Member/MemberDetails";
-import DepartmnetList from "../Pages/Table/Setting/DepartmnetList";
-import AddDepartment from "../Pages/Form/Setting/AddDepartment";
-import InstituteList from "../Pages/Table/Setting/InstituteList";
-import AddInstitute from "../Pages/Form/Setting/AddInstitute";
-import SemisterList from "../Pages/Table/Setting/SemisterList";
-import AddSemister from "../Pages/Form/Setting/AddSemister";
-import BloodGroupList from "../Pages/Table/Setting/BloodGroupList";
-import AddBloodGroup from "../Pages/Form/Setting/AddBloodGroup";
+import AddProduct from './../DashPages/Form/AddProduct';
+import ProductList from './../DashPages/Table/ProductList';
+import ManagerList from './../DashPages/Table/ManagerTable/ManagerList';
+import MemberDetails from './../DashPages/Details/Member/MemberDetails';
+import DepartmnetList from './../DashPages/Table/Setting/DepartmnetList';
+import AddDepartment from './../DashPages/Form/Setting/AddDepartment';
+import InstituteList from './../DashPages/Table/Setting/InstituteList';
+import AddInstitute from './../DashPages/Form/Setting/AddInstitute';
+import SemisterList from './../DashPages/Table/Setting/SemisterList';
+import AddSemister from './../DashPages/Form/Setting/AddSemister';
+import BloodGroupList from './../DashPages/Table/Setting/BloodGroupList';
+import AddBloodGroup from './../DashPages/Form/Setting/AddBloodGroup';
+import AddManager from "../DashPages/Form/Manager/AddManager";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />, 
     children:[
-        {
-            path: "/dashboard",
-            element:<ManagerList/>
-        },
+
         {
           path: "/dashboard/memberlist",
           element:<ProductList/>
@@ -30,6 +28,15 @@ const router = createBrowserRouter([
           path: "/dashboard/addmember",
           element:<AddProduct/>
       },
+      {
+        path: "/dashboard/managerlist",
+        element:<ManagerList/>
+    },
+    {
+      path: "/dashboard/addmanager",
+      element:<AddManager/>
+  },
+
 
       {
         path: "/dashboard/memberdetails/:id",

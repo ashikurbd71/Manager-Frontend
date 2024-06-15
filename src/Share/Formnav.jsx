@@ -17,7 +17,7 @@ const DashCustomNav = ({name,listroute}) => {
             </h1>
             </div>
             <div className=''>
-                <button className=' text-lg font-semibold font-medium  '>
+                <button className=' text-lg  '>
 
                    <Link to={listroute}>
                    <div className='flex text-gray-500 justify-items-center items-center'>

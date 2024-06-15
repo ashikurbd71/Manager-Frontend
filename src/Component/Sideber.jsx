@@ -5,6 +5,7 @@ import { FaUserPlus } from "react-icons/fa6";
 import { MdArrowDropDown, MdArrowRight, MdOutlineDashboard ,MdOutlineSettings} from "react-icons/md";
 import img from "../assets/manager.png"
 import { LuCircleDot } from "react-icons/lu";
+import { FaUserGear } from "react-icons/fa6";
 const Sideber = () => {
 
     const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
@@ -50,6 +51,24 @@ const Sideber = () => {
             </div>
         
         </NavLink>
+
+        {/* manager */}
+      
+
+        
+        <NavLink
+          to="/dashboard/managerlist"
+          className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? "text-[#0284C7]" : ""
+          }
+        >
+            <div className="flex justify-center pb-2 hover:text-gray-600 items-center gap-1">
+            <FaUserGear className="text-lg"/>
+             <h1 className="text-lg font-medium"> Add Manager</h1>
+            </div>
+        
+        </NavLink>
+
 
         {/* setting */}
 

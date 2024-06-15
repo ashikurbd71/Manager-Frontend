@@ -34,7 +34,7 @@ Add New
 
    </Link>
 
-<button className=' text-lg font-semibold font-samibold  '>
+<button className=' text-lg   '>
 
 <div className='flex text-gray-500 border-2 px-2 py-1 rounded-md gap-1 justify-items-center items-center'>
  

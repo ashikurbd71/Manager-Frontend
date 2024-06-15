@@ -5,22 +5,26 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Helmet } from "react-helmet";
 import DashCustomNav from "../../../Share/Formnav";
-import axoissecure from "../../../Share/Hooks/Axoisscure";
+import axoissecure from './../../../Hooks/Axoisscure';
+
 
 // Validation Schema
 const Schema = Yup.object().shape({
-  department: Yup.string()
-  .label('Department')
+  semister: Yup.string()
+  .label('Semister')
   .required(),
-
+  shortname: Yup.string()
+  .label('Short Name')
+  .required(),
  
 });
 
-const AddDepartment = () => {
+const AddSemister = () => {
   
   const formik = useFormik({
     initialValues: {
-      department: "",
+        semister: "",
+        shortname: ""
       
     },
     validationSchema: Schema,
@@ -28,15 +32,15 @@ const AddDepartment = () => {
       console.log(values)
       try {
         await axoissecure.post("/members", {
-          name: values.department,
-          
+          name: values.semister,
+          shortName : values.shortname,
         });
         console.log("Product added successfully:", values);
-        toast.success("Department Added  successfully!");
+        toast.success("Semister Added  successfully!");
         resetForm();
       } catch (error) {
-        toast.error("Error adding Department");
-        console.error("Error adding Department:", error);
+        toast.error("Error adding Semister");
+        console.error("Error adding Semister:", error);
       }
     },
   });
@@ -45,11 +49,11 @@ const AddDepartment = () => {
   
   return (
     <>
-     <DashCustomNav name={"Add Department "} listroute={'/dashboard/setting/departmentlist'} />
+     <DashCustomNav name={"Add Semister "} listroute={'/dashboard/setting/semisterlist'} />
     
   
     <div className="p-8">
-       <Helmet><title>Manager || Add Department </title></Helmet>
+       <Helmet><title>Manager || Add Semister </title></Helmet>
       
       
      
@@ -63,24 +67,44 @@ const AddDepartment = () => {
             {/* Product SL */}
             <div className="flex flex-col">
               <label htmlFor="name">
-                1. Department{" "}
+                1. Semister Name {" "}
                 <span className="text-xl font-semibold text-red-500">*</span>
               </label>
               <input
-              placeholder="Department"
-                id="department"
-                name="department"
+              placeholder="Semister"
+                id="semister"
+                name="semister"
                 className="py-2 border-2 rounded-md border-[#0284C7] px-3 w-full"
                 type="text"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.department}
+                value={formik.values.semister}
               />
-              {formik.touched.department && formik.errors.department ? (
-                <div className="text-red-600">{formik.errors.department}</div>
+              {formik.touched.semister && formik.errors.semister ? (
+                <div className="text-red-600">{formik.errors.semister}</div>
               ) : null}
             </div>
                   
+                                     {/* short name */}
+            <div className="flex flex-col">
+              <label htmlFor="name">
+                2. Short Name {" "}
+                <span className="text-xl font-semibold text-red-500">*</span>
+              </label>
+              <input
+              placeholder="Short Name"
+                id="shortname"
+                name="shortname"
+                className="py-2 border-2 rounded-md border-[#0284C7] px-3 w-full"
+                type="text"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.shortname}
+              />
+              {formik.touched.shortname && formik.errors.shortname ? (
+                <div className="text-red-600">{formik.errors.shortname}</div>
+              ) : null}
+            </div>
 
           </div>
 
@@ -108,4 +132,4 @@ const AddDepartment = () => {
   );
 };
 
-export default AddDepartment;
+export default AddSemister;

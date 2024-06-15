@@ -4,20 +4,21 @@ import { useTable } from "react-table";
 import { FaEdit, FaTrashAlt, FaEye, FaBan } from 'react-icons/fa';
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-import axoissecure from "../../../Share/Hooks/Axoisscure";
-import Tablenav from "../../../Share/Hooks/Tablenav";
+
+import axoissecure from './../../../Hooks/Axoisscure';
+import Tablenav from './../../../Share/Tablenav';
 
 
 
 
 
-const InstituteList = () => {
+const SemisterList = () => {
 
   const { data: items = [], refetch } = useQuery({
     queryKey: ["productadded"],
     queryFn: async () => {
       try {
-        const res = await axoissecure.get(`/members`);
+        const res = await axoissecure.get(`/semister`);
         return res.data;
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -33,8 +34,8 @@ console.log(items)
       accessor: 'sl'
     },
     {
-      Header: "Institue Name",
-      accessor: 'institues'
+      Header: "Semister",
+      accessor: 'semister'
     },
  
 
@@ -100,12 +101,12 @@ console.log(items)
 
     {/* <useHelmet name={'Manager || De list'} /> */}
 
-    <Helmet><title>Manager || Institute List</title></Helmet>
+    <Helmet><title>Manager || Semister List</title></Helmet>
 
     
-    <h1 className="text-2xl font-medium text-gray-600 p-5">Institute List</h1>
+    <h1 className="text-2xl font-medium text-gray-600 p-5">Semister List</h1>
 
-    <Tablenav route={'/dashboard/setting/addinstitute'}/>
+    <Tablenav route={'/dashboard/setting/addsemister'}/>
 
  
     <div className="px-6 bg-gray-100 rounded-lg">
@@ -138,4 +139,4 @@ console.log(items)
   );
 };
 
-export default InstituteList;
+export default SemisterList;

@@ -2,13 +2,13 @@ import React, { useState,useRef } from "react";
 import DashCustomNav from "../../Share/Formnav";
 import {useFormik } from "formik";
 import * as Yup from "yup";
-import axoissecure from "../../Share/Hooks/Axoisscure";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineFileUpload } from "react-icons/md";
 import Select from 'react-select'
-import useHelmet from './../../Share/Hooks/useHelmet';
+
 import { Helmet } from "react-helmet";
+import axoissecure from './../../Hooks/Axoisscure';
 
 // Validation Schema
 const Schema = Yup.object().shape({
@@ -58,7 +58,7 @@ const AddProduct = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef();
   const options = [
-    { value: 'Computer Since And Teachnology', label: 'Computer Since And Teachnology' },
+    { value: 'CST', label: 'CST' },
   
   ]
   const optionsBlood = [
@@ -162,7 +162,7 @@ const AddProduct = () => {
   
     <div className="p-8">
        <Helmet><title>Manager || Add Member</title></Helmet>
-      <useHelmet name={'Manager || Add Member'}/>
+  
      
       <div>
         <form

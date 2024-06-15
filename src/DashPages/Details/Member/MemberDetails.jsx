@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { FaPrint, FaUser } from 'react-icons/fa6';
-import DashCustomNav from '../../Share/Formnav';
+import DashCustomNav from '../../../Share/Formnav';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import axoissecure from '../../Share/Hooks/Axoisscure';
-import img from '../../assets/manager.png'
+import axoissecure from './../../../Hooks/Axoisscure';
 const MemberDetails = () => {
  const[member,setMember] = useState()
   const { id } = useParams();
@@ -39,6 +38,9 @@ const MemberDetails = () => {
 
 
   const image = `${import.meta.env.VITE_API_URL}${"/"}${member?.profile}`;
+
+  console.log(image)
+
 
     return (
       <>

@@ -5,38 +5,38 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Helmet } from "react-helmet";
 import DashCustomNav from "../../../Share/Formnav";
-import axoissecure from "../../../Share/Hooks/Axoisscure";
+import axoissecure from './../../../Hooks/Axoisscure';
+
 
 // Validation Schema
 const Schema = Yup.object().shape({
-  semister: Yup.string()
-  .label('Semister')
+  bloodgroup: Yup.string()
+  .label('Blood Group')
   .required(),
 
  
 });
 
-const AddSemister = () => {
+const AddBloodGroup = () => {
   
   const formik = useFormik({
     initialValues: {
-        semister: "",
+        bloodgroup: "",
       
     },
     validationSchema: Schema,
     onSubmit: async (values, { resetForm }) => {
       console.log(values)
       try {
-        await axoissecure.post("/members", {
-          name: values.semister,
-          
+        await axoissecure.post("/blood", {
+          name: values.bloodgroup,
         });
         console.log("Product added successfully:", values);
-        toast.success("Semister Added  successfully!");
+        toast.success("Blood Group Added  successfully!");
         resetForm();
       } catch (error) {
-        toast.error("Error adding Semister");
-        console.error("Error adding Semister:", error);
+        toast.error("Error adding Blood Group");
+        console.error("Error adding Blood Group:", error);
       }
     },
   });
@@ -45,11 +45,11 @@ const AddSemister = () => {
   
   return (
     <>
-     <DashCustomNav name={"Add Semister "} listroute={'/dashboard/setting/semisterlist'} />
+     <DashCustomNav name={"Add Blood Group "} listroute={'/dashboard/setting/bloodgrouplist'} />
     
   
     <div className="p-8">
-       <Helmet><title>Manager || Add Semister </title></Helmet>
+       <Helmet><title>Manager || Add Blood Group </title></Helmet>
       
       
      
@@ -62,22 +62,22 @@ const AddSemister = () => {
 
             {/* Product SL */}
             <div className="flex flex-col">
-              <label htmlFor="name">
-                1. Semister Name {" "}
+              <label htmlFor="bloodgroup">
+                1. Blood Group  {" "}
                 <span className="text-xl font-semibold text-red-500">*</span>
               </label>
               <input
-              placeholder="Semister"
-                id="semister"
-                name="semister"
+              placeholder="Blood Group"
+                id="bloodgroup"
+                name="bloodgroup"
                 className="py-2 border-2 rounded-md border-[#0284C7] px-3 w-full"
                 type="text"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.semister}
+                value={formik.values.bloodgroup}
               />
-              {formik.touched.semister && formik.errors.semister ? (
-                <div className="text-red-600">{formik.errors.semister}</div>
+              {formik.touched.bloodgroup && formik.errors.bloodgroup ? (
+                <div className="text-red-600">{formik.errors.bloodgroup}</div>
               ) : null}
             </div>
                   
@@ -108,4 +108,4 @@ const AddSemister = () => {
   );
 };
 
-export default AddSemister;
+export default AddBloodGroup;
