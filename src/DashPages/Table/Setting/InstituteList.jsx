@@ -36,6 +36,10 @@ console.log(items)
       Header: "Institue Name",
       accessor: 'institues'
     },
+    {
+      Header: "Short Name",
+      accessor: 'shortname'
+    },
  
 
     {

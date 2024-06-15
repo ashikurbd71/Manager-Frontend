@@ -37,6 +37,10 @@ console.log(items)
       Header: "Semister",
       accessor: 'semister'
     },
+    {
+      Header: "Short Name",
+      accessor: 'shortname'
+    },
  
 
     {
