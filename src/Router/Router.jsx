@@ -13,8 +13,42 @@ import AddSemister from './../DashPages/Form/Setting/AddSemister';
 import BloodGroupList from './../DashPages/Table/Setting/BloodGroupList';
 import AddBloodGroup from './../DashPages/Form/Setting/AddBloodGroup';
 import AddManager from "../DashPages/Form/Manager/AddManager";
+import ProfileCard from "../Public/Pages/ProfileCrad";
+import PublicLyaout from './../Public/Layout/PublicLyaout';
+import PublicNoitice from "../Public/Pages/PublicNoitice";
+import PublicGallery from "../Public/Pages/PublicGallery";
+import NoticeList from "../DashPages/Table/Notice/NoticeList";
+import AddNotice from "../DashPages/Form/Notice/AddNotice";
 
 const router = createBrowserRouter([
+
+  // public
+
+   {
+
+    path: "/public",
+    element: <PublicLyaout/>, 
+    children:[
+      {
+        path: "/public/profilecard",
+        element:<ProfileCard/>
+      },
+      {
+        path: "/public/notice",
+        element:<PublicNoitice/>
+      },
+      {
+        path: "/public/gallery",
+        element:<PublicGallery/>
+      }
+
+    ]
+   }
+  ,
+
+  // dashboard
+
+
   {
     path: "/",
     element: <Layout />, 
@@ -38,10 +72,18 @@ const router = createBrowserRouter([
   },
 
 
-      {
-        path: "/dashboard/memberdetails/:id",
-        element:<MemberDetails/>
-    },
+   
+  
+  // notice
+
+  {
+    path: "/dashboard/noticelist",
+    element:<NoticeList/>
+},
+{
+  path: "/dashboard/addnotice",
+  element:<AddNotice/>
+},
 
     // setting
 
@@ -91,6 +133,8 @@ const router = createBrowserRouter([
 
     ]// Changed the case to match convention and added closing tags
   },
+
+  
 ]);
 
 export default router;

@@ -4,21 +4,21 @@ import { useTable } from "react-table";
 import { FaEdit, FaTrashAlt, FaEye, FaBan } from 'react-icons/fa';
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-
-import axoissecure from './../../../Hooks/Axoisscure';
-import Tablenav from './../../../Share/Tablenav';
-
+import axoissecure from "../../../Hooks/Axoisscure";
+import Tablenav from "../../../Share/Tablenav";
 
 
 
 
-const SemisterList = () => {
+
+
+const NoticeList = () => {
 
   const { data: items = [], refetch } = useQuery({
     queryKey: ["productadded"],
     queryFn: async () => {
       try {
-        const res = await axoissecure.get(`/semister`);
+        const res = await axoissecure.get(`/members`);
         return res.data;
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -33,16 +33,27 @@ console.log(items)
       Header: "Sl.",
       accessor: 'sl'
     },
+   
     {
-      Header: "Semister",
-      accessor: 'semister'
+        Header: "Topic",
+        accessor: 'topic'
+      },
+    {
+      Header: "Date",
+      accessor: 'date'
     },
     {
-      Header: "Short Name",
-      accessor: 'shortname'
+        Header: "Assign",
+        accessor: 'assign'
     },
- 
-      
+    {
+        Header: "Title",
+        accessor: 'title'
+    },
+     
+   
+   
+
     {
       Header: "Action",
       accessor: 'action',
@@ -87,7 +98,13 @@ console.log(items)
     items.map((item, index) => ({
       ...item,
       sl: index + 1,
-    
+      name : item?.name,
+      number : item?.number,
+      institute : item?.instituteName,
+      department : item?.department,
+      semister: item?.semister,
+      email: item?.email,
+      date: item?.joiningDate?.split('T')[0],
 
     })), [items]
   );
@@ -103,14 +120,14 @@ console.log(items)
 
     <>
 
-    {/* <useHelmet name={'Manager || De list'} /> */}
+    <useHelmet name={'Manager || Member list'} />
 
-    <Helmet><title>Manager || Semister List</title></Helmet>
+    <Helmet><title>Manager || Notice list</title></Helmet>
 
     
-    <h1 className="text-2xl font-medium text-gray-600 p-5">Semister List</h1>
+    <h1 className="text-2xl font-medium text-gray-600 p-5">Notice List</h1>
 
-    <Tablenav route={'/dashboard/setting/addsemister'}/>
+    <Tablenav route={'/dashboard/addnotice'}/>
 
  
     <div className="px-6 bg-gray-100 rounded-lg">
@@ -143,4 +160,4 @@ console.log(items)
   );
 };
 
-export default SemisterList;
+export default NoticeList;

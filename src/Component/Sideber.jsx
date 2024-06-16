@@ -6,6 +6,7 @@ import { MdArrowDropDown, MdArrowRight, MdOutlineDashboard ,MdOutlineSettings} f
 import img from "../assets/manager.png"
 import { LuCircleDot } from "react-icons/lu";
 import { FaUserGear } from "react-icons/fa6";
+import { TbNews } from "react-icons/tb";
 const Sideber = () => {
 
     const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
@@ -69,26 +70,40 @@ const Sideber = () => {
         
         </NavLink>
 
+        <NavLink
+          to="/dashboard/noticelist"
+          className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? "text-[#0284C7]" : ""
+          }
+        >
+            <div className="flex justify-center -ml-6 pb-2 hover:text-gray-600 items-center gap-1">
+            <TbNews className="text-lg"/>
+             <h1 className="text-lg font-medium"> Add Notice</h1>
+            </div>
+        
+        </NavLink>
+
+
+    
+
 
         {/* setting */}
 
         
         <div>
-      <NavLink
+      <button
    
-        className={({ isActive, isPending }) =>
-          isPending ? "pending" : isActive ? "" : ""
-        }
+    
       >
         <div
-          className="flex justify-items-center pb-2 -ml-7 hover:text-gray-600 items-center gap-1"
+          className="flex justify-items-center pb-2 -ml-10 hover:text-gray-600 items-center gap-1"
           onClick={toggleSubMenu}
         >
           <MdOutlineSettings className="text-lg"/>
           <h1 className="text-lg font-medium">Setting</h1>
           {isSubMenuOpen ? <MdArrowDropDown className="text-lg"/> : <MdArrowRight className="text-lg"/>}
         </div>
-      </NavLink>
+      </button>
       {isSubMenuOpen && (
         <div className="pt-2">
 
