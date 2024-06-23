@@ -114,7 +114,7 @@ const AddNotice = () => {
             <div className="grid grid-cols-1 gap-4">
               <div className="flex flex-col">
                 <label htmlFor="name">
-                  1. Assign Name{" "}
+                  1. Assigner{" "}
                   <span className="text-xl font-semibold text-red-500">*</span>
                 </label>
                 <input

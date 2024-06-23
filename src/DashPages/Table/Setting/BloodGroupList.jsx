@@ -82,6 +82,7 @@ console.log(items)
     items.map((item, index) => ({
       ...item,
       sl: index + 1,
+      blood: item?.name,
     
 
     })), [items]

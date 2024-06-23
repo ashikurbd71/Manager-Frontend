@@ -31,7 +31,7 @@ const AddSemister = () => {
     onSubmit: async (values, { resetForm }) => {
       console.log(values)
       try {
-        await axoissecure.post("/members", {
+        await axoissecure.post("/semister", {
           name: values.semister,
           shortName : values.shortname,
         });

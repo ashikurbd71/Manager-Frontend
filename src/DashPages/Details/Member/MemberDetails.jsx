@@ -72,43 +72,78 @@ const MemberDetails = () => {
       <h1 className='text-left text-[20px]  font-semibold  text-[#0284C7]'>About</h1>
       </div>
 
-        <div className='grid lg:grid-cols-2 grid-cols-1 space-y-4 gap-4 py-14 mx-10'>
+      
+      <div className="text-gray-700 p-10">
+  <div className="overflow-x-auto">
+    
+    <table className="w-full border border-gray-200 text-sm">
+        
+      <tbody>
+      <tr>
+          <td className="px-4 py-2 font-semibold border border-gray-200">Name</td>
+          <td className="px-4 py-2 border border-gray-200">{member?.name}</td>
+        </tr>
 
-            <div className='flex  items-center gap-10'><h1 className='text-lg font-medium'>Name</h1> <span className='text-lg pl-5'>:</span>
-            <span className='text-lg text-gray-800'>{member?.name}</span></div>
+        <tr>
+          <td className="px-4 py-2 font-semibold border border-gray-200">Phone</td>
+          <td className="px-4 py-2 border border-gray-200">{member?.number}</td>
+        </tr>
 
-            <div className='flex  items-center gap-10'><h1 className='text-lg font-medium'>Phone</h1> <span className=' text-lg  pl-[53px]'>:</span>
-            <span className='text-lg text-gray-800'>{member?.number}</span></div>
+        <tr>
+          <td className="px-4 py-2 font-semibold border border-gray-200">Institute</td>
+          <td className="px-4 py-2 border border-gray-200">{member?.instituteName}</td>
+        </tr>
 
+        <tr>
+          <td className="px-4 py-2 font-semibold border border-gray-200">Department</td>
+          <td className="px-4 py-2 border border-gray-200">{member?.department}</td>
+        </tr>
 
-            <div className='flex  items-center gap-10'><h1 className='text-lg font-medium'>Institute</h1> <span className='text-lg -pl-10'>:</span>
-            <span className='text-lg text-gray-800'>{member?.instituteName}</span></div>
-
-            <div className='flex  items-center gap-10'><h1 className='text-lg font-medium'>Department</h1> <span className='text-lg -pl-10'>:</span>
-            <span className='text-lg text-gray-800'>{member?.department}</span></div>
-
-            <div className='flex  items-center gap-10'><h1 className='text-lg font-medium'>NID</h1> <span className='text-lg pl-10'>:</span>
-            <span className='text-lg text-gray-800'>{member?.nid}</span></div>
-
-
-            <div className='flex  items-center gap-10'><h1 className='text-lg font-medium'>Blood</h1> <span className='text-lg  pl-[55px]'>:</span>
-            <span className='text-lg text-gray-800'>{member?.bloodGroup}</span></div>
-
-
-            <div className='flex  items-center gap-10'><h1 className='text-lg font-medium'>Address</h1> <span className='text-lg -pl-10'>:</span>
-            <span className='text-lg text-gray-800'>{member?.address}</span></div>
-
-            <div className='flex  items-center gap-10'><h1 className='text-lg font-medium'>Semister</h1> <span className='text-lg  pl-[28px]'>:</span>
-            <span className='text-lg text-gray-800'>{member?.semister}</span></div>
-
-            <div className='flex  items-center gap-10'><h1 className='text-lg font-medium'>Email</h1> <span className='text-lg pl-6'>:</span>
-            <span className='text-lg text-gray-800'>{member?.email}</span></div>
-
-            <div className='flex  items-center gap-10'><h1 className='text-lg font-medium'>Joining</h1> <span className='text-lg  pl-[43px]'>:</span>
-            <span className='text-lg text-gray-800'>{formattedDate}</span></div>
+        <tr>
+          <td className="px-4 py-2 font-semibold border border-gray-200">Semester</td>
+          <td className="px-4 py-2 border border-gray-200">{member?.semester}</td>
+        </tr>
 
 
-        </div>
+        <tr>
+          <td className="px-4 py-2 font-semibold border border-gray-200">National Id No.</td>
+          <td className="px-4 py-2 border border-gray-200">{member?.nid}</td>
+        </tr>
+
+        <tr>
+          <td className="px-4 py-2 font-semibold border border-gray-200">Blood Group</td>
+          <td className="px-4 py-2 border border-gray-200">{member?.bloodGroup}</td>
+        </tr>
+
+        <tr>
+          <td className="px-4 py-2 font-semibold border border-gray-200">Address</td>
+          <td className="px-4 py-2 border border-gray-200">{member?.address}</td>
+        </tr>
+
+   
+        <tr>
+          <td className="px-4 py-2 font-semibold border border-gray-200">Email</td>
+          <td className="px-4 py-2 border border-gray-200">{member?.email}</td>
+        </tr>
+
+        <tr>
+          <td className="px-4 py-2 font-semibold border border-gray-200">Joining Date</td>
+          <td className="px-4 py-2 border border-gray-200">{formattedDate}</td>
+        </tr>
+     
+      
+      </tbody>
+    </table>
+  </div>
+
+    
+
+</div>
+
+
+
+
+
           </div>
             
         </div>

@@ -32,7 +32,7 @@ const AddDepartment = () => {
     onSubmit: async (values, { resetForm }) => {
       console.log(values)
       try {
-        await axoissecure.post("/members", {
+        await axoissecure.post("/department", {
           name: values.department,
           shortName  : values.shortname,
           
