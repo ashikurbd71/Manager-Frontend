@@ -68,7 +68,7 @@ console.log(items)
           <FaTrashAlt title="Delete" onClick={() => handleDelete(row.original.id)} className="  hover:text-red-500 cursor-pointer"  />
           
           {/* View Icon */}
-          <Link to={`/dashboard/memberdetails/${row.original.id}`}>
+          <Link to={`/dashboard/memberdeatils/${row.original.id}`}>
           <FaEye title="View Deatails"  className=" hover:text-yellow-500 cursor-pointer"  />
           </Link>
        

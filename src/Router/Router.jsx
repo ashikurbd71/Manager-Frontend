@@ -54,13 +54,18 @@ const router = createBrowserRouter([
     element: <Layout />, 
     children:[
 
+      
+      {
+        path: "/dashboard/memberlist",
+        element:<ProductList/>
+    },
+    {
+      path: "/dashboard/addmember",
+      element:<AddProduct/>
+  },
         {
-          path: "/dashboard/memberlist",
-          element:<ProductList/>
-      },
-        {
-          path: "/dashboard/addmember",
-          element:<AddProduct/>
+          path: "/dashboard/memberdeatils/:id",
+          element:<MemberDetails/>
       },
       {
         path: "/dashboard/managerlist",

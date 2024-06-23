@@ -86,7 +86,8 @@ console.log(items)
     items.map((item, index) => ({
       ...item,
       sl: index + 1,
-    
+      institues: item?.name,
+      shortname: item?.shortName,
 
     })), [items]
   );

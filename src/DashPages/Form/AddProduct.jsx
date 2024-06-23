@@ -107,7 +107,9 @@ const AddProduct = () => {
         
           
           // date: new Date()?.split("T")[0],
-        });
+        },{    headers: {
+          "Content-Type": "multipart/form-data",
+        }});
         console.log("Product added successfully:", values);
         toast.success("Member Added  successfully!");
         resetForm();
