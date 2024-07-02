@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import { useTable } from "react-table";
 import { FaEdit, FaTrashAlt, FaEye, FaBan } from 'react-icons/fa';
 import { Helmet } from "react-helmet";
@@ -9,22 +9,25 @@ import Tablenav from "../../../Share/Tablenav";
 
 
 
-
-
 const BloodGroupList = () => {
-
+  const [search, setSearch] = useState("");
+  
   const { data: items = [], refetch } = useQuery({
-    queryKey: ["productadded"],
+    queryKey: ["blood",search],
     queryFn: async () => {
       try {
-        const res = await axoissecure.get(`/blood`);
-        return res.data;
+        const res = await axoissecure.get(`/blood/search?query=${search}`);
+        console.log(res?.data?.item)
+        return res?.data?.item;
+      
       } catch (error) {
         console.error("Error fetching data:", error);
         throw error;
       }
     },
   });
+
+
 
 console.log(items)
   const columns = React.useMemo(() => [
@@ -79,7 +82,7 @@ console.log(items)
 
 
   const data = React.useMemo(() => 
-    items.map((item, index) => ({
+    items?.map((item, index) => ({
       ...item,
       sl: index + 1,
       blood: item?.name,
@@ -106,7 +109,7 @@ console.log(items)
     
     <h1 className="text-2xl font-medium text-gray-600 p-5">Blood Group List </h1>
 
-    <Tablenav route={'/dashboard/setting/addbloodgroup'}/>
+    <Tablenav route={'/dashboard/setting/addbloodgroup'}   setSearch={setSearch}/>
 
  
     <div className="px-6 bg-gray-100 rounded-lg">

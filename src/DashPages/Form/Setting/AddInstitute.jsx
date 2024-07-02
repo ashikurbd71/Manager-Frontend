@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Helmet } from "react-helmet";
 import DashCustomNav from "../../../Share/Formnav";
 import axoissecure from './../../../Hooks/Axoisscure';
+import CustomModal from './../../../Share/CustomModal/CustomModal';
 
 
 // Validation Schema
@@ -33,8 +34,8 @@ const AddInstitute = () => {
       try {
         await axoissecure.post("/institute", {
           name: values.institute,
-          shortName : values.shortname
-          
+          shortName : values.shortname,
+           status:"1",
         });
         console.log("Product added successfully:", values);
         toast.success("Institute Added  successfully!");
@@ -56,7 +57,7 @@ const AddInstitute = () => {
     <div className="p-8">
        <Helmet><title>Manager || Add Institute </title></Helmet>
       
-      
+    
      
       <div>
         <form
