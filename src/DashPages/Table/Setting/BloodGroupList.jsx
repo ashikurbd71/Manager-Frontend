@@ -17,8 +17,8 @@ const BloodGroupList = () => {
     queryFn: async () => {
       try {
         const res = await axoissecure.get(`/blood/search?query=${search}`);
-        console.log(res?.data?.item)
-        return res?.data?.item;
+        console.log(res?.data)
+        return res?.data;
       
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -27,7 +27,7 @@ const BloodGroupList = () => {
     },
   });
 
-
+ console.log(search)
 
 console.log(items)
   const columns = React.useMemo(() => [
