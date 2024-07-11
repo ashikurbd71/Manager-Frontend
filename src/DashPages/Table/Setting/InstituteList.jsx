@@ -9,6 +9,8 @@ import Tablenav from './../../../Share/Tablenav';
 
 import Modal from "./../../../Share/CustomModal/CustomModal";
 import { toast } from "react-toastify";
+import UpdateInstitute from "../../Update/SettingModal/UpdateInstitute";
+import Swal from "sweetalert2";
 
 
 
@@ -57,10 +59,7 @@ console.log(items)
           {/* Delete Icon */}
           <FaTrashAlt title="Delete" onClick={() => handleDelete(row.original.id)} className="  hover:text-red-500 cursor-pointer"  />
           
-          {/* View Icon */}
-          <Link to={`/dashboard/memberdetails/${row.original.id}`}>
-          <FaEye title="View Deatails"  className=" hover:text-yellow-500 cursor-pointer"  />
-          </Link>
+         
        
           
           {/* Disable Icon */}
@@ -71,39 +70,41 @@ console.log(items)
     },
   ], []);
 
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(null)
   const[id,setId] = useState()
 
-  function closeModal() {
-    setIsOpen(false)
-  }
 
   const openModal = (id) => {
     setIsOpen(true)
     setId(id)
   }
-  const handleDelete = () => {
 
-    toast.warn('Are you sure you want to delete?', {
-      position: "top-center",
-      autoClose: false,
-      closeOnClick: false,
-      draggable: false,
-      actions: [
-        {
-          text: 'Cancel',
-          action: () => console.log('Cancel')
-        },
-        {
-          text: 'Delete',
-          action: () => {
-            // Perform delete action here
-            console.log('Item deleted');
+
+  const handleDelete = (_id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to delete this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        axoissecure.delete(`/institute/${_id}`).then((res) => {
+          if (res.status === 200) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+
+          refetch();
           }
-        }
-      ]
+        });
+      }
     });
-  }
+  };
   const handleView = () => {
     
   }
@@ -132,7 +133,7 @@ console.log(items)
   return (
 
     <>
- <Modal isOpen={isOpen} setIsOpen={setIsOpen} />
+ <UpdateInstitute isOpen={isOpen} setIsOpen={setIsOpen} id={id} />
     {/* <useHelmet name={'Manager || De list'} /> */}
 
     <Helmet><title>Manager || Institute List</title></Helmet>

@@ -27,9 +27,11 @@ const BloodGroupList = () => {
     },
   });
 
- console.log(search)
+console.log(search)
 
 console.log(items)
+
+
   const columns = React.useMemo(() => [
     {
       Header: "Sl.",
