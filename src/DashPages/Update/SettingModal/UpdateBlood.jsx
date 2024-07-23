@@ -8,16 +8,14 @@ import { toast } from 'react-toastify';
 
 // Validation Schema
 const Schema = Yup.object().shape({
-    institute:Yup.string()
-    .label('Institute')
+    bloodgroup: Yup.string()
+    .label('Blood Group')
     .required(),
   
-    shortname:Yup.string()
-    .label('Short Name')
-    .required(),
+   
   });
   
-const UpdateInstitute = ({isOpen,setIsOpen,update,refetch}) => {
+const UpdateBlood = ({isOpen,setIsOpen,update,refetch}) => {
 
     console.log(update?.name)
 
@@ -27,30 +25,27 @@ const UpdateInstitute = ({isOpen,setIsOpen,update,refetch}) => {
 
     const formik = useFormik({
         initialValues: {
-          institute: "",
-          shortname : ""
+            bloodgroup: "",
           
         },
         validationSchema: Schema,
         onSubmit: async (values, { resetForm }) => {
           console.log(values)
           try {
-            await axoissecure.patch(`/institute/${update?.id}`, {
-              name: values.institute,
-              shortName : values.shortname,
-             
+            await axoissecure.patch(`/blood/${update?.id}`, {
+                name: values.bloodgroup,
             });
             console.log("Product added successfully:", values);
-            toast.success("Institute Update  successfully!");
+            toast.success("BloodGroup Update  successfully!");
             refetch();
             setIsOpen(false)
-
           } catch (error) {
-            toast.error("Error adding Institute");
-            console.error("Error adding Institute:", error);
+            toast.error("Error Update BloodGroup");
+            console.error("Error adding Semister:", error);
           }
         },
       });
+    
 
     const handleCancel = () => {
         formik.handleReset()
@@ -61,8 +56,8 @@ const UpdateInstitute = ({isOpen,setIsOpen,update,refetch}) => {
     useEffect(() => {
       if (update) {
           formik.setValues({
-              institute: update.name || "",
-              shortname: update.shortName || ""
+            bloodgroup: update.name || "",
+
           });
       }
   }, [update]);
@@ -72,53 +67,31 @@ const UpdateInstitute = ({isOpen,setIsOpen,update,refetch}) => {
      <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
 
     
-      <div>
+     <div>
         <form
           onSubmit={formik.handleSubmit}
           className="w-[400px] bg-white p-2  rounded-md"
         >
-          <div className="grid  grid-cols-1 gap-3">
+          <div className="grid  grid-cols-1 gap-4">
 
-            {/* institute */}
+            {/* Product SL */}
             <div className="flex flex-col">
-              <label htmlFor="name" className="pb-1 text-[#726f6f]">
-                1. Institute Name {" "}
+              <label htmlFor="bloodgroup" className="pb-1 text-[#726f6f]">
+                1. Blood Group  {" "}
                 <span className="text-xl font-semibold text-red-500">*</span>
               </label>
               <input
-              placeholder="Institute Name"
-                id="institute"
-                name="institute"
-                           className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
-                type="text"
-                onChange={formik.handleChange}
-              
-                onBlur={formik.handleBlur}
-                value={formik.values.institute}
-              />
-              {formik.touched.institute && formik.errors.institute ? (
-                <div className="text-red-600">{formik.errors.institute}</div>
-              ) : null}
-            </div>
-
-            {/* short name */}
-            <div className="flex flex-col">
-              <label htmlFor="name" className="pb-1 text-[#726f6f]">
-                2. Short Name {" "}
-                <span className="text-xl font-semibold text-red-500">*</span>
-              </label>
-              <input
-              placeholder="Short Name"
-                id="shortname"
-                name="shortname"
-                           className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
+              placeholder="Blood Group"
+                id="bloodgroup"
+                name="bloodgroup"
+                            className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                 type="text"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.shortname}
+                value={formik.values.bloodgroup}
               />
-              {formik.touched.shortname && formik.errors.shortname ? (
-                <div className="text-red-600">{formik.errors.shortname}</div>
+              {formik.touched.bloodgroup && formik.errors.bloodgroup ? (
+                <div className="text-red-600">{formik.errors.bloodgroup}</div>
               ) : null}
             </div>
                   
@@ -131,7 +104,7 @@ const UpdateInstitute = ({isOpen,setIsOpen,update,refetch}) => {
               className="w-[100px] bg-[#0284C7] text-white mt-10 rounded-lg h-[40px] border-2 font-bold"
               type="submit"
             >
-              Update
+              Save
             </button>
             <button
               className="w-[100px] bg-gray-200 font-bold mt-10 rounded-lg h-[40px] border-2 text-red-400"
@@ -149,4 +122,4 @@ const UpdateInstitute = ({isOpen,setIsOpen,update,refetch}) => {
     );
 };
 
-export default UpdateInstitute;
+export default UpdateBlood;

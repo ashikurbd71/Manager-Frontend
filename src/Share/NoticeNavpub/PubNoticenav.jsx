@@ -2,7 +2,7 @@ import React from 'react';
 import { FaPlus } from "react-icons/fa6";
 import { TbTableExport } from "react-icons/tb";
 import { Link } from 'react-router-dom';
-const Tablenav = ({route,setSearch,setActive}) => {
+const PubNoticenav = ({setSearch,setActive}) => {
     return (
        <>
           <div className="mx-6 px-5 mt-4 pt-2 lg:h-[60px] bg-white">
@@ -25,28 +25,9 @@ const Tablenav = ({route,setSearch,setActive}) => {
     <div className="flex items-center pb-3 lg:pb-0 lg:gap-10 gap-3">
 
  
-   <Link to={route}>
-   <button className=' text-lg  font-medium  '>
 
-<div className='flex text-gray-500 border-2 px-2 py-1 rounded-md gap-1 justify-items-center items-center'>
- 
-Add New
-<FaPlus className='text-[#0284C7]'/>
-</div>
 
-</button>
 
-   </Link>
-
-<button className=' text-lg   '>
-
-<div className='flex text-gray-500 border-2 px-2 py-1 rounded-md gap-1 justify-items-center items-center'>
- 
-Export
-<TbTableExport className='text-[#0284C7]'/>
-</div>
-
-</button>
 
      
     </div>
@@ -59,4 +40,4 @@ Export
     );
 };
 
-export default Tablenav;
+export default PubNoticenav;

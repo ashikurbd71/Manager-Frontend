@@ -2,10 +2,10 @@ import React from 'react';
 import { FaPlus } from "react-icons/fa6";
 import { TbTableExport } from "react-icons/tb";
 import { Link } from 'react-router-dom';
-const Tablenav = ({route,setSearch,setActive}) => {
+const MealManagenav = ({route,setSearch,setActive,totaltk,totalmeal}) => {
     return (
        <>
-          <div className="mx-6 px-5 mt-4 pt-2 lg:h-[60px] bg-white">
+          <div className="mx-6 px-5 mt-4 pt-2 lg:h-[110px] bg-white">
   <div className="flex justify-between flex-col lg:flex-row items-center">
 
     
@@ -24,13 +24,28 @@ const Tablenav = ({route,setSearch,setActive}) => {
 
     <div className="flex items-center pb-3 lg:pb-0 lg:gap-10 gap-3">
 
+
+
+ 
+    <Link to={route}>
+   <button className=' text-lg  font-medium  '>
+
+<div className='flex text-gray-500 border-2 px-2 py-1 rounded-md gap-1 justify-items-center items-center'>
+ 
+Add Extra
+<FaPlus className='text-[#0284C7]'/>
+</div>
+
+</button>
+
+   </Link>
  
    <Link to={route}>
    <button className=' text-lg  font-medium  '>
 
 <div className='flex text-gray-500 border-2 px-2 py-1 rounded-md gap-1 justify-items-center items-center'>
  
-Add New
+Add Meal
 <FaPlus className='text-[#0284C7]'/>
 </div>
 
@@ -53,10 +68,41 @@ Export
 
 
   </div>
+
+{/* calculation */}
+
+
+  <div className='pt-4 grid grid-cols-3 pl-40'>
+   <div className='flex items-center gap-1'>
+
+    <h1 className='fon font-semibold text-gray-600'>Date : </h1>
+
+    <h1 className='fon font-medium text-[#0284C7]'>20/7/24</h1>
+
+   </div>
+
+   <div className='flex items-center gap-1'>
+
+<h1 className='fon font-semibold text-gray-600'>Total Tk : </h1>
+
+<h1 className='fon font-medium text-[#0284C7]'>640 <span>Tk</span></h1>
+
+</div>
+
+
+<div className='flex items-center gap-1'>
+
+<h1 className='fon font-semibold text-gray-600'>Total Meal : </h1>
+
+<h1 className='fon font-medium text-[#0284C7]'>24</h1>
+
+</div>
+  </div>
+
     </div>
        
        </>
     );
 };
 
-export default Tablenav;
+export default MealManagenav;

@@ -1,5 +1,5 @@
 import React, { useState,useRef, useEffect } from "react";
-import DashCustomNav from "../../Share/Formnav";
+
 import {useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
@@ -8,83 +8,102 @@ import { MdOutlineFileUpload } from "react-icons/md";
 import Select from 'react-select'
 
 import { Helmet } from "react-helmet";
-import axoissecure from './../../Hooks/Axoisscure';
-import { getBlood, getDepartment, getInstitute, getSemister } from "../../Share/Api/SelectorApi/settingselector";
+
+import DashCustomNav from "../../../Share/Formnav";
+import axoissecure from "../../../Hooks/Axoisscure";
+import { getBlood, getDepartment, getInstitute, getSemister } from "../../../Share/Api/SelectorApi/settingselector";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 // Validation Schema
 const Schema = Yup.object().shape({
-  name: Yup.string()
-  .label('Name')
-  .required(),
+//   name: Yup.string()
+//   .label('Name')
+//   .required(),
 
-  fatherName: Yup.string()
-  .label('Father Name')
-  .required(),
+//   fatherName: Yup.string()
+//   .label('Father Name')
+//   .required(),
 
-  motherName: Yup.string()
-  .label('Mother Name')
-  .required(),
+//   motherName: Yup.string()
+//   .label('Mother Name')
+//   .required(),
 
-  session: Yup.string()
-  .label('Session')
-  .required(),
+//   session: Yup.string()
+//   .label('Session')
+//   .required(),
 
-  number: Yup.string()
-  .matches(/^(01[3-9]\d{8})$/, 'Please provide a valid number')
-     .typeError('Please Provide Valid Number')
-     .label("Number")
-    .required(),
-    motherNumber: Yup.string()
-  .matches(/^(01[3-9]\d{8})$/, 'Please provide a valid number')
-     .typeError('Please Provide Valid Number')
-     .label("Mother Number")
-    .required(),
-    fatherNumber: Yup.string()
-  .matches(/^(01[3-9]\d{8})$/, 'Please provide a valid number')
-     .typeError('Please Provide Valid Number')
-     .label("Father Number")
-    .required(),
-    institute: Yup.string()
-    .label('Institute Name')
-    .required(),
-    department: Yup.string().required().label('Department'),
+//   number: Yup.string()
+//   .matches(/^(01[3-9]\d{8})$/, 'Please provide a valid number')
+//      .typeError('Please Provide Valid Number')
+//      .label("Number")
+//     .required(),
+//     motherNumber: Yup.string()
+//   .matches(/^(01[3-9]\d{8})$/, 'Please provide a valid number')
+//      .typeError('Please Provide Valid Number')
+//      .label("Mother Number")
+//     .required(),
+//     fatherNumber: Yup.string()
+//   .matches(/^(01[3-9]\d{8})$/, 'Please provide a valid number')
+//      .typeError('Please Provide Valid Number')
+//      .label("Father Number")
+//     .required(),
+//     institute: Yup.string()
+//     .label('Institute Name')
+//     .required(),
+//     department: Yup.string().required().label('Department'),
     
-    nid: Yup.string()
-    .matches( /^\d{17}$/i,"Please Provide Valid Nid Number"),
+//     nid: Yup.string()
+//     .matches( /^\d{17}$/i,"Please Provide Valid Nid Number"),
 
-    BrithCertifecate: Yup.string()
-    .matches( /^\d{17}$/i,"Please Provide Valid Brith Certifecate Number"),
+//     BrithCertifecate: Yup.string()
+//     .matches( /^\d{17}$/i,"Please Provide Valid Brith Certifecate Number"),
 
-    department: Yup.string()
-    .label('Departmnet')
-    .required(),
-    blood: Yup.string()
-    .label('Blood')
-    .required(),
-    date: Yup.string()
-    .label('Joining Date')
-    .required(),
+//     department: Yup.string()
+//     .label('Departmnet')
+//     .required(),
+//     blood: Yup.string()
+//     .label('Blood')
+//     .required(),
+//     date: Yup.string()
+//     .label('Joining Date')
+//     .required(),
 
-    address: Yup.string()
-    .label('Address')
-    .required(),
+//     address: Yup.string()
+//     .label('Address')
+//     .required(),
 
-    semister: Yup.string()
-    .label('Semister')
-    .required(),
+//     semister: Yup.string()
+//     .label('Semister')
+//     .required(),
 
-    email: Yup.string()
-    .label('Email')
-    .matches( /^[^\s@]+@[^\s@]+\.[^\s@]+$/,'Please provide Valid Email')
-    .required(),
+//     email: Yup.string()
+//     .label('Email')
+//     .matches( /^[^\s@]+@[^\s@]+\.[^\s@]+$/,'Please provide Valid Email')
+//     .required(),
     
 });
 
-const AddProduct = () => {
+const MemberUpdate = () => {
   const [type,setType] = useState()
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef();
+  const {id} =useParams()
 
+  const { data: items = [], refetch } = useQuery({
+    queryKey: ["membersingle"],
+    queryFn: async () => {
+      try {
+        const res = await axoissecure.get(`/members/${id}`);
+        return res.data;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+      }
+    },
+  });
+
+  console.log(items)
   
   const formik = useFormik({
     initialValues: {
@@ -111,7 +130,7 @@ const AddProduct = () => {
     onSubmit: async (values, { resetForm }) => {
       console.log(values)
       try {
-        await axoissecure.post("/members", {
+        await axoissecure.patch(`/members/${id}`, {
 
 
           name: values.name,
@@ -148,16 +167,56 @@ const AddProduct = () => {
           "Content-Type": "multipart/form-data",
         }});
         console.log("Product added successfully:", values);
-        toast.success("Member Added  successfully!");
-        resetForm();
+        toast.success("Member Update  successfully!");
+         refetch()
         
       } catch (error) {
-        toast.error("Error adding Member");
+        toast.error("Error Update Member");
         console.error("Error adding Member:", error);
       }
     },
   });
 
+  useEffect(() => {
+    if (items) {
+        formik.setValues({
+            name: items.name || "",
+            date: items.joiningDate?.split('T')[0] || "",
+            fatherName: items.fatherName || "",
+            motherName: items.motherName || "",
+            fatherNumber: items.fatherNumber || "",
+            motherNumber: items.motherNumber || "",
+
+            BrithCertifecate: items.brithCertifecate || "",
+            number: items.number || "",
+            nid: items.nid || "",
+            address: items.address || "",
+            image: items.profile || "",
+            email: items.email || "",
+
+            session: items.session || "",
+            institute: items?.instituteName?.id || "",
+            department: items?.department?.id || "",
+            semister: items?.semister?.id || "",
+            blood: items?.bloodGroup?.id || "",
+
+
+        });
+
+        if(items.nid ){
+
+      setType('NID')
+        }else if(items.brithCertifecate){
+
+            setType('Brith Certifecate')
+        }
+    }
+}, [items]);
+
+
+const image = `${import.meta.env.VITE_API_URL}${"/"}${items?.profile}`;
+
+console.log(image)
 
   // style
 
@@ -293,7 +352,7 @@ const AddProduct = () => {
 
   return (
     <>
-     <DashCustomNav name={"Add Member"} listroute={'/dashboard/memberlist'} />
+     <DashCustomNav name={"Update Member"} listroute={'/dashboard/memberlist'} />
     
   
     <div className="p-8">
@@ -317,7 +376,7 @@ const AddProduct = () => {
               placeholder="Full Name"
                 id="name"
                 name="name"
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
+                      className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                 type="text"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -338,7 +397,7 @@ const AddProduct = () => {
                 id="number"
                 placeholder="+088-"
                 name="number"
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
+                      className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                 type="text"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -360,7 +419,7 @@ const AddProduct = () => {
               placeholder="Father Name"
                 id="fatherName"
                 name="fatherName"
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
+              className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                 type="text"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -405,7 +464,7 @@ const AddProduct = () => {
               placeholder="Mother Name"
                 id="motherName"
                 name="motherName"
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
+                      className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                 type="text"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -427,7 +486,7 @@ const AddProduct = () => {
                 id="motherNumber"
                 placeholder="+088-"
                 name="motherNumber"
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
+                      className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                 type="text"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -470,7 +529,7 @@ const AddProduct = () => {
               placeholder="Session 22-23"
                 id="session"
                 name="session"
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
+                      className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                 type="text"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -584,7 +643,7 @@ const AddProduct = () => {
                 placeholder="Nid Number"
                 id="nid"
                 name="nid"
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
+                      className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                 type="text"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -604,7 +663,7 @@ const AddProduct = () => {
                placeholder="Brith Certifecate Number"
                id="BrithCertifecate"
                name="BrithCertifecate"
-                    className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
+                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                type="text"
                onChange={formik.handleChange}
                onBlur={formik.handleBlur}
@@ -656,7 +715,7 @@ const AddProduct = () => {
                 id="address"
                 name="address"
      
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
+                      className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                 type="text"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -678,7 +737,7 @@ const AddProduct = () => {
                 
                 id="date"
                 name="date"
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
+                      className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                 type="date"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -704,7 +763,7 @@ const AddProduct = () => {
                 id="email"
                 placeholder="ovi@gmail.com"
                 name="email"
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
+                      className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                 type="text"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -749,14 +808,17 @@ const AddProduct = () => {
                 <MdOutlineFileUpload className="flex justify-items-center text-[30px] w-[300px] mx-auto"/>
               </button>
             </div>
-
+   
+              {
+                items?.profile &&   <a href={image} target="blank" className="underline text-blue-500 font-semibold pt-4">View</a>
+              }
 
           <div className="flex justify-end items-center gap-4">
             <button
               className="w-[100px] bg-[#0284C7] text-white mt-10 rounded-lg h-[40px] border-2 font-bold"
               type="submit"
             >
-              Save
+              Update
             </button>
             <button
               className="w-[100px] bg-gray-200 font-bold mt-10 rounded-lg h-[40px] border-2 text-red-400"
@@ -774,4 +836,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default MemberUpdate;

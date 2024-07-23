@@ -62,7 +62,7 @@ const AddBloodGroup = () => {
 
             {/* Product SL */}
             <div className="flex flex-col">
-              <label htmlFor="bloodgroup">
+              <label htmlFor="bloodgroup" className="pb-1 text-[#726f6f]">
                 1. Blood Group  {" "}
                 <span className="text-xl font-semibold text-red-500">*</span>
               </label>
@@ -70,7 +70,7 @@ const AddBloodGroup = () => {
               placeholder="Blood Group"
                 id="bloodgroup"
                 name="bloodgroup"
-                className="py-2 border-2 rounded-md border-[#0284C7] px-3 w-full"
+                          className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                 type="text"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}

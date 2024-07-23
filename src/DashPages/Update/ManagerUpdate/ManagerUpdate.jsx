@@ -9,6 +9,8 @@ import { Helmet } from "react-helmet";
 import axoissecure from "../../../Hooks/Axoisscure";
 import DashCustomNav from "../../../Share/Formnav";
 import { getDepartment, getInstitute, getSemister } from "../../../Share/Api/SelectorApi/settingselector";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 // Validation Schema
 const Schema = Yup.object().shape({
@@ -47,11 +49,26 @@ const Schema = Yup.object().shape({
   //   .label('Password')
 });
 
-const AddManager = () => {
+const ManagerUpdate = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [showPassword, setShowPassword] = useState(false); // State for password visibility
   const fileInputRef = useRef();
-  
+  const {id} =useParams()
+
+  const { data: items = [], refetch } = useQuery({
+    queryKey: ["membersingle"],
+    queryFn: async () => {
+      try {
+        const res = await axoissecure.get(`/manager/${id}`);
+        return res.data;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+      }
+    },
+  });
+
+
   const options = [
     { value: 'Meal Manager', label: 'Meal Manager' },
   ];
@@ -77,7 +94,7 @@ const AddManager = () => {
     onSubmit: async (values, { resetForm }) => {
       console.log(values);
       try {
-        await axoissecure.post("/manager", {
+        await axoissecure.patch(`/manager/${id}`, {
           name: values.name,
           number: values.number,
           instituteName: {
@@ -109,6 +126,33 @@ const AddManager = () => {
       }
     },
   });
+
+
+  useEffect(() => {
+    if (items) {
+        formik.setValues({
+            name: items.name || "",
+            startDate: items.startDate?.split('T')[0] || "",
+            endDate: items.endDate?.split('T')[0] || "",
+            number: items.number || "",
+            image: items.profile || "",
+            email: items.email || "",
+            title: items.position || "",
+            institute: items?.instituteName?.id || "",
+            department: items?.department?.id || "",
+            semister: items?.semister?.id || "",
+          
+
+
+        });
+    }
+}, [items]);
+
+
+const image = `${import.meta.env.VITE_API_URL}${"/"}${items?.profile}`;
+
+console.log(image)
+
 
  // style
 
@@ -219,9 +263,9 @@ const AddManager = () => {
 
   return (
     <>
-      <DashCustomNav name={"Add Manager"} listroute={'/dashboard/managerlist'} />
+      <DashCustomNav name={"Update Manager"} listroute={'/dashboard/managerlist'} />
       <div className="p-8">
-        <Helmet><title>Manager || Add Manager</title></Helmet>
+        <Helmet><title>Manager || Update Manager</title></Helmet>
         <div>
           <form
             onSubmit={formik.handleSubmit}
@@ -467,7 +511,9 @@ const AddManager = () => {
                 </button>
               </div>
             </div>
-
+            {
+                items?.profile &&   <a href={image} target="blank" className="underline text-blue-500 font-semibold pt-4">View</a>
+              }
             <div className="flex justify-end items-center gap-4">
               <button
                 className="w-[100px] bg-[#0284C7] text-white mt-10 rounded-lg h-[40px] border-2 font-bold"
@@ -490,4 +536,4 @@ const AddManager = () => {
   );
 };
 
-export default AddManager;
+export default ManagerUpdate;

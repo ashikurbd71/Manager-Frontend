@@ -1,12 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Select from 'react-select';
 import { Helmet } from "react-helmet";
-import DashCustomNav from "../../../Share/Formnav";
-import axoissecure from "../../../Hooks/Axoisscure";
+import { useParams } from "react-router-dom";
+import DashCustomNav from "../../../../Share/Formnav";
+import axoissecure from "../../../../Hooks/Axoisscure";
+import { useQuery } from "@tanstack/react-query";
 
 // Validation Schema
 const Schema = Yup.object().shape({
@@ -27,7 +29,27 @@ const Schema = Yup.object().shape({
   
 });
 
-const AddNotice = () => {
+const UpdateNotice = () => {
+
+const {id} =useParams()
+
+console.log(id)
+
+const { data: items = [], refetch } = useQuery({
+    queryKey: ["productadded"],
+    queryFn: async () => {
+      try {
+        const res = await axoissecure.get(`/notice/${id}`);
+        return res.data;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+      }
+    },
+  });
+
+  console.log(items)
+
   
   const [type,setType] = useState()
 
@@ -43,7 +65,7 @@ const AddNotice = () => {
     onSubmit: async (values, { resetForm }) => {
       console.log(values);
       try {
-        await axoissecure.post("/notice", {
+        await axoissecure.patch(`/notice/${id}`, {
           assigner: values.name,
           position: type,
           date : values.startDate,
@@ -52,53 +74,42 @@ const AddNotice = () => {
 
         });
         console.log("Product added successfully:", values);
-        toast.success("Notice Send successfully!");
-        resetForm();
+        toast.success("Notice Update successfully!");
+        refetch();
       } catch (error) {
-        toast.error("Error adding Notice");
+        toast.error("Error Update Notice");
         console.error("Error adding Manager:", error);
       }
     },
   });
 
-  // style
-  const customStyles = {
-    control: (provided, state) => ({
-      ...provided,
-      border: "1px solid #0284C7",
-      borderRadius: "0.30rem",
-      padding: "0.2rem",
-      width: "100%",
-      boxShadow: state.isFocused ? "0 0 0 1px #000000" : "none",
-      "&:hover": {
-        borderColor: "#0284C7",
-      },
-    }),
-    option: (provided, state) => ({
-      ...provided,
-      backgroundColor: state.isSelected ? "#0284C7" : "#fff",
-      color: state.isSelected ? "#fff" : "#000",
-      "&:hover": {
-        backgroundColor: "#0284C7",
-        color: "#fff",
-      },
-    }),
-    singleValue: (provided) => ({
-      ...provided,
-      color: "#000",
-    }),
-    menu: (provided) => ({
-      ...provided,
-      border: "1px solid #0284C7",
-      borderRadius: "0.30rem",
-    }),
-  };
+  useEffect(() => {
+    if (items) {
+        formik.setValues({
+            name: items.assigner || "",
+            startDate: items.date?.split('T')[0] || "",
+            noticetitle: items.noticetitle || "",
+            deatils: items.discription || "",
+
+        });
+
+        if(items.position === "Meal Manager"){
+
+      setType('Meal Manager')
+        }else if(items.position === "Mass Owner"){
+
+            setType('Mass Owner')
+        }
+    }
+}, [items]);
+
+ 
 
   return (
     <>
-      <DashCustomNav name={"Add Notice"} listroute={'/dashboard/noticelist'} />
+      <DashCustomNav name={"Update Notice"} listroute={'/dashboard/noticelist'} />
       <div className="p-8">
-        <Helmet><title>Manager || Add Manager</title></Helmet>
+        <Helmet><title>Manager || Update Notice</title></Helmet>
         <div>
           <form
             onSubmit={formik.handleSubmit}
@@ -114,7 +125,7 @@ const AddNotice = () => {
                   placeholder="Full Name"
                   id="name"
                   name="name"
-                      className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
+                         className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                   type="text"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -181,7 +192,7 @@ const AddNotice = () => {
                 <input
                   id="startDate"
                   name="startDate"
-                        className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
+                          className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                   type="date"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -202,7 +213,7 @@ const AddNotice = () => {
                   placeholder="Notice Title"
                   id="noticetitle"
                   name="noticetitle"
-                        className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
+                          className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                   type="text"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -223,7 +234,7 @@ const AddNotice = () => {
                   placeholder="Notice Details"
                   id="deatils"
                   name="deatils"
-                        className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
+                          className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                   type="text"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -245,7 +256,7 @@ const AddNotice = () => {
                 className="w-[100px] bg-[#0284C7] text-white mt-10 rounded-lg h-[40px] border-2 font-bold"
                 type="submit"
               >
-                Save
+                Update
               </button>
               <button
                 className="w-[100px] bg-gray-200 font-bold mt-10 rounded-lg h-[40px] border-2 text-red-400"
@@ -262,4 +273,4 @@ const AddNotice = () => {
   );
 };
 
-export default AddNotice;
+export default UpdateNotice;

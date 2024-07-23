@@ -8,8 +8,8 @@ import { toast } from 'react-toastify';
 
 // Validation Schema
 const Schema = Yup.object().shape({
-    institute:Yup.string()
-    .label('Institute')
+    name:Yup.string()
+    .label('Department')
     .required(),
   
     shortname:Yup.string()
@@ -17,7 +17,7 @@ const Schema = Yup.object().shape({
     .required(),
   });
   
-const UpdateInstitute = ({isOpen,setIsOpen,update,refetch}) => {
+const Updateepartment = ({isOpen,setIsOpen,update,refetch}) => {
 
     console.log(update?.name)
 
@@ -27,7 +27,7 @@ const UpdateInstitute = ({isOpen,setIsOpen,update,refetch}) => {
 
     const formik = useFormik({
         initialValues: {
-          institute: "",
+          name: "",
           shortname : ""
           
         },
@@ -35,18 +35,18 @@ const UpdateInstitute = ({isOpen,setIsOpen,update,refetch}) => {
         onSubmit: async (values, { resetForm }) => {
           console.log(values)
           try {
-            await axoissecure.patch(`/institute/${update?.id}`, {
-              name: values.institute,
+            await axoissecure.patch(`/department/${update?.id}`, {
+              name: values.name,
               shortName : values.shortname,
              
             });
             console.log("Product added successfully:", values);
-            toast.success("Institute Update  successfully!");
+            toast.success("Department Update  successfully!");
             refetch();
             setIsOpen(false)
 
           } catch (error) {
-            toast.error("Error adding Institute");
+            toast.error("Department Update ");
             console.error("Error adding Institute:", error);
           }
         },
@@ -61,7 +61,7 @@ const UpdateInstitute = ({isOpen,setIsOpen,update,refetch}) => {
     useEffect(() => {
       if (update) {
           formik.setValues({
-              institute: update.name || "",
+              name: update.name || "",
               shortname: update.shortName || ""
           });
       }
@@ -82,22 +82,22 @@ const UpdateInstitute = ({isOpen,setIsOpen,update,refetch}) => {
             {/* institute */}
             <div className="flex flex-col">
               <label htmlFor="name" className="pb-1 text-[#726f6f]">
-                1. Institute Name {" "}
+                1. Department Name {" "}
                 <span className="text-xl font-semibold text-red-500">*</span>
               </label>
               <input
-              placeholder="Institute Name"
-                id="institute"
-                name="institute"
-                           className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
+              placeholder="Department Name"
+                id="name"
+                name="name"
+                            className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                 type="text"
                 onChange={formik.handleChange}
               
                 onBlur={formik.handleBlur}
-                value={formik.values.institute}
+                value={formik.values.name}
               />
-              {formik.touched.institute && formik.errors.institute ? (
-                <div className="text-red-600">{formik.errors.institute}</div>
+              {formik.touched.name && formik.errors.name ? (
+                <div className="text-red-600">{formik.errors.name}</div>
               ) : null}
             </div>
 
@@ -111,7 +111,7 @@ const UpdateInstitute = ({isOpen,setIsOpen,update,refetch}) => {
               placeholder="Short Name"
                 id="shortname"
                 name="shortname"
-                           className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
+                            className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                 type="text"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -149,4 +149,4 @@ const UpdateInstitute = ({isOpen,setIsOpen,update,refetch}) => {
     );
 };
 
-export default UpdateInstitute;
+export default Updateepartment;

@@ -68,7 +68,7 @@ const AddInstitute = () => {
 
             {/* institute */}
             <div className="flex flex-col">
-              <label htmlFor="name">
+              <label htmlFor="name" className="pb-1 text-[#726f6f]">
                 1. Institute Name {" "}
                 <span className="text-xl font-semibold text-red-500">*</span>
               </label>
@@ -76,7 +76,7 @@ const AddInstitute = () => {
               placeholder="Institute Name"
                 id="institute"
                 name="institute"
-                className="py-2 border-2 rounded-md border-[#0284C7] px-3 w-full"
+                   className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                 type="text"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -89,7 +89,7 @@ const AddInstitute = () => {
 
             {/* short name */}
             <div className="flex flex-col">
-              <label htmlFor="name">
+              <label htmlFor="name" className="pb-1 text-[#726f6f]">
                 2. Short Name {" "}
                 <span className="text-xl font-semibold text-red-500">*</span>
               </label>
@@ -97,7 +97,7 @@ const AddInstitute = () => {
               placeholder="Short Name"
                 id="shortname"
                 name="shortname"
-                className="py-2 border-2 rounded-md border-[#0284C7] px-3 w-full"
+                   className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                 type="text"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}

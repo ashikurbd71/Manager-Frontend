@@ -5,7 +5,7 @@ import DashCustomNav from '../../../Share/Formnav';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import axoissecure from './../../../Hooks/Axoisscure';
-const MemberDetails = () => {
+const ManagerDetails = () => {
  const[member,setMember] = useState()
   const { id } = useParams();
 
@@ -13,7 +13,7 @@ const MemberDetails = () => {
     queryKey: ["volunteer"],
     queryFn: async () => {
       try {
-        const res = await axoissecure.get(`/members/${id}`);
+        const res = await axoissecure.get(`/manager/${id}`);
         console.log(res.data);
         setMember(res?.data);
         return res.data;
@@ -26,7 +26,7 @@ const MemberDetails = () => {
 
   console.log(member)
 
-  const join = member?.joiningDate;
+  const join = member?.startDate;
   const parsedDate = new Date(join);
   
   // Format the date as "14 May 2024"
@@ -35,6 +35,17 @@ const MemberDetails = () => {
     month: "long",
     day: "2-digit",
   });
+
+  const join1 = member?.endDate;
+  const parsedDate1 = new Date(join1);
+  
+  // Format the date as "14 May 2024"
+  const formattedDate1 = parsedDate1.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "2-digit",
+  });
+
 
 
   const image = `${import.meta.env.VITE_API_URL}${"/"}${member?.profile}`;
@@ -47,7 +58,7 @@ const MemberDetails = () => {
       <Helmet>
         <title>Manager || Member details</title>
       </Helmet>
-      <DashCustomNav c name={'Member details'} listroute={'/dashboard/memberlist'}/>
+      <DashCustomNav c name={'Member details'} listroute={'/dashboard/managerlist'}/>
      
         <div className='px-10 pb-10'>
      
@@ -69,7 +80,7 @@ const MemberDetails = () => {
            
       <div className='flex mx-10 gap-1 items-center'>
   <FaUser/>
-      <h1 className='text-left text-[20px]  font-semibold  text-[#0284C7]'>About</h1>
+      <h1 className='text-left text-[20px]  font-semibold  text-[#0284C7]'>{member?.position}</h1>
       </div>
 
       
@@ -89,40 +100,9 @@ const MemberDetails = () => {
           <td className="px-4 py-2 border border-gray-200">{member?.number}</td>
         </tr>
 
-
-        <tr>
-          <td className="px-4 py-2 font-semibold border border-gray-200">Father Name</td>
-          <td className="px-4 py-2 border border-gray-200">{member?.fatherName}</td>
-        </tr>
-
-        
-        <tr>
-          <td className="px-4 py-2 font-semibold border border-gray-200">Father Phone</td>
-          <td className="px-4 py-2 border border-gray-200">{member?.fatherNumber}</td>
-        </tr>
-
-        
-        <tr>
-          <td className="px-4 py-2 font-semibold border border-gray-200">Mother Name</td>
-          <td className="px-4 py-2 border border-gray-200">{member?.motherName}</td>
-        </tr>
-
-        
-        <tr>
-          <td className="px-4 py-2 font-semibold border border-gray-200">Mother Phone</td>
-          <td className="px-4 py-2 border border-gray-200">{member?.motherNumber}</td>
-        </tr>
-
-
-      
         <tr>
           <td className="px-4 py-2 font-semibold border border-gray-200">Institute Name</td>
           <td className="px-4 py-2 border border-gray-200">{member?.instituteName?.name}</td>
-        </tr>
-
-        <tr>
-          <td className="px-4 py-2 font-semibold border border-gray-200">Session</td>
-          <td className="px-4 py-2 border border-gray-200">{member?.session}</td>
         </tr>
 
         <tr>
@@ -135,37 +115,22 @@ const MemberDetails = () => {
           <td className="px-4 py-2 border border-gray-200">{member?.semister?.name}</td>
         </tr>
 
-
-        <tr>
-          <td className="px-4 py-2 font-semibold border border-gray-200">National Id No.</td>
-          <td className="px-4 py-2 border border-gray-200">{member?.nid || "N/A"}</td>
-        </tr>
-
-        <tr>
-          <td className="px-4 py-2 font-semibold border border-gray-200">Brith Certifecate No.</td>
-          <td className="px-4 py-2 border border-gray-200">{member?.brithCertifecate || "N/A"}</td>
-        </tr>
-
-        <tr>
-          <td className="px-4 py-2 font-semibold border border-gray-200">Blood Group</td>
-          <td className="px-4 py-2 border border-gray-200">{member?.bloodGroup?.name}</td>
-        </tr>
-
-        <tr>
-          <td className="px-4 py-2 font-semibold border border-gray-200">Address</td>
-          <td className="px-4 py-2 border border-gray-200">{member?.address}</td>
-        </tr>
-
    
+        <tr>
+          <td className="px-4 py-2 font-semibold border border-gray-200">Start Date</td>
+          <td className="px-4 py-2 border border-gray-200">{formattedDate}</td>
+        </tr>
+
+        <tr>
+          <td className="px-4 py-2 font-semibold border border-gray-200">End Date</td>
+          <td className="px-4 py-2 border border-gray-200">{formattedDate1}</td>
+        </tr>
+        
         <tr>
           <td className="px-4 py-2 font-semibold border border-gray-200">Email</td>
           <td className="px-4 py-2 border border-gray-200">{member?.email}</td>
         </tr>
 
-        <tr>
-          <td className="px-4 py-2 font-semibold border border-gray-200">Joining Date</td>
-          <td className="px-4 py-2 border border-gray-200">{formattedDate}</td>
-        </tr>
      
       
       </tbody>
@@ -188,4 +153,4 @@ const MemberDetails = () => {
     );
 };
 
-export default MemberDetails;
+export default ManagerDetails;

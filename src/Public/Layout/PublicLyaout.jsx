@@ -8,7 +8,7 @@ const PublicLyaout = () => {
      
      <PublicNavber/>
 
-    <div className='px-10 min-h-screen'>
+    <div className='lg:px-10 min-h-screen'>
     <Outlet />
     </div>
      

@@ -1,12 +1,13 @@
 // src/Sidebar.js
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FaUserPlus } from "react-icons/fa6";
+import { FaMagnet, FaUserPlus } from "react-icons/fa6";
 import { MdArrowDropDown, MdArrowRight, MdOutlineDashboard ,MdOutlineSettings} from "react-icons/md";
 import img from "../assets/manager.png"
 import { LuCircleDot } from "react-icons/lu";
 import { FaUserGear } from "react-icons/fa6";
 import { TbNews } from "react-icons/tb";
+import { FaAward } from "react-icons/fa";
 const Sideber = () => {
 
     const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
@@ -28,7 +29,7 @@ const Sideber = () => {
        <NavLink
           to="/"
           className={({ isActive, isPending }) =>
-            isPending ? "pending" : isActive ? " text-[#0284C7]" : ""
+            isPending ? "pending" : isActive ? " bg-[#0284C7] px-10 pt-1 rounded-md text-white " : ""
           }
         >
             <div className="flex -ml-3 justify-center pb-2 hover:text-gray-600 items-center gap-1">
@@ -43,7 +44,7 @@ const Sideber = () => {
         <NavLink
           to="/dashboard/memberlist"
           className={({ isActive, isPending }) =>
-            isPending ? "pending" : isActive ? "text-[#0284C7]" : ""
+            isPending ? "pending" : isActive ? "bg-[#0284C7] px-6 pt-1 rounded-md text-white " : ""
           }
         >
             <div className="flex justify-center pb-2 hover:text-gray-600 items-center gap-1">
@@ -60,7 +61,7 @@ const Sideber = () => {
         <NavLink
           to="/dashboard/managerlist"
           className={({ isActive, isPending }) =>
-            isPending ? "pending" : isActive ? "text-[#0284C7]" : ""
+            isPending ? "pending" : isActive ? "bg-[#0284C7] px-6 pt-1 rounded-md text-white " : ""
           }
         >
             <div className="flex justify-center pb-2 hover:text-gray-600 items-center gap-1">
@@ -73,7 +74,7 @@ const Sideber = () => {
         <NavLink
           to="/dashboard/noticelist"
           className={({ isActive, isPending }) =>
-            isPending ? "pending" : isActive ? "text-[#0284C7]" : ""
+            isPending ? "pending" : isActive ? "bg-[#0284C7] px-10 pt-1 rounded-md text-white " : ""
           }
         >
             <div className="flex justify-center -ml-6 pb-2 hover:text-gray-600 items-center gap-1">
@@ -82,6 +83,22 @@ const Sideber = () => {
             </div>
         
         </NavLink>
+
+
+        <NavLink
+          to="/dashboard/mealmanagelist"
+          className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? "bg-[#0284C7] px-8 pt-1 rounded-md text-white " : ""
+          }
+        >
+            <div className="flex justify-center -ml-6 pb-2 hover:text-gray-600 items-center gap-1">
+            <FaAward className="text-lg"/>
+             <h1 className="text-lg font-medium">Meal Manage</h1>
+            </div>
+        
+        </NavLink>
+
+
 
 
     
@@ -109,7 +126,7 @@ const Sideber = () => {
 
 <NavLink
             to="/dashboard/setting/institutelist"
-            className={({ isActive }) => (isActive ? "text-[#0284C7]" : "")}
+            className={({ isActive }) => (isActive ? "text-[#0284C7] " : "")}
           >
             <div className="flex items-center  hover:text-gray-600 gap-1 ">
             <LuCircleDot className="text-lg"/>
@@ -119,7 +136,7 @@ const Sideber = () => {
 
           <NavLink
             to="/dashboard/setting/departmentlist"
-            className={({ isActive }) => (isActive ? "text-[#0284C7]" : "")}
+            className={({ isActive }) => (isActive ? "text-[#0284C7] " : "")}
           >
             <div className="flex items-center  hover:text-gray-600 gap-1 py-2 ">
               <LuCircleDot className="text-lg"/>
@@ -131,7 +148,7 @@ const Sideber = () => {
           
           <NavLink
             to="/dashboard/setting/semisterlist"
-            className={({ isActive }) => (isActive ? "text-[#0284C7]" : "")}
+            className={({ isActive }) => (isActive ? "text-[#0284C7] " : "")}
           >
             <div className="flex items-center  hover:text-gray-600 gap-1 pb-2 ">
             <LuCircleDot className="text-lg"/>
@@ -141,7 +158,7 @@ const Sideber = () => {
 
           <NavLink
             to="/dashboard/setting/bloodgrouplist"
-            className={({ isActive }) => (isActive ? "text-[#0284C7]" : "")}
+            className={({ isActive }) => (isActive ? "text-[#0284C7] " : "")}
           >
             <div className="flex items-center  hover:text-gray-600 gap-1 ">
             <LuCircleDot className="text-lg"/>

@@ -19,6 +19,16 @@ import PublicNoitice from "../Public/Pages/PublicNoitice";
 import PublicGallery from "../Public/Pages/PublicGallery";
 import NoticeList from "../DashPages/Table/Notice/NoticeList";
 import AddNotice from "../DashPages/Form/Notice/AddNotice";
+import UpdateNotice from "../DashPages/Update/SettingModal/NoticeUpdate/UpdateNotice";
+import NoticeDetails from "../DashPages/Details/Member/NoticeDetails/NoticeDetails";
+import NoticeDetailsPub from "../DashPages/Details/Publicdetails/NoticeDetailsPub";
+import MemberUpdate from "../DashPages/Update/MemberUpdate/MemberUpdate";
+import ManagerUpdate from "../DashPages/Update/ManagerUpdate/ManagerUpdate";
+import ManagerDetails from "../DashPages/Details/Manager/ManagerDetails";
+import MealManage from "../DashPages/Table/MealManage/MealManage";
+import AddMealManage from "../DashPages/Form/MealManage/AddMeal";
+import AddMeal from "../DashPages/Form/MealManage/AddMeal";
+import Mealdetails from "../DashPages/Details/Manager/Meal/Mealdetails";
 
 const router = createBrowserRouter([
 
@@ -36,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "/public/notice",
         element:<PublicNoitice/>
+      },
+      {
+        path: "/public/deatailsnotice/:id",
+        element:<NoticeDetailsPub/>
       },
       {
         path: "/public/gallery",
@@ -63,6 +77,10 @@ const router = createBrowserRouter([
       path: "/dashboard/addmember",
       element:<AddProduct/>
   },
+  {
+    path: "/dashboard/updatemember/:id",
+    element:<MemberUpdate/>
+},
         {
           path: "/dashboard/memberdeatils/:id",
           element:<MemberDetails/>
@@ -75,6 +93,32 @@ const router = createBrowserRouter([
       path: "/dashboard/addmanager",
       element:<AddManager/>
   },
+  {
+    path: "/dashboard/updatemanager/:id",
+    element:<ManagerUpdate/>
+},
+
+{
+  path: "/dashboard/detailsmanager/:id",
+  element:<ManagerDetails/>
+},
+
+{
+  path: "/dashboard/mealmanagelist",
+  element:<MealManage/>
+},
+
+{
+  path: "/dashboard/addmeal",
+  element:<AddMeal/>
+},
+
+{
+  path: "/dashboard/detailsmeal/:id",
+  element:<Mealdetails/>
+},
+
+
 
 
    
@@ -88,6 +132,16 @@ const router = createBrowserRouter([
 {
   path: "/dashboard/addnotice",
   element:<AddNotice/>
+},
+
+{
+  path: "/dashboard/updatenotice/:id",
+  element:<UpdateNotice/>
+},
+
+{
+  path: "/dashboard/detailsnotice/:id",
+  element:<NoticeDetails/>
 },
 
     // setting
