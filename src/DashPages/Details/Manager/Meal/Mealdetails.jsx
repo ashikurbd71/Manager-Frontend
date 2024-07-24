@@ -8,6 +8,8 @@ import axoissecure from '../../../../Hooks/Axoisscure';
 import DashCustomNav from '../../../../Share/Formnav';
 
 const Mealdetails = () => {
+
+
  const[member,setMember] = useState()
   const { id } = useParams();
 
@@ -38,6 +40,42 @@ const Mealdetails = () => {
     day: "2-digit",
   });
 
+
+  const { data: totalitem = [],  } = useQuery({
+    queryKey: ["extrag"],
+    queryFn: async () => {
+      try {
+        const res = await axoissecure.get(`/mealmanage/search`);
+        return res?.data?.meta?.totalItems;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+      }
+    },
+  });
+
+
+  const { data: extra = [],  } = useQuery({
+    queryKey: ["extra"],
+    queryFn: async () => {
+      try {
+        const res = await axoissecure.get(`/mealextra/search`);
+        return res?.data.meta?.totalExtraMoney;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+      }
+    },
+  });
+
+  console.log(extra)
+
+ console.log(totalitem)
+
+
+
+
+  const extramoney = extra / totalitem
 
 
 
@@ -110,6 +148,11 @@ const Mealdetails = () => {
           <td className="px-4 py-2 border border-gray-200">{member?.gg}</td>
         </tr>
 
+
+        <tr>
+          <td className="px-4 py-2 font-semibold border border-gray-200">Total Extra</td>
+          <td className="px-4 py-2 border border-gray-200">{extramoney || 'Loading...'}</td>
+        </tr>
 
       
         

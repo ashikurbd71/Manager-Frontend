@@ -49,6 +49,17 @@ const PublicNavber = () => {
                         </div>
                     </NavLink>
                     <NavLink
+                        to="/public/myreport"
+                        className={({ isActive, isPending }) =>
+                            isPending ? "pending" : isActive ? " text-[#0284C7]" : ""
+                        }
+                    >
+                        <div className="flex justify-center items-center gap-1 hover:text-gray-600">
+                            <TbNews className="text-lg"/>
+                            <h1 className="text-lg font-medium">My Report</h1>
+                        </div>
+                    </NavLink>
+                    <NavLink
                         to="/public/profilecard"
                         className={({ isActive, isPending }) =>
                             isPending ? "pending" : isActive ? " text-[#0284C7]" : ""
@@ -107,13 +118,24 @@ const PublicNavber = () => {
                         </div>
                     </NavLink>
                     <NavLink
+                        to="/public/myreport"
+                        className={({ isActive, isPending }) =>
+                            isPending ? "pending" : isActive ? " text-[#0284C7]" : ""
+                        }
+                    >
+                        <div className="flex justify-center items-center gap-1 hover:text-gray-600">
+                            <TbNews className="text-lg"/>
+                            <h1 className="text-lg font-medium">My Report</h1>
+                        </div>
+                    </NavLink>
+                    <NavLink
                         to="/public/profilecard"
                         className={({ isActive, isPending }) =>
                             isPending ? "pending" : isActive ? " text-[#0284C7]" : ""
                         }
                         onClick={toggleMobileMenu} // Close menu on navigation
                     >
-                        <div className="flex justify-center items-center gap-1 hover:text-gray-600 mb-4">
+                        <div className="flex justify-center items-center gap-1 mt-4 hover:text-gray-600 mb-4">
                             <CgProfile className="text-lg"/>
                             <h1 className="text-lg font-medium">Profile</h1>
                         </div>

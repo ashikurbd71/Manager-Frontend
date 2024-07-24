@@ -29,6 +29,12 @@ import MealManage from "../DashPages/Table/MealManage/MealManage";
 import AddMealManage from "../DashPages/Form/MealManage/AddMeal";
 import AddMeal from "../DashPages/Form/MealManage/AddMeal";
 import Mealdetails from "../DashPages/Details/Manager/Meal/Mealdetails";
+import AddExtra from "../DashPages/Form/MealManage/AddExtra";
+import ExtraMealList from "../DashPages/Table/MealManage/ExtraMeal/ExtraMealList";
+import MonthlyReport from "../DashPages/Table/MealManage/MonthlyReport/MonthlyReport";
+import MyReport from "../Public/Pages/MyReport";
+import AddMyReport from "../Public/PublicForm/AddMyReport";
+import MonyhlyReportUpdate from "../DashPages/Update/MonthlyReportUpdate/MonyhlyReportUpdate";
 
 const router = createBrowserRouter([
 
@@ -54,6 +60,16 @@ const router = createBrowserRouter([
       {
         path: "/public/gallery",
         element:<PublicGallery/>
+      },
+
+      {
+        path: "/public/myreport",
+        element:<MyReport/>
+      },
+
+      {
+        path: "/public/addmyreport",
+        element:<AddMyReport/>
       }
 
     ]
@@ -116,6 +132,26 @@ const router = createBrowserRouter([
 {
   path: "/dashboard/detailsmeal/:id",
   element:<Mealdetails/>
+},
+
+{
+  path: "/dashboard/addextra",
+  element:<AddExtra/>
+},
+
+{
+  path: "/dashboard/extralist",
+  element:<ExtraMealList/>
+},
+
+{
+  path: "/dashboard/monthlyreport",
+  element:<MonthlyReport/>
+},
+
+{
+  path: "/dashboard/monthlyreportupdate/:id",
+  element:<MonyhlyReportUpdate/>
 },
 
 

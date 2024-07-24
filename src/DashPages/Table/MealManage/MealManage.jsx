@@ -11,7 +11,7 @@ import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import Pagination from "../../../Share/PaginationTable/Pagination";
 import MealManagenav from "../../../Share/MealManagenav/MealManagenav";
 import { useFormik } from "formik";
-import { getInstitute } from "../../../Share/Api/SelectorApi/settingselector";
+import { getInstitute, getMember } from "../../../Share/Api/SelectorApi/settingselector";
 import Select from 'react-select'
 import MealUpdate from "../../Update/MealManager/MealUpdate";
 
@@ -27,7 +27,7 @@ const MealManage = () => {
   const [page, setPage] = useState(1);
   const [stat, setStat] = useState();
   const [active, setActive] = useState(0);
-
+  const[meal,setMeal] = useState(null)
 
   useEffect(() => {
     if (active === 1) {
@@ -55,15 +55,15 @@ const MealManage = () => {
           const res = await axoissecure.get(
             `/mealmanage/search?query=${search}&limit=${limit}&page=${page}`
           );
-          setStat(res.data?.meta);
-
-          return res?.data?.items;
+          setStat(res?.data?.meta);
+          setMeal(res?.data?.meta?.totalItems )
+          return res?.data?.items
         } else {
           const res = await axoissecure.get(
             `/mealmanage/search?limit=${limit}&page=${page}`
           );
           setStat(res.data?.meta);
-
+           setMeal(res?.data?.meta?.totalItems )
           return res?.data?.items;
         }
       } catch (error) {
@@ -74,6 +74,7 @@ const MealManage = () => {
   });
 
    console.log(items)
+
   const columns = React.useMemo(() => [
     {
       Header: "Sl.",
@@ -140,7 +141,7 @@ const MealManage = () => {
           <FaTrashAlt title="Delete" onClick={() => handleDelete(row.original.id)} className="  hover:text-red-500 cursor-pointer"  />
           
           {/* View Icon */}
-          <Link to={`/dashboard/detailsmeal/${row.original.id}`}>
+          <Link  to={`/dashboard/detailsmeal/${row.original.id}`}>
           <FaEye title="View Deatails"  className=" hover:text-yellow-500 cursor-pointer"  />
           </Link>
        
@@ -245,6 +246,26 @@ const MealManage = () => {
     });
   }
 
+  const { data: extra = [],  } = useQuery({
+    queryKey: ["extra"],
+    queryFn: async () => {
+      try {
+        const res = await axoissecure.get(`/mealextra/search`);
+        return res.data.meta?.totalExtraMoney;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+      }
+    },
+  });
+
+  console.log(extra)
+
+ 
+
+  console.log(meal)
+
+ 
 
   const data = React.useMemo(() => 
     items.map((item, index) => ({
@@ -255,6 +276,7 @@ const MealManage = () => {
       totalmeal: item?.totalMeal,
       memberblance : item?.b,
       memberbloan : item?.b,
+      extra :  extra / meal || 'loading...',
     //   startDate: item?.startDate?.split('T')[0],
     //   endDate: item?.endDate?.split('T')[0],
 
@@ -270,91 +292,8 @@ const MealManage = () => {
   } = useTable({ columns, data });
 
     
-  const formik = useFormik({
-    initialValues: {
-      totaltk: "",
-      totalmeal : "",
-      totalextra : "",
-      bazarkari : ""
-      
-    },
+  
 
-    onSubmit: async (values, { resetForm }) => {
-      console.log(values)
-      try {
-        await axoissecure.post("/institute", {
-          name: values.institute,
-          totalmeal : values.totalmeal,
-           status:"1",
-        });
-        console.log("Product added successfully:", values);
-        toast.success("Institute Added  successfully!");
-        resetForm();
-      } catch (error) {
-        toast.error("Error adding Institute");
-        console.error("Error adding Institute:", error);
-      }
-    },
-  });
-
-
-
-  const customStylesS = {
-    control: (provided, state) => ({
-      ...provided,
-      border: "1px solid #979292",
-      borderRadius: "0.30rem",
-      padding: "0.2rem",
-      width: "100%",
-      boxShadow: state.isFocused ? "0 0 0 1px #0284C7" : "none",
-      "&:hover": {
-        borderColor: "#0284C7",
-      },
-    }),
-    option: (provided, state) => ({
-      ...provided,
-      backgroundColor: state.isSelected ? "#0284C7" : "#fff",
-      color: state.isSelected ? "#fff" : "#726f6f",
-      "&:hover": {
-        backgroundColor: "#0284C7",
-        color: "#fff",
-      },
-    }),
-    singleValue: (provided) => ({
-      ...provided,
-      color: "#726f6f",
-    }),
-    menu: (provided) => ({
-      ...provided,
-      border: "1px solid #0284C7",
-      borderRadius: "0.30rem",
-    }),
-  };
-
-  const[institute,setInstitute] = useState(null)
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getInstitute();
-        console.log(data, "all items here");
-        setInstitute(data);
-      } catch (error) {
-        console.error("Error fetching member types:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const InstituteOptions =
-    (institute &&
-      institute?.map((singleData) => ({
-        value: singleData?.id,
-        label: singleData?.name,
-      }))) ||
-    [];
-
-console.log(InstituteOptions)
   return (
 
     <>
@@ -368,10 +307,12 @@ console.log(InstituteOptions)
     
     <h1 className="text-2xl font-medium text-gray-600 p-5">Meal Manage</h1>
 
-    <MealManagenav setActive={setActive} setSearch={setSearch} route={'/dashboard/addmeal'}/>
+    <MealManagenav setActive={setActive} setSearch={setSearch} secondroute={'/dashboard/extralist'} route={'/dashboard/addmeal'}/>
 
  
     <div className="px-6 pb-10 bg-gray-100 rounded-lg">
+
+        
       <table {...getTableProps()} className="min-w-full overflow-x-auto bg-white border mb-5 border-gray-200">
         <thead>
           {headerGroups.map(headerGroup => (
@@ -397,123 +338,8 @@ console.log(InstituteOptions)
       </table>
 
 
-      <h1 className="text-xl  font-semibold text-[#0284C7] py-4">Today Report</h1>
-
-<div className="flex justify-items-center pb-10">
-    
-        <form
-          onSubmit={formik.handleSubmit}
-          className="w-[500px] bg-white p-8  rounded-md"
-        >
-          <div className="grid  grid-cols-1 gap-4">
-
-            {/* institute */}
-            <div className="flex flex-col">
-              <label htmlFor="name" className="pb-1 text-[#726f6f]">
-                1. Total Tk {" "}
-                <span className="text-xl font-semibold text-red-500">*</span>
-              </label>
-              <input
-              placeholder="00"
-                id="totaltk"
-                name="totaltk"
-                readOnly
-                   className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
-                type="text"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.totaltk}
-              />
-              {formik.touched.totaltk && formik.errors.totaltk ? (
-                <div className="text-red-600">{formik.errors.totaltk}</div>
-              ) : null}
-            </div>
-
-            {/* short name */}
-            <div className="flex flex-col">
-              <label htmlFor="name" className="pb-1 text-[#726f6f]">
-                2. Total Meal {" "}
-                <span className="text-xl font-semibold text-red-500">*</span>
-              </label>
-              <input
-              placeholder="00"
-                id="totalmeal"
-                name="totalmeal"
-                readOnly
-                   className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
-                type="text"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.totalmeal}
-              />
-              {formik.touched.totalmeal && formik.errors.totalmeal ? (
-                <div className="text-red-600">{formik.errors.totalmeal}</div>
-              ) : null}
-            </div>
 
 
-            <div className="flex flex-col">
-              <label htmlFor="name" className="pb-1 text-[#726f6f]">
-                3. Extra Tk {" "}
-                <span className="text-xl font-semibold text-red-500">*</span>
-              </label>
-              <input
-              placeholder="00"
-                id="extratk"
-                name="extratk"
-                
-                className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
-                type="text"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.extratk}
-              />
-              {formik.touched.extratk && formik.errors.extratk ? (
-                <div className="text-red-600">{formik.errors.extratk}</div>
-              ) : null}
-            </div>
-
-
-
-             {/* Cost */}
-             <div className="flex flex-col">
-              <label htmlFor="bazarkari" className="pb-1 text-[#726f6f]">
-                4. Bazarkari {" "}
-                <span className="text-xl font-semibold text-red-500">*</span>
-              </label>
-              <Select
-              placeholder="Select Name"
-                id="bazarkari"
-                name="bazarkari"
-                isMulti
-                styles={customStylesS}
-                options={InstituteOptions}
-                onChange={(option) => formik.setFieldValue("bazarkari", option.value)}
-                onBlur={formik.handleBlur}
-                value={InstituteOptions.find(option => option.value === formik.values.bazarkari)}
-              />
-              {formik.touched.bazarkari && formik.errors.bazarkari ? (
-                <div className="text-red-600">{formik.errors.bazarkari}</div>
-              ) : null}
-            </div>
-
-          </div>
-
-
-          <div className="flex justify-end items-center gap-4">
-            <button
-              className="w-full bg-[#0284C7] text-white mt-10 rounded-lg h-[40px] border-2 font-bold"
-              type="submit"
-            >
-               Save Report
-            </button>
-           
-
-          </div>
-
-
-        </form>
-      </div>
 
       
       

@@ -72,9 +72,9 @@ const NoticeDetails = () => {
            </div>
 
 
-           <h1 className=' text-wrap font-medium text-gray-500  pt-16 px-8'>  {
+           <p className=' text-wrap font-medium text-gray-500  pt-16 px-8'>  {
     data?.discription
-   }</h1>
+   }</p>
 
 
           </div>

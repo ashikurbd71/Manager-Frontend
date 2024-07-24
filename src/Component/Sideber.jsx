@@ -1,7 +1,7 @@
 // src/Sidebar.js
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FaMagnet, FaUserPlus } from "react-icons/fa6";
+import { FaMagnet, FaMoneyBillTransfer, FaUserPlus } from "react-icons/fa6";
 import { MdArrowDropDown, MdArrowRight, MdOutlineDashboard ,MdOutlineSettings} from "react-icons/md";
 import img from "../assets/manager.png"
 import { LuCircleDot } from "react-icons/lu";
@@ -88,7 +88,7 @@ const Sideber = () => {
         <NavLink
           to="/dashboard/mealmanagelist"
           className={({ isActive, isPending }) =>
-            isPending ? "pending" : isActive ? "bg-[#0284C7] px-8 pt-1 rounded-md text-white " : ""
+            isPending ? "pending" : isActive ? "bg-[#0284C7] px-8 pt-2 rounded-md text-white " : ""
           }
         >
             <div className="flex justify-center -ml-6 pb-2 hover:text-gray-600 items-center gap-1">
@@ -99,6 +99,19 @@ const Sideber = () => {
         </NavLink>
 
 
+
+        <NavLink
+          to="/dashboard/monthlyreport"
+          className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? "bg-[#0284C7] px-8 pt-2 rounded-md text-white " : ""
+          }
+        >
+            <div className="flex justify-center -ml-6 pb-2 hover:text-gray-600 items-center gap-1">
+            <FaMoneyBillTransfer className="text-lg"/>
+             <h1 className="text-lg font-medium">Monthly Report</h1>
+            </div>
+        
+        </NavLink>
 
 
     
