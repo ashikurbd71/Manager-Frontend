@@ -40,6 +40,7 @@ const MealUpdate = ({isOpen,setIsOpen,update,refetch}) => {
          
           addMoney: parseInt(values.taka) + parseInt(values.addmoney),
           totalMeal: values.totalmeal,
+          blance : parseInt(update?.blance) + parseInt(values?.addmoney),
           date : today
         
         

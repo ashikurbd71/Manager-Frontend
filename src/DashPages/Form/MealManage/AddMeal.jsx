@@ -54,6 +54,7 @@ const AddMeal = () => {
          
           addMoney: values.taka,
           totalMeal: values.totalmeal,
+          blance : values.taka,
           date : today,
           member: {
             id: values?.name && parseInt(values?.name),

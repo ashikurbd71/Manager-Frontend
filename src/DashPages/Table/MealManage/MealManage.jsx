@@ -100,7 +100,7 @@ const MealManage = () => {
     },
    
     {
-      Header: "Member(blance)",
+      Header: "Blance",
       accessor: 'memberblance'
     },
 
@@ -117,8 +117,8 @@ const MealManage = () => {
       
 
       {
-        Header: "Member(loan)",
-        accessor: 'memberlon'
+        Header: "Loan",
+        accessor: 'loan'
       },
    
    
@@ -153,7 +153,7 @@ const MealManage = () => {
             <IoCheckmarkDoneCircleOutline title="Meal On" onClick={() => handleEnable(row.original.id)} className=" hover:text-green-600 text-lg cursor-pointer" />
           }
 
-      <FaMoneyBillTransfer title="Delete" onClick={() => takeIt(row.original.id)} className="  hover:text-green-500 cursor-pointer"  />
+      <FaMoneyBillTransfer title="Money" onClick={() => takeIt(row.original)} className="  hover:text-green-500 cursor-pointer"  />
          </div>
         </>
       )
@@ -197,33 +197,74 @@ const MealManage = () => {
   };
 
 
-   const[cost,setCost] = useState()
-  const takeIt = async (_id) => {
+  const handleDisable = (_id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You want to Take Money!",
+      text: "You want to be disable this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, take it 35$!",
+      confirmButtonText: "Yes, Disable it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        axoissecure.patch(`/mealmanage/disable/${_id}`).then((res) => {
+          if (res.status === 200) {
+            Swal.fire({
+              title: "Disabled!",
+              text: "Your file has been disabled.",
+              icon: "success",
+            });
+
+          refetch();
+          }
+        });
+      }
+    });
+  }
+
+
+ 
+  const takeIt = async (money) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to take money!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, take it $35!",
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          // Fetch the current item data
-          const { data: item } = await axoissecure.get(`/mealmanage/${_id}`);
-          const newCostTk = item.addMoney - 35;
-          setCost(cost)
+         
+          
+          const newCostTk = money.blance - 35;
+          const costMeal = parseInt(money.eatMeal)  + 1;
+
+          
+      
+
+          if (newCostTk < 0) {
+            Swal.fire({
+              title: "Insufficient Balance!",
+              text: "Please Add Money",
+              icon: "error",
+            });
+            return ;
+          }
+  
      
   
           // Update the item with the new costTk value
-          await axoissecure.patch(`/mealmanage/disable/${_id}`, { costtk: newCostTk });
+          await axoissecure.patch(`/mealmanage/${money?.id}`, { blance: newCostTk ,eatMeal : costMeal});
   
-          Swal.fire({
-            title: "Take Money Done!",
-            text: ` Money Cate Form ${item?.name?.name} Awalte`,
-            icon: "success",
-          });
+       // Show success message
+       Swal.fire({
+        title: "Money Taken!",
+        text: `Money taken from ${money?.member?.name}'s wallet.`,
+        icon: "success",
+      });
   
           refetch();
         } catch (error) {
@@ -285,7 +326,7 @@ const MealManage = () => {
   console.log(meal)
 
 
-  console.log(cost)
+
 
   const data = React.useMemo(() => 
     items.map((item, index) => ({
@@ -294,9 +335,9 @@ const MealManage = () => {
       name : item?.member?.name,
       totaltk : item?.addMoney,
       totalmeal: item?.totalMeal,
-      // costtk : costTk,
-      memberblance :cost,
-      memberbloan : item?.b,
+      meal : item?.eatMeal,
+      memberblance :item?.blance ,
+      memberbloan : item?.loan || "00",
       extra :  (extra / meal).toFixed(2) || 'loading...',
     //   startDate: item?.startDate?.split('T')[0],
     //   endDate: item?.endDate?.split('T')[0],

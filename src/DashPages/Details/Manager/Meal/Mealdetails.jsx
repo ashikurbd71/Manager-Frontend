@@ -6,6 +6,8 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import axoissecure from '../../../../Hooks/Axoisscure';
 import DashCustomNav from '../../../../Share/Formnav';
+import { MdContactEmergency } from 'react-icons/md';
+import MealEmergency from '../../../Update/MealManager/MealEmergency/MealEmergency';
 
 const Mealdetails = () => {
 
@@ -78,6 +80,14 @@ const Mealdetails = () => {
   const extramoney = (extra / totalitem).toFixed(2)
 
 
+  const [isOpen, setIsOpen] = useState(null)
+  const[update,setUpdate] = useState()
+
+
+  const openModal = (id) => {
+    setIsOpen(true)
+    setUpdate(id)
+  }
 
 
     return (
@@ -85,12 +95,18 @@ const Mealdetails = () => {
       <Helmet>
         <title>Manager || Meal details</title>
       </Helmet>
+      <MealEmergency isOpen={isOpen} setIsOpen={setIsOpen} update={update} refetch={refetch} />
       <DashCustomNav name={'Meal details'} listroute={'/dashboard/mealmanagelist'}/>
      
         <div className='px-10 pb-10'>
      
 
-          <div className='flex  justify-end  pb-5'>
+          <div className='flex  justify-end gap-5 pb-5'>
+
+          <div onClick={ () => openModal(member)} className='flex border-2 bg-red-500  cursor-pointer item items-center px-3 py-1 gap-1'>
+         
+            <h1 className='text-lg font-medium text-white'>Emergency</h1>
+            </div>
 
             <div className='flex border-2 cursor-pointer item items-center px-3 py-1 gap-1'>
             <FaPrint className='text-bl text-blue-400'/>
@@ -127,7 +143,7 @@ const Mealdetails = () => {
 
         <tr>
           <td className="px-4 py-2 font-semibold border border-gray-200">Total Money</td>
-          <td className="px-4 py-2 border border-gray-200">{member?.addMoney}</td>
+          <td className="px-4 py-2 border border-gray-200">{member?.addMoney}Tk</td>
         </tr>
 
         
@@ -138,39 +154,33 @@ const Mealdetails = () => {
 
         
         <tr>
-          <td className="px-4 py-2 font-semibold border border-gray-200">Cost Money</td>
-          <td className="px-4 py-2 border border-gray-200">{member?.ff}</td>
+          <td className="px-4 py-2 font-semibold border border-gray-200">Blance</td>
+          <td className="px-4 py-2 border border-gray-200">{member?.blance}Tk</td>
         </tr>
 
         
         <tr>
-          <td className="px-4 py-2 font-semibold border border-gray-200">Cost Meal</td>
-          <td className="px-4 py-2 border border-gray-200">{member?.gg}</td>
+          <td className="px-4 py-2 font-semibold border border-gray-200">Meal Eat</td>
+          <td className="px-4 py-2 border border-gray-200">{member?.eatMeal}</td>
+        </tr>
+
+        <tr>
+          <td className="px-4 py-2 font-semibold border border-gray-200">Loan</td>
+          <td className="px-4 py-2 border border-gray-200">{member?.loan || 0}Tk</td>
+        </tr>
+
+        <tr>
+          <td className="px-4 py-2 font-semibold border border-gray-200">Guest Meal</td>
+          <td className="px-4 py-2 border border-gray-200">{member?.guest || 0}</td>
         </tr>
 
 
         <tr>
           <td className="px-4 py-2 font-semibold border border-gray-200">Total Extra</td>
-          <td className="px-4 py-2 border border-gray-200">{extramoney || 'Loading...'}</td>
+          <td className="px-4 py-2 border border-gray-200">{extramoney || 'Loading...'}Tk</td>
         </tr>
 
       
-        
-        <tr>
-          <td className="px-4 py-2 font-semibold border border-gray-200">Member Blance</td>
-          <td className="px-4 py-2 border border-gray-200">{member?.b}</td>
-        </tr>
-
-        
-    
-
-
-        <tr>
-          <td className="px-4 py-2 font-semibold border border-gray-200">Member Loan</td>
-          <td className="px-4 py-2 border border-gray-200">{member?.b}</td>
-        </tr>
-
-
     
         <tr>
           <td className="px-4 py-2 font-semibold border border-gray-200">Last Payment</td>
