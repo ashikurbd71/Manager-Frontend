@@ -146,7 +146,12 @@ const AddMeal = () => {
 
 
    
-
+    useEffect(() => {
+      if (formik.values.taka) {
+        const calculatedTotalMeal = (parseFloat(formik.values.taka) / 35).toFixed();
+        formik.setFieldValue('totalmeal', calculatedTotalMeal);
+      }
+    }, [formik.values.taka]);
   
 
 
@@ -165,86 +170,65 @@ const AddMeal = () => {
           onSubmit={formik.handleSubmit}
           className="w-[600px] bg-white p-8  rounded-md"
         >
-          <div className="grid  grid-cols-1 gap-4">
-
-
-
-             {/* Cost */}
-             <div className="flex flex-col">
-              <label htmlFor="name" className="pb-1 text-[#726f6f]">
-                1. Name{" "}
-                <span className="text-xl font-semibold text-red-500">*</span>
-              </label>
-              <Select
+          <div className="grid grid-cols-1 gap-4">
+          {/* Name */}
+          <div className="flex flex-col">
+            <label htmlFor="name" className="pb-1 text-[#726f6f]">
+              1. Name <span className="text-xl font-semibold text-red-500">*</span>
+            </label>
+            <Select
               placeholder="Select Member Name"
-                id="name"
-                name="name"
-                styles={customStyles}
-                className="text-[#726f6f]"
-                options={nameOptions}
-                onChange={(option) => formik.setFieldValue("name", option.value)}
-                onBlur={formik.handleBlur}
-                value={nameOptions.find(option => option.value === formik.values.name)}
-              />
-              {formik.touched.name && formik.errors.name ? (
-                <div className="text-red-600">{formik.errors.name}</div>
-              ) : null}
-            </div>
-
-
-
-
-
-{/* semister */}
-            
-
-          
-            <div className="flex pt-2 flex-col">
-              <label htmlFor="taka"    className="pb-1 text-[#726f6f]">
-                2. Add Money <span className="text-xl font-semibold text-red-500">*</span>
-               
-              </label>
-              <input
-                placeholder="00$"
-                id="taka"
-                name="taka"
-                
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
-                type="text"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.taka}
-                
-              />
-              {formik.touched.taka && formik.errors.taka ? (
-                <div className="text-red-600">{formik.errors.taka}</div>
-              ) : null}
-            </div>
-
-
-            <div className="flex  flex-col">
-              <label htmlFor="totalmeal" className="pb-1 text-[#726f6f]">
-                3. Total Meal{" "}
-                <span className="text-xl font-semibold text-red-500">*</span>
-              </label>
-              <input
-                id="totalmeal"
-                // readOnly
-                placeholder="00"
-                name="totalmeal"
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
-                type="text"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.totalmeal}
-              />
-             
-            </div>
-
-         
-
-
+              id="name"
+              name="name"
+              styles={customStyles}
+              className="text-[#726f6f]"
+              options={nameOptions}
+              onChange={(option) => formik.setFieldValue('name', option.value)}
+              onBlur={formik.handleBlur}
+              value={nameOptions.find(option => option.value === formik.values.name)}
+            />
+            {formik.touched.name && formik.errors.name ? (
+              <div className="text-red-600">{formik.errors.name}</div>
+            ) : null}
           </div>
+
+          {/* Add Money */}
+          <div className="flex pt-2 flex-col">
+            <label htmlFor="taka" className="pb-1 text-[#726f6f]">
+              2. Add Money <span className="text-xl font-semibold text-red-500">*</span>
+            </label>
+            <input
+              placeholder="00$"
+              id="taka"
+              name="taka"
+              className="py-2 text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
+              type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.taka}
+            />
+            {formik.touched.taka && formik.errors.taka ? (
+              <div className="text-red-600">{formik.errors.taka}</div>
+            ) : null}
+          </div>
+
+          {/* Total Meal */}
+          <div className="flex flex-col">
+            <label htmlFor="totalmeal" className="pb-1 text-[#726f6f]">
+              3. Total Meal <span className="text-xl font-semibold text-red-500">*</span>
+            </label>
+            <input
+              id="totalmeal"
+              placeholder="00"
+              name="totalmeal"
+              readOnly
+              className="py-2 text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
+              type="text"
+      
+              value={formik.values.totalmeal}
+            />
+          </div>
+        </div>
 
            {/* Cost */}
       

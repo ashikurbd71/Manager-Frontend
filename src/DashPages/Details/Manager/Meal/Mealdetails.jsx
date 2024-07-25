@@ -75,7 +75,7 @@ const Mealdetails = () => {
 
 
 
-  const extramoney = extra / totalitem
+  const extramoney = (extra / totalitem).toFixed(2)
 
 
 

@@ -14,6 +14,8 @@ import { useFormik } from "formik";
 import { getInstitute, getMember } from "../../../Share/Api/SelectorApi/settingselector";
 import Select from 'react-select'
 import MealUpdate from "../../Update/MealManager/MealUpdate";
+import moment from "moment-timezone";
+import { FaMoneyBillTransfer } from "react-icons/fa6";
 
 
 
@@ -27,7 +29,7 @@ const MealManage = () => {
   const [page, setPage] = useState(1);
   const [stat, setStat] = useState();
   const [active, setActive] = useState(0);
-  const[meal,setMeal] = useState(null)
+  const[meal,setMeal] = useState(6)
 
   useEffect(() => {
     if (active === 1) {
@@ -96,25 +98,23 @@ const MealManage = () => {
       Header: "Total Meal",
       accessor: 'totalmeal'
     },
+   
     {
-      Header: "Cost Tk",
-      accessor: 'costtk'
+      Header: "Member(blance)",
+      accessor: 'memberblance'
     },
 
     {
-        Header: "Cost Meal",
-        accessor: 'costmeal'
-      },
+      Header: "Eeat Meal",
+      accessor: 'meal'
+    },
 
       {
         Header: "Extra",
         accessor: 'extra'
       },
 
-      {
-        Header: "Member(blance)",
-        accessor: 'memberblance'
-      },
+      
 
       {
         Header: "Member(loan)",
@@ -152,6 +152,8 @@ const MealManage = () => {
             <FaBan title="Meal Of" onClick={() => handleDisable(row.original.id)} className=" hover:text-red-600 cursor-pointer" />    :  
             <IoCheckmarkDoneCircleOutline title="Meal On" onClick={() => handleEnable(row.original.id)} className=" hover:text-green-600 text-lg cursor-pointer" />
           }
+
+      <FaMoneyBillTransfer title="Delete" onClick={() => takeIt(row.original.id)} className="  hover:text-green-500 cursor-pointer"  />
          </div>
         </>
       )
@@ -194,31 +196,48 @@ const MealManage = () => {
     });
   };
 
-  const handleDisable = (_id) => {
+
+   const[cost,setCost] = useState()
+  const takeIt = async (_id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You want to be disable this!",
+      text: "You want to Take Money!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Disable it!",
+      confirmButtonText: "Yes, take it 35$!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        axoissecure.patch(`/mealmanage/disable/${_id}`).then((res) => {
-          if (res.status === 200) {
-            Swal.fire({
-              title: "Disabled!",
-              text: "Your file has been disabled.",
-              icon: "success",
-            });
-
+        try {
+          // Fetch the current item data
+          const { data: item } = await axoissecure.get(`/mealmanage/${_id}`);
+          const newCostTk = item.addMoney - 35;
+          setCost(cost)
+     
+  
+          // Update the item with the new costTk value
+          await axoissecure.patch(`/mealmanage/disable/${_id}`, { costtk: newCostTk });
+  
+          Swal.fire({
+            title: "Take Money Done!",
+            text: ` Money Cate Form ${item?.name?.name} Awalte`,
+            icon: "success",
+          });
+  
           refetch();
-          }
-        });
+        } catch (error) {
+          console.error("Error disabling item:", error);
+          Swal.fire({
+            title: "Error!",
+            text: "There was an error disabling the item.",
+            icon: "error",
+          });
+        }
       }
     });
-  }
+  };
+  
 
   const handleEnable = (_id) => {
     Swal.fire({
@@ -265,7 +284,8 @@ const MealManage = () => {
 
   console.log(meal)
 
- 
+
+  console.log(cost)
 
   const data = React.useMemo(() => 
     items.map((item, index) => ({
@@ -274,9 +294,10 @@ const MealManage = () => {
       name : item?.member?.name,
       totaltk : item?.addMoney,
       totalmeal: item?.totalMeal,
-      memberblance : item?.b,
+      // costtk : costTk,
+      memberblance :cost,
       memberbloan : item?.b,
-      extra :  extra / meal || 'loading...',
+      extra :  (extra / meal).toFixed(2) || 'loading...',
     //   startDate: item?.startDate?.split('T')[0],
     //   endDate: item?.endDate?.split('T')[0],
 

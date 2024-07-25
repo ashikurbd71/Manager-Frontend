@@ -51,6 +51,7 @@ const MealUpdate = ({isOpen,setIsOpen,update,refetch}) => {
         console.log("Product added successfully:", values);
         toast.success("Meal Update  successfully!");
        refetch()
+       setIsOpen(false)
         
       } catch (error) {
         toast.error("Error Update Meal");
@@ -87,6 +88,20 @@ const MealUpdate = ({isOpen,setIsOpen,update,refetch}) => {
           });
       }
   }, [update]);
+
+  
+  useEffect(() => {
+    const addMoney = parseFloat(formik.values.addmoney) || 0;
+    const balance = parseFloat(formik.values.taka) || 0;
+    const newBalance = addMoney + balance;
+    // formik.setFieldValue('taka', newBalance.toFixed(2));
+    const totalMeals = (newBalance / 35).toFixed();
+    formik.setFieldValue('totalmeal', totalMeals);
+  }, [formik.values.addmoney]);
+
+
+
+
 
     return (
      <>
