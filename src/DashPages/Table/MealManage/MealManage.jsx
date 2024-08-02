@@ -134,26 +134,26 @@ const MealManage = () => {
            {/*  */}
          
     
-         <FaEdit title="Meal Edit"  onClick={() => openModal(row.original)} className=" hover:text-green-500 cursor-pointer" />
+         <FaEdit title="Meal Edit"  onClick={() => openModal(row.original)} className=" text-green-500 cursor-pointer" />
        
           
           {/* Delete Icon */}
-          <FaTrashAlt title="Delete" onClick={() => handleDelete(row.original.id)} className="  hover:text-red-500 cursor-pointer"  />
+          <FaTrashAlt title="Delete" onClick={() => handleDelete(row.original.id)} className="  text-red-500 cursor-pointer"  />
           
           {/* View Icon */}
           <Link  to={`/dashboard/detailsmeal/${row.original.id}`}>
-          <FaEye title="View Deatails"  className=" hover:text-yellow-500 cursor-pointer"  />
+          <FaEye title="View Deatails"  className=" text-yellow-600 cursor-pointer"  />
           </Link>
        
           
           {/* Disable Icon */}
           {
             row?.original?.status === 1 ?  
-            <FaBan title="Meal Of" onClick={() => handleDisable(row.original.id)} className=" hover:text-red-600 cursor-pointer" />    :  
-            <IoCheckmarkDoneCircleOutline title="Meal On" onClick={() => handleEnable(row.original.id)} className=" hover:text-green-600 text-lg cursor-pointer" />
+            <FaBan title="Meal Of" onClick={() => handleDisable(row.original.id)} className=" text-red-600 cursor-pointer" />    :  
+            <IoCheckmarkDoneCircleOutline title="Meal On" onClick={() => handleEnable(row.original.id)} className="text-green-600 text-lg cursor-pointer" />
           }
 
-      <FaMoneyBillTransfer title="Money" onClick={() => takeIt(row.original)} className="  hover:text-green-500 cursor-pointer"  />
+      <FaMoneyBillTransfer title="Money" onClick={() => takeIt(row.original)} className="  text-green-500 cursor-pointer"  />
          </div>
         </>
       )
@@ -378,9 +378,9 @@ const MealManage = () => {
       <table {...getTableProps()} className="min-w-full overflow-x-auto bg-white border mb-5 border-gray-200">
         <thead>
           {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-200">
+            <tr {...headerGroup.getHeaderGroupProps()} className="bg-[#0284C7]">
               {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()} className="p-2 border-2 border-gray-300 text-center text-gray-700">{column.render('Header')}</th>
+                <th {...column.getHeaderProps()} className="p-2 border-2 border-gray-300 text-center text-white">{column.render('Header')}</th>
               ))}
             </tr>
           ))}
@@ -391,7 +391,7 @@ const MealManage = () => {
             return (
               <tr {...row.getRowProps()} className="hover:bg-gray-100">
                 {row.cells.map(cell => (
-                  <td {...cell.getCellProps()} className="p-2 text-gray-600 font font-medium border-2 text-center border-gray-300">{cell.render('Cell')}</td>
+                  <td {...cell.getCellProps()} className="p-2 text-gray-500 font font-normal border-2 text-center border-gray-300">{cell.render('Cell')}</td>
                 ))}
               </tr>
             );

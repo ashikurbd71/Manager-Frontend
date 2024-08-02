@@ -132,7 +132,7 @@ const UpdateSemiter = ({isOpen,setIsOpen,update,refetch}) => {
               Save
             </button>
             <button
-              className="w-[100px] bg-gray-200 font-bold mt-10 rounded-lg h-[40px] border-2 text-red-400"
+              className="w-[100px] bg-red-600 font-semibold mt-10 rounded-lg h-[40px] border-2 text-white"
               type="button"
               onClick={handleCancel}
             >

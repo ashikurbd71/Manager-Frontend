@@ -15,8 +15,8 @@ const Tablenav = ({route,setSearch,setActive}) => {
                     setSearch(e.target.value);
                      setActive(1);
           
-                  }} className="peer rounded-lg border-2 bg-transparent px-4 w-[300px] lg:w-[500px] py-2 text-gray-500 focus:outline-none" type="text" placeholder="" id="navigate_ui_input_33" />
-        <label className="absolute -top-2 left-[10px] rounded-md px-2 text-xs text-gray-500 duration-300 peer-placeholder-shown:left-[14px] peer-placeholder-shown:top-3  peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-sm peer-focus:-top-2 peer-focus:left-[10px] peer-focus:bg-sky-300 peer-focus:text-xs peer-focus:text-sky-800 dark:peer-focus:text-sky-400 dark:peer-focus:bg-[#0F172A]" htmlFor="navigate_ui_input_33">
+                  }} className="peer border-[#0284C7] rounded-lg border-2 bg-transparent px-4 w-[300px] lg:w-[500px] py-2 text-gray-500 focus:outline-none" type="text" placeholder="" id="navigate_ui_input_33" />
+        <label className="absolute -top-2 left-[10px]  rounded-md px-2 text-xs text-gray-500 duration-300 peer-placeholder-shown:left-[14px] peer-placeholder-shown:top-3  peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-sm peer-focus:-top-2 peer-focus:left-[10px] peer-focus:bg-sky-300 peer-focus:text-xs peer-focus:text-sky-800 dark:peer-focus:text-sky-400 dark:peer-focus:bg-[#0F172A]" htmlFor="navigate_ui_input_33">
           Search
         </label>
       </div>
@@ -26,24 +26,24 @@ const Tablenav = ({route,setSearch,setActive}) => {
 
  
    <Link to={route}>
-   <button className=' text-lg  font-medium  '>
+   <button className=' text-sm  font-semibold  '>
 
-<div className='flex text-gray-500 border-2 px-2 py-1 rounded-md gap-1 justify-items-center items-center'>
+<div className='flex text-white bg-[#0284C7] border-2 px-2 py-2 rounded-md gap-1 justify-items-center items-center'>
  
 Add New
-<FaPlus className='text-[#0284C7]'/>
+<FaPlus className=''/>
 </div>
 
 </button>
 
    </Link>
 
-<button className=' text-lg   '>
+<button className=' text-sm font-semibold  '>
 
-<div className='flex text-gray-500 border-2 px-2 py-1 rounded-md gap-1 justify-items-center items-center'>
+<div className='flex text-white bg-[#0284C7] border-2 px-2 py-2 rounded-md gap-1 justify-items-center items-center'>
  
 Export
-<TbTableExport className='text-[#0284C7]'/>
+<TbTableExport className=''/>
 </div>
 
 </button>

@@ -106,15 +106,15 @@ const ProductList = () => {
            {/* Edit Icon */}
          
          <Link to={`/dashboard/updatemember/${row.original.id}`}>
-         <FaEdit title="Edit" className=" hover:text-green-500 cursor-pointer" />
+         <FaEdit title="Edit" className="  text-green-500 cursor-pointer" />
          </Link>
           
           {/* Delete Icon */}
-          <FaTrashAlt title="Delete" onClick={() => handleDelete(row.original.id)} className="  hover:text-red-500 cursor-pointer"  />
+          <FaTrashAlt title="Delete" onClick={() => handleDelete(row.original.id)} className=" text-red-500 cursor-pointer"  />
           
           {/* View Icon */}
           <Link to={`/dashboard/memberdeatils/${row.original.id}`}>
-          <FaEye title="View Deatails"  className=" hover:text-yellow-500 cursor-pointer"  />
+          <FaEye title="View Deatails"  className=" text-yellow-600 cursor-pointer"  />
           </Link>
        
           
@@ -122,8 +122,8 @@ const ProductList = () => {
                    {/* Disable Icon */}     
                    {
             row?.original?.status === 1 ?  
-            <FaBan title="Disable" onClick={() => handleDisable(row.original.id)} className=" hover:text-red-600 cursor-pointer" />    :  
-            <IoCheckmarkDoneCircleOutline title="Enable" onClick={() => handleEnable(row.original.id)} className=" hover:text-green-600 text-lg cursor-pointer" />
+            <FaBan title="Disable" onClick={() => handleDisable(row.original.id)} className="text-red-600 cursor-pointer" />    :  
+            <IoCheckmarkDoneCircleOutline title="Enable" onClick={() => handleEnable(row.original.id)} className=" text-green-600 text-lg cursor-pointer" />
           }
          </div>
         </>
@@ -242,7 +242,7 @@ const ProductList = () => {
     <Helmet><title>Manager || Member list</title></Helmet>
 
     
-    <h1 className="text-2xl font-medium text-gray-600 p-5">Member List</h1>
+    <h1 className="text-xl font-semibold text-[#0284C7] p-5">Member List</h1>
 
     <Tablenav setSearch={setSearch} setActive={setActive} route={'/dashboard/addmember'}/>
 
@@ -251,9 +251,9 @@ const ProductList = () => {
       <table {...getTableProps()} className="min-w-full overflow-x-auto bg-white mb-5 border border-gray-200">
         <thead>
           {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-200">
+            <tr {...headerGroup.getHeaderGroupProps()} className="bg-[#0284C7] text-white">
               {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()} className="p-2 border-2 border-gray-300 text-center text-gray-700">{column.render('Header')}</th>
+                <th {...column.getHeaderProps()} className="p-2 border-2 border-gray-300 text-center text-white">{column.render('Header')}</th>
               ))}
             </tr>
           ))}
@@ -264,7 +264,7 @@ const ProductList = () => {
             return (
               <tr  {...row.getRowProps()} className="hover:bg-gray-100">
                 {row.cells.map(cell => (
-                  <td {...cell.getCellProps()} className="p-2 text-gray-600 font font-medium border-2 text-center border-gray-300">{cell.render('Cell')}</td>
+                  <td {...cell.getCellProps()} className="p-2 text-gray-500 font font-normal border-2 text-center border-gray-300">{cell.render('Cell')}</td>
                 ))}
               </tr>
             );

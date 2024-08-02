@@ -103,14 +103,14 @@ console.log(items)
         <>
          <div className="flex w-full mx-auto  items-center gap-2 ">
            {/* Edit Icon */}
-           <FaEdit title="Edit" onClick={() => openModal(row.original)} className=" cursor-pointer hover:text-green-500 " />
+           <FaEdit title="Edit" onClick={() => openModal(row.original)} className=" cursor-pointe text-green-500 " />
           
 
-           <FaEye title="View Deatails" onClick={() => openModald(row.original)}  className=" hover:text-yellow-500 cursor-pointer"  />
+           <FaEye title="View Deatails" onClick={() => openModald(row.original)}  className=" text-yellow-500 cursor-pointer"  />
 
 
           {/* Delete Icon */}
-          <FaTrashAlt title="Delete" onClick={() => handleDelete(row.original.id)} className="  hover:text-red-500 cursor-pointer"  />
+          <FaTrashAlt title="Delete" onClick={() => handleDelete(row.original.id)} className="  text-red-500 cursor-pointer"  />
           
          
        
@@ -201,12 +201,12 @@ console.log(items)
     <div className="flex justify-between items-center p-5">
 
 <div>
-<h1 className="text-xl font-medium text-gray-600 ">Extra Money </h1>
+<h1 className="text-xl font-semibold text-[#0284C7]">Extra Money </h1>
 </div>
 
     <Link to={'/dashboard/mealmanagelist'}>
-                   <div className='flex text-gray-500 text-lg justify-items-center items-center'>
-                    <IoCaretBackSharp className='text-[#0284C7]'/>
+                   <div className='flex px-2 py-2 rounded-md text-white bg-red-600 text-sm justify-items-center items-center'>
+                    <IoCaretBackSharp className=''/>
                    Back Meal Manage
                    </div>
 
@@ -223,9 +223,9 @@ console.log(items)
       <table {...getTableProps()} className="min-w-full overflow-x-auto bg-white border mb-5 border-gray-200">
         <thead>
           {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-200">
+            <tr {...headerGroup.getHeaderGroupProps()} className="bg-[#0284C7]">
               {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()} className="p-2 border-2 border-gray-300 text-center text-gray-700">{column.render('Header')}</th>
+                <th {...column.getHeaderProps()} className="p-2 border-2 border-gray-300 text-center text-white">{column.render('Header')}</th>
               ))}
             </tr>
           ))}
@@ -236,7 +236,7 @@ console.log(items)
             return (
               <tr {...row.getRowProps()} className="hover:bg-gray-100">
                 {row.cells.map(cell => (
-                  <td {...cell.getCellProps()} className="p-2 text-gray-600 font font-medium border-2 text-center border-gray-300">{cell.render('Cell')}</td>
+                  <td {...cell.getCellProps()} className="p-2 text-gray-500 font font-medium border-2 text-center border-gray-300">{cell.render('Cell')}</td>
                 ))}
               </tr>
             );
