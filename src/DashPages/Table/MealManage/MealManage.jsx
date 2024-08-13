@@ -30,7 +30,7 @@ const MealManage = () => {
   const [stat, setStat] = useState();
   const [active, setActive] = useState(0);
   const[meal,setMeal] = useState(6)
-
+ const [onmeal,setOnmeal] = useState(0)
   useEffect(() => {
     if (active === 1) {
       setPage(1);
@@ -59,6 +59,7 @@ const MealManage = () => {
           );
           setStat(res?.data?.meta);
           setMeal(res?.data?.meta?.totalItems )
+          setOnmeal(res?.data?.meta?.statusOneCount)
           return res?.data?.items
         } else {
           const res = await axoissecure.get(
@@ -66,6 +67,7 @@ const MealManage = () => {
           );
           setStat(res.data?.meta);
            setMeal(res?.data?.meta?.totalItems )
+           setOnmeal(res?.data?.meta?.statusOneCount)
           return res?.data?.items;
         }
       } catch (error) {
@@ -149,8 +151,8 @@ const MealManage = () => {
           {/* Disable Icon */}
           {
             row?.original?.status === 1 ?  
-            <FaBan title="Meal Of" onClick={() => handleDisable(row.original.id)} className=" text-red-600 cursor-pointer" />    :  
-            <IoCheckmarkDoneCircleOutline title="Meal On" onClick={() => handleEnable(row.original.id)} className="text-green-600 text-lg cursor-pointer" />
+            <FaBan title="Meal Of" onClick={() => handleDisable(row.original)} className=" text-red-600 cursor-pointer" />    :  
+            <IoCheckmarkDoneCircleOutline title="Meal On" onClick={() => handleEnable(row.original)} className="text-green-600 text-lg cursor-pointer" />
           }
 
       <FaMoneyBillTransfer title="Money" onClick={() => takeIt(row.original)} className="  text-green-500 cursor-pointer"  />
@@ -200,19 +202,19 @@ const MealManage = () => {
   const handleDisable = (_id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You want to be disable this!",
+      text: "You want to be meal of!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Disable it!",
+      confirmButtonText: "Yes, Of Meal!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        axoissecure.patch(`/mealmanage/disable/${_id}`).then((res) => {
+        axoissecure.patch(`/mealmanage/disable/${_id?.id}`).then((res) => {
           if (res.status === 200) {
             Swal.fire({
-              title: "Disabled!",
-              text: "Your file has been disabled.",
+              title: "Of Meal",
+              text: `${_id?.member?.name} meal has been of.`,
               icon: "success",
             });
 
@@ -283,19 +285,19 @@ const MealManage = () => {
   const handleEnable = (_id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You want to be enable this!",
+      text: "You want to be on meal!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Enable it!",
+      confirmButtonText: "Yes, on meal!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        axoissecure.patch(`/mealmanage/enable/${_id}`).then((res) => {
+        axoissecure.patch(`/mealmanage/enable/${_id?.id}`).then((res) => {
           if (res.status === 200) {
             Swal.fire({
-              title: "Enabled!",
-              text: "Your file has been Enabled.",
+              title: "On Meal",
+              text: `${_id?.member?.name} meal has been on .`,
               icon: "success",
             });
 
@@ -354,7 +356,11 @@ const MealManage = () => {
   } = useTable({ columns, data });
 
     
-  
+  const options = { day: 'numeric', month: 'long', year: 'numeric' };
+  const formattedDate = new Date().toLocaleDateString('en-GB', options);
+
+
+  const daliyamount = onmeal * 35
 
   return (
 
@@ -369,7 +375,7 @@ const MealManage = () => {
     
     <h1 className="text-2xl font-medium text-gray-600 p-5">Meal Manage</h1>
 
-    <MealManagenav setActive={setActive} setSearch={setSearch} secondroute={'/dashboard/extralist'} route={'/dashboard/addmeal'}/>
+    <MealManagenav onmeal={onmeal} daliyamount={daliyamount} formattedDate={formattedDate} setActive={setActive} setSearch={setSearch} secondroute={'/dashboard/extralist'} route={'/dashboard/addmeal'}/>
 
  
     <div className="px-6 pb-10 bg-gray-100 rounded-lg">

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaPlus } from "react-icons/fa6";
 import { TbTableExport } from "react-icons/tb";
 import { Link } from 'react-router-dom';
-const MealManagenav = ({route,setSearch,setActive,totaltk,totalmeal,secondroute}) => {
+const MealManagenav = ({route,setSearch,setActive,daliyamount,onmeal,secondroute,formattedDate}) => {
 
 
     const [isOpen, setIsOpen] = useState(null)
@@ -88,7 +88,7 @@ Export
 
     <h1 className='fon font-semibold text-gray-600'>Date : </h1>
 
-    <h1 className='fon font-medium text-[#0284C7]'>20/7/24</h1>
+    <h1 className='fon font-medium text-[#0284C7]'>{formattedDate}</h1>
 
    </div>
 
@@ -96,7 +96,7 @@ Export
 
 <h1 className='fon font-semibold text-gray-600'>Total Tk : </h1>
 
-<h1 className='fon font-medium text-[#0284C7]'>640 <span>Tk</span></h1>
+<h1 className='fon font-medium text-[#0284C7]'> {daliyamount} <span>Tk</span></h1>
 
 </div>
 
@@ -105,7 +105,7 @@ Export
 
 <h1 className='fon font-semibold text-gray-600'>Total Meal : </h1>
 
-<h1 className='fon font-medium text-[#0284C7]'>24</h1>
+<h1 className='fon font-medium text-[#0284C7]'>{onmeal}</h1>
 
 </div>
   </div>

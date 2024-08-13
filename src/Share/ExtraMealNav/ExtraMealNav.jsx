@@ -29,7 +29,7 @@ const ExtraMealNav = ({route,setSearch,setActive,totalextrameal}) => {
 
 <div className='flex bg-[#0284C7] text-white border-2 px-2 py-2 rounded-md gap-1 justify-items-center items-center'>
  
-Add Meal
+Add Extra
 <FaPlus className=''/>
 </div>
 
