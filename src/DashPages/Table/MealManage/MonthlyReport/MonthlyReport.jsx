@@ -16,6 +16,7 @@ import UpdateInstitute from "../../../Update/SettingModal/UpdateInstitute";
 import Tablenav from "../../../../Share/Tablenav";
 import Pagination from "../../../../Share/PaginationTable/Pagination";
 import MonthlyReportnav from "../../../../Share/MonthlyReportnav/MonthlyReportnav";
+import Approve from "../../../Update/ReportApprove/Approve";
 
 
 
@@ -38,7 +39,7 @@ const MonthlyReport = () => {
   
   const { data: items = [], refetch } = useQuery({
     queryKey: [
-      "institute",
+      "report",
       search,
       rowPerPage,
       page,
@@ -52,14 +53,14 @@ const MonthlyReport = () => {
 
         if (active) {
           const res = await axoissecure.get(
-            `/institute/search?query=${search}&limit=${limit}&page=${page}`
+            `/report/search?query=${search}&limit=${limit}&page=${page}`
           );
           setStat(res.data?.meta);
 
           return res?.data?.items;
         } else {
           const res = await axoissecure.get(
-            `/institute/search?limit=${limit}&page=${page}`
+            `/report/search?limit=${limit}&page=${page}`
           );
           setStat(res.data?.meta);
 
@@ -99,7 +100,7 @@ console.log(items)
 
       {
         Header: "Status",
-        accessor: 's'
+        accessor: 'reportStatus'
       },
    
  
@@ -114,19 +115,22 @@ console.log(items)
            {/* Edit Icon */}
          
         
-        <Link to={`/dashboard/monthlyreportupdate/${row.original.id}`}>
+        {/* <Link to={`/dashboard/monthlyreportupdate/${row.original.id}`}>
         <FaEdit title="Edit"  className=" cursor-pointer text-green-500 " />  
         
-        </Link>
+        </Link> */}
 
              {/* View Icon */}
-          <Link to={`/dashboard/memberdeatils/${row.original.id}`}>
+          <Link to={`/public/reportdtails/${row.original.id}`}>
           <FaEye title="View Deatails"  className=" text-yellow-600 cursor-pointer"  />
           </Link>
           
           {/* Delete Icon */}
-          <FaTrashAlt title="Delete" onClick={() => handleDelete(row.original.id)} className="  text-red-500 cursor-pointer"  />
-          <FaPaperPlane title="Approve"  className=" text-blue-600 cursor-pointer"  />
+          {/* <FaTrashAlt title="Delete" onClick={() => handleDelete(row.original.id)} className="  text-red-500 cursor-pointer"  /> */}
+          
+          {
+            row.original.reportStatus === "Approve" ? "" : <FaPaperPlane onClick={() => HandleApprove(row.original)} title="Approve"  className=" text-blue-600 cursor-pointer"  />
+          }
        
         
           
@@ -140,37 +144,12 @@ console.log(items)
   const[update,setUpdate] = useState()
 
 
-  const openModal = (id) => {
+  const HandleApprove = (id) => {
     setIsOpen(true)
     setUpdate(id)
   }
 
 
-  const handleDelete = (_id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You want to be delete this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        axoissecure.delete(`/institute/${_id}`).then((res) => {
-          if (res.status === 200) {
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
-              icon: "success",
-            });
-
-          refetch();
-          }
-        });
-      }
-    });
-  };
 
   
  
@@ -181,8 +160,12 @@ console.log(items)
     items?.map((item, index) => ({
       ...item,
       sl: rowPerPage === "All" ? index + 1 : index + 1 + (page - 1) * rowPerPage,
-      institues: item?.name,
-      shortname: item?.shortName,
+      totaltk: item?.totalTk,
+      meal: item?.totalMeal,
+      extratk: item?.extraTk,
+      reportStatus: item?.reportStatus,
+      date : item?.date.split('T')[0]
+
 
     })), [items]
   );
@@ -198,13 +181,13 @@ console.log(items)
   return (
 
     <>
- <UpdateInstitute isOpen={isOpen} setIsOpen={setIsOpen} update={update} refetch={refetch} />
+ <Approve isOpen={isOpen} setIsOpen={setIsOpen} update={update} refetch={refetch} />
     {/* <useHelmet name={'Manager || De list'} /> */}
 
     <Helmet><title>Manager || Monthly Report</title></Helmet>
 
     
-    <h1 className="text-xl font-medium text-gray-600 p-5">Monthly Report</h1>
+    <h1 className="text-lg font-semibold text-[#0284C7] p-5">Monthly Report</h1>
 
     <MonthlyReportnav    setActive={setActive} setSearch={setSearch} />
 

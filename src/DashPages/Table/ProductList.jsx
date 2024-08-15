@@ -105,7 +105,7 @@ const ProductList = () => {
           {/**/}
            {/* Edit Icon */}
          
-         <Link to={`/dashboard/updatemember/${row.original.id}`}>
+           <Link to={`/dashboard/updatemember/${row.original.id}`}>
          <FaEdit title="Edit" className="  text-green-500 cursor-pointer" />
          </Link>
           

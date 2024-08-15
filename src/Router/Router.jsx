@@ -35,6 +35,9 @@ import MonthlyReport from "../DashPages/Table/MealManage/MonthlyReport/MonthlyRe
 import MyReport from "../Public/Pages/MyReport";
 import AddMyReport from "../Public/PublicForm/AddMyReport";
 import MonyhlyReportUpdate from "../DashPages/Update/MonthlyReportUpdate/MonyhlyReportUpdate";
+import UpdateReport from "../DashPages/Update/MyReport/UpdateReport";
+import ReportDetails from "../DashPages/Details/MyReport/ReportDetails";
+import MyreportDetails from "../DashPages/Details/MyReport/MyreportDetails";
 
 const router = createBrowserRouter([
 
@@ -65,6 +68,22 @@ const router = createBrowserRouter([
       {
         path: "/public/myreport",
         element:<MyReport/>
+      },
+
+      
+      {
+        path: "/public/updatereport/:id",
+        element:<UpdateReport/>
+      },
+
+      {
+        path: "/public/reportdtails/:id",
+        element:<ReportDetails/>
+      },
+
+      {
+        path: "/public/myreportdtails/:id",
+        element:<MyreportDetails/>
       },
 
       {

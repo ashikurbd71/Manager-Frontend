@@ -13,8 +13,9 @@ import Swal from "sweetalert2";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import axoissecure from "../../Hooks/Axoisscure";
 import Tablenav from "../../Share/Tablenav";
-import UpdateInstitute from "../../DashPages/Update/SettingModal/UpdateInstitute";
+
 import Pagination from "../../Share/PaginationTable/Pagination";
+import Marquee from "react-fast-marquee";
 
 
 
@@ -39,7 +40,7 @@ const MyReport = () => {
   
   const { data: items = [], refetch } = useQuery({
     queryKey: [
-      "institute",
+      "report",
       search,
       rowPerPage,
       page,
@@ -53,14 +54,14 @@ const MyReport = () => {
 
         if (active) {
           const res = await axoissecure.get(
-            `/institute/search?query=${search}&limit=${limit}&page=${page}`
+            `/report/search?query=${search}&limit=${limit}&page=${page}`
           );
           setStat(res.data?.meta);
 
           return res?.data?.items;
         } else {
           const res = await axoissecure.get(
-            `/institute/search?limit=${limit}&page=${page}`
+            `/report/search?limit=${limit}&page=${page}`
           );
           setStat(res.data?.meta);
 
@@ -89,18 +90,11 @@ console.log(items)
       Header: "Cost Tk",
       accessor: 'totaltk'
     },
-    // {
-    //   Header: "Meal",
-    //   accessor: 'meal'
-    // },
-    // {
-    //     Header: "Extra",
-    //     accessor: 'extratk'
-    //   },
+
 
       {
         Header: "Status",
-        accessor: 's'
+        accessor: 'reportStatus'
       },
    
  
@@ -113,13 +107,26 @@ console.log(items)
         <>
          <div className="flex w-full mx-auto  items-center gap-2 ">
          
-
-             {/* View Icon */}
-          <Link to={`/dashboard/memberdeatils/${row.original.id}`}>
-          <FaEye title="View Deatails"  className=" hover:text-yellow-500 cursor-pointer"  />
+                  {/* View Icon */}
+                  <Link to={`/public/myreportdtails/${row.original.id}`}>
+          <FaEye title="View Deatails"  className=" text-yellow-500 cursor-pointer"  />
           </Link>
+
+
+
+        {
+          row.original.reportStatus === "Pending"  ?  <>
+          <Link to={`/public/updatereport/${row.original.id}`}>
+          <FaEdit title="Edit" className="  text-green-500 cursor-pointer" />
+          </Link>
+ 
+     
+         
+           <FaTrashAlt title="Delete" onClick={() => handleDelete(row.original.id)} className=" text-red-500 cursor-pointer"  />
           
-       
+          
+          </> : ''
+        }
        
         
           
@@ -129,7 +136,31 @@ console.log(items)
     },
   ], []);
 
-  
+  const handleDelete = (_id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to be delete this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        axoissecure.delete(`/report/${_id}`).then((res) => {
+          if (res.status === 200) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+
+          refetch();
+          }
+        });
+      }
+    });
+  };
 
 
 
@@ -137,8 +168,9 @@ console.log(items)
     items?.map((item, index) => ({
       ...item,
       sl: rowPerPage === "All" ? index + 1 : index + 1 + (page - 1) * rowPerPage,
-      institues: item?.name,
-      shortname: item?.shortName,
+      date: item?.date?.split('T')[0],
+      totaltk: item?.totalTk,
+      reportStatus: item?.reportStatus,
 
     })), [items]
   );
@@ -160,6 +192,7 @@ console.log(items)
     <Helmet><title>Manager || My Report</title></Helmet>
 
     <h1 className="text-2xl  font-semibold text-center text-gray-600 pt-10 pb-5">My Report</h1>
+
 
     <Tablenav    setActive={setActive} setSearch={setSearch} route={'/public/addmyreport'} />
 

@@ -1,13 +1,17 @@
 import { useFormik } from 'formik';
 import React, { useEffect, useRef, useState } from 'react';
 import  Select from 'react-select';
-import DashCustomNav from '../../Share/Formnav';
+
 import { Helmet } from 'react-helmet';
 import { MdOutlineFileUpload } from 'react-icons/md';
-import { getMember } from '../../Share/Api/SelectorApi/settingselector';
-import axoissecure from '../../Hooks/Axoisscure';
+
 import * as Yup from "yup";
 import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
+import axoissecure from '../../../Hooks/Axoisscure';
+import DashCustomNav from '../../../Share/Formnav';
+import { useQuery } from '@tanstack/react-query';
+import { getMember } from '../../../Share/Api/SelectorApi/settingselector';
 
 // / Validation Schema
 const Schema = Yup.object().shape({
@@ -27,7 +31,25 @@ const Schema = Yup.object().shape({
 
 });
 
-const AddMyReport = () => {
+const UpdateReport = () => {
+
+ const {id} = useParams()
+
+ 
+ const { data: items = [], refetch } = useQuery({
+    queryKey: ["report"],
+    queryFn: async () => {
+      try {
+        const res = await axoissecure.get(`/report/${id}`);
+        return res.data;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+      }
+    },
+  });
+
+
   const fileInputRef = useRef();
     const formik = useFormik({
         initialValues: {
@@ -45,7 +67,7 @@ const AddMyReport = () => {
         onSubmit: async (values, { resetForm }) => {
           console.log(values)
           try {
-            await axoissecure.post("/report", {
+            await axoissecure.patch(`/report/${id}`, {
               bazarkari:Array.isArray(values.bazarkari)
               ? values.bazarkari.map((item) => ({ id: parseInt(item) }))
               : [],
@@ -56,15 +78,14 @@ const AddMyReport = () => {
               comments : values.comments,
               profile : values.image,
               reportStatus : "Pending",
-              feedBack : "",
               date : new Date(),
               status:"1",
             },{    headers: {
               "Content-Type": "multipart/form-data",
             }})
-            console.log("Product added successfully:", values);
+            console.log("Update  successfully:", values);
             toast.success("Report Send  successfully!");
-            resetForm(); 
+            refetch(); 
           } catch (error) {
             toast.error("error report sending ");
             console.error("Error adding Institute:", error);
@@ -72,7 +93,23 @@ const AddMyReport = () => {
         },
       });
     
+
+      
+  useEffect(() => {
+    if (items) {
+        formik.setValues({
+            bazarkari: items.bazarkari?.id || "",
+            totalmeal: items.totalMeal,
+            totaltk : items?.totalTk,
+            extratk: items.extraTk,
+            comments: items.comments || "",
+            image : items.profile,
+            
+        });
+    }
+}, [items]);
     
+const image = `${import.meta.env.VITE_API_URL}${"/"}${items?.profile}`;
     
       const customStylesS = {
         control: (provided, state) => ({
@@ -133,8 +170,8 @@ const AddMyReport = () => {
     
     return (
        <>
-          <Helmet><title>Manager || Public || Add My Report</title></Helmet>
-       <DashCustomNav name={"Add My Report"} listroute={'/public/myreport'} />
+          <Helmet><title>Manager || Public || Update My Report</title></Helmet>
+       <DashCustomNav name={"Update My Report"} listroute={'/public/myreport'} />
        
        <div className="flex justify-items-center pt-5 px-5 pb-10">
     
@@ -269,6 +306,10 @@ const AddMyReport = () => {
              
                 }}
               />
+
+              {
+                items?.profile && <a href={image} target='blank' className='text-[#0284C7] font-semibold underline'>View</a>
+              }
              
               <button
                 type="button"
@@ -288,7 +329,7 @@ const AddMyReport = () => {
               className="w-full bg-[#0284C7] text-white mt-10 rounded-lg h-[40px] border-2 font-bold"
               type="submit"
             >
-               Send Report
+               Update Report
             </button>
            
 
@@ -302,4 +343,4 @@ const AddMyReport = () => {
     );
 };
 
-export default AddMyReport;
+export default UpdateReport;

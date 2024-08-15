@@ -115,13 +115,13 @@ const AddProduct = () => {
 
 
           name: values.name,
-          fatherName: values.fatherName,
-          motherName: values.motherName,
-          fatherNumber: values.fatherNumber,
+          fatherName: values.fatherName || "",
+          motherName: values.motherName || "",
+          fatherNumber: values.fatherNumber || "",
           motherNumber: values.motherNumber,
-          brithCertifecate: values.BrithCertifecate,
-          number: values.number,
-          session : values.session,
+          brithCertifecate: values.BrithCertifecate || "",
+          number: values.number || "",
+          session : values.session || "",
           instituteName: {
             id: values?.institute && parseInt(values?.institute),
           },
@@ -136,11 +136,11 @@ const AddProduct = () => {
           bloodGroup: {
             id: values?.blood && parseInt(values?.blood),
           },
-          nid : values.nid,
-          address : values.address,
-          joiningDate : values.date,
-          profile : values.image,
-          email : values.email,
+          nid : values.nid || "",
+          address : values.address || "",
+          joiningDate : values.date || "",
+          profile : values.image || "",
+          email : values.email || "",
       
           
           // date: new Date()?.split("T")[0],

@@ -5,6 +5,7 @@ import { TbNews } from "react-icons/tb";
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai"; // Import icons for open and close
 import { TfiGallery } from "react-icons/tfi";
+import Marquee from 'react-fast-marquee';
 const PublicNavber = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -147,6 +148,8 @@ const PublicNavber = () => {
                     </Link>
                 </div>
             )}
+
+   
         </>
     );
 };
