@@ -71,7 +71,10 @@ const MyreportDetails = () => {
                     <td className="px-4 py-2 font-semibold border border-gray-200">Report Date</td>
                     <td className="px-4 py-2 border border-gray-200">{formattedDate}</td>
                   </tr>
-
+                  <tr>
+                    <td className="px-4 py-2 font-semibold border border-gray-200">Bazarkari</td>
+                    <td className="px-4 py-2 border border-gray-200">Ashikur Rahman Ovi , Nasir</td>
+                  </tr>
                   <tr>
                     <td className="px-4 py-2 font-semibold border border-gray-200">Total Tk</td>
                     <td className="px-4 py-2 border border-gray-200">{data?.totalTk}Tk</td>

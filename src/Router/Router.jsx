@@ -38,6 +38,8 @@ import MonyhlyReportUpdate from "../DashPages/Update/MonthlyReportUpdate/Monyhly
 import UpdateReport from "../DashPages/Update/MyReport/UpdateReport";
 import ReportDetails from "../DashPages/Details/MyReport/ReportDetails";
 import MyreportDetails from "../DashPages/Details/MyReport/MyreportDetails";
+import UserList from "../DashPages/Table/User/UserList";
+import Adduser from "../DashPages/Form/User/Adduser";
 
 const router = createBrowserRouter([
 
@@ -201,6 +203,18 @@ const router = createBrowserRouter([
 {
   path: "/dashboard/reportdtails/:id",
   element:<ReportDetails/>
+},
+
+// user
+
+{
+  path: "/dashboard/userlist",
+  element:<UserList/>
+},
+
+{
+  path: "/dashboard/adduser",
+  element:<Adduser/>
 },
 
     // setting

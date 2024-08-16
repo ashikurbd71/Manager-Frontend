@@ -9,6 +9,7 @@ import { FaUserGear } from "react-icons/fa6";
 import { TbNews } from "react-icons/tb";
 import { FaAward } from "react-icons/fa";
 import { GoReport } from "react-icons/go";
+import { LuServer } from "react-icons/lu";
 const Sideber = () => {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
 
@@ -102,6 +103,18 @@ const Sideber = () => {
           </div>
         </NavLink>
 
+        
+        <NavLink
+          to="/dashboard/userlist"
+          className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? "bg-[#0284C7]   pt-2 rounded-md text-white " : ""
+          }
+        >
+          <div className="flex justify-center -ml-8  px-14  pb-2 hover:text-gray-600 items-center gap-1">
+            <LuServer className="text-lg" />
+            <h1 className="text-lg font-medium">Users Role</h1>
+          </div>
+        </NavLink>
         {/* setting */}
 
         <div>

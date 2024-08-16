@@ -6,6 +6,8 @@ import { CgProfile } from "react-icons/cg";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai"; // Import icons for open and close
 import { TfiGallery } from "react-icons/tfi";
 import Marquee from 'react-fast-marquee';
+import { MdFoodBank } from 'react-icons/md';
+import { GoReport } from 'react-icons/go';
 const PublicNavber = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -56,7 +58,7 @@ const PublicNavber = () => {
                         }
                     >
                         <div className="flex justify-center items-center gap-1 hover:text-gray-600">
-                            <TbNews className="text-lg"/>
+                            <GoReport className="text-lg"/>
                             <h1 className="text-lg font-medium">My Report</h1>
                         </div>
                     </NavLink>
@@ -125,7 +127,7 @@ const PublicNavber = () => {
                         }
                     >
                         <div className="flex justify-center items-center gap-1 hover:text-gray-600">
-                            <TbNews className="text-lg"/>
+                            <GoReport className="text-lg"/>
                             <h1 className="text-lg font-medium">My Report</h1>
                         </div>
                     </NavLink>

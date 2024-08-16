@@ -23,7 +23,7 @@ const PublicLyaout = () => {
         speed={50}
         gradient={false}
       >
-       <h1>I love You</h1>
+       <h1>I love You Afrin</h1>
       </Marquee>
     </div>
   </div>

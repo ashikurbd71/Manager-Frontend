@@ -62,12 +62,12 @@ const ReportDetails = () => {
           <div className="  items-center p-10 flex"></div>
 
           <div className="flex flex-col mx-10 gap-1 ">
-            <h1 className="text-lg font-bold text-[#0284C7]">Report Submit By : </h1>
+            <h1 className="text-lg font-bold text-[#0284C7]">Report Send By : </h1>
             <h1 className="text-left text-[16px]  font-semibold  ">Ashikur Rahman Ovi</h1>
 
             <h1 className="text-gray-500  -mt-2">Rangpur Ideal Institute Of Technology</h1>
             <h1 className="text-gray-500  -mt-2">
-               Computer Sinece And Technology (4th)
+               Computer science  And Technology (4th)
             </h1>
           </div>
 
@@ -82,9 +82,14 @@ const ReportDetails = () => {
                   </tr>
 
                   <tr>
+                    <td className="px-4 py-2 font-semibold border border-gray-200">Bazarkari</td>
+                    <td className="px-4 py-2 border border-gray-200">Ashikur Rahman Ovi , Nasir</td>
+                  </tr>
+                  <tr>
                     <td className="px-4 py-2 font-semibold border border-gray-200">Total Tk</td>
                     <td className="px-4 py-2 border border-gray-200">{data?.totalTk}Tk</td>
                   </tr>
+
 
                   <tr>
                     <td className="px-4 py-2 font-semibold border border-gray-200">Total Meal</td>
