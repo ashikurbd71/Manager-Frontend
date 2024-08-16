@@ -2,12 +2,13 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FaMagnet, FaMoneyBillTransfer, FaUserPlus } from "react-icons/fa6";
-import { MdArrowDropDown, MdArrowRight, MdOutlineDashboard, MdOutlineSettings } from "react-icons/md";
+import { MdArrowDropDown, MdArrowRight, MdFoodBank, MdOutlineDashboard, MdOutlineSettings } from "react-icons/md";
 import img from "../assets/manager.png";
 import { LuCircleDot } from "react-icons/lu";
 import { FaUserGear } from "react-icons/fa6";
 import { TbNews } from "react-icons/tb";
 import { FaAward } from "react-icons/fa";
+import { GoReport } from "react-icons/go";
 const Sideber = () => {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
 
@@ -84,7 +85,7 @@ const Sideber = () => {
           }
         >
           <div className="flex justify-center  pb-2 hover:text-gray-600 items-center gap-1">
-            <FaAward className="text-lg" />
+            <MdFoodBank className="text-lg" />
             <h1 className="text-lg font-medium">Meal Manage</h1>
           </div>
         </NavLink>
@@ -96,7 +97,7 @@ const Sideber = () => {
           }
         >
           <div className="flex justify-center pb-2 ml-4 hover:text-gray-600 items-center gap-1">
-            <FaMoneyBillTransfer className="text-lg" />
+            <GoReport className="text-lg" />
             <h1 className="text-lg font-medium">Monthly Report</h1>
           </div>
         </NavLink>

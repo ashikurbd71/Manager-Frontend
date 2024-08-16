@@ -373,7 +373,7 @@ const MealManage = () => {
     <Helmet><title>mealmanage || Meal Manage</title></Helmet>
 
     
-    <h1 className="text-2xl font-medium text-gray-600 p-5">Meal Manage</h1>
+    <h1 className="text-xl font-semibold text-[#0284C7] p-5">Meal Manage</h1>
 
     <MealManagenav onmeal={onmeal} daliyamount={daliyamount} formattedDate={formattedDate} setActive={setActive} setSearch={setSearch} secondroute={'/dashboard/extralist'} route={'/dashboard/addmeal'}/>
 

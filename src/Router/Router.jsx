@@ -76,10 +76,7 @@ const router = createBrowserRouter([
         element:<UpdateReport/>
       },
 
-      {
-        path: "/public/reportdtails/:id",
-        element:<ReportDetails/>
-      },
+  
 
       {
         path: "/public/myreportdtails/:id",
@@ -197,6 +194,13 @@ const router = createBrowserRouter([
 {
   path: "/dashboard/detailsnotice/:id",
   element:<NoticeDetails/>
+},
+
+// repoptr
+
+{
+  path: "/dashboard/reportdtails/:id",
+  element:<ReportDetails/>
 },
 
     // setting

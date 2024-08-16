@@ -225,7 +225,7 @@ console.log(items)
 
     <Helmet><title>Manager || Department List</title></Helmet>
     
-    <h1 className="text-2xl font-medium text-gray-600 p-5">Department List</h1>
+    <h1 className="text-xl font-semibold text-[#0284C7] p-5">Department List</h1>
 
     <Updateepartment isOpen={isOpen} setIsOpen={setIsOpen} update={update} refetch={refetch} />
     <Tablenav setSearch={setSearch} setActive={setActive} route={'/dashboard/setting/adddepartment'}/>

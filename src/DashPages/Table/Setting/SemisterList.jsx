@@ -229,7 +229,7 @@ console.log(items)
     <Helmet><title>Manager || Semister List</title></Helmet>
 
     
-    <h1 className="text-2xl font-medium text-gray-600 p-5">Semister List</h1>
+    <h1 className="text-xl font-semibold text-[#0284C7] p-5">Semister List</h1>
 
     <UpdateSemiter isOpen={isOpen} setIsOpen={setIsOpen} update={update} refetch={refetch} />
 

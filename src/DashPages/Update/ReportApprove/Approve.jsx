@@ -92,7 +92,7 @@ const Approve = ({isOpen,setIsOpen,update,refetch}) => {
 
   const Options =[
     {value : "Pending" , label : "Pending"},
-    {value : "Approve" , label : "Approve"}
+    {value : "Approved" , label : "Approved"}
   ]
 
     return (

@@ -239,7 +239,7 @@ const ManagerList = () => {
     <Helmet><title>Manager || Manager list</title></Helmet>
 
     
-    <h1 className="text-2xl font-medium text-gray-600 p-5">Manager List</h1>
+    <h1 className="text-xl font-semibold text-[#0284C7] p-5">Manager List</h1>
 
     <Tablenav setActive={setActive} setSearch={setSearch} route={'/dashboard/addmanager'}/>
 

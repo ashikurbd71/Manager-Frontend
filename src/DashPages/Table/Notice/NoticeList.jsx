@@ -243,7 +243,7 @@ console.log(items)
     <Helmet><title>Manager || Notice list</title></Helmet>
 
     
-    <h1 className="text-2xl font-medium text-gray-600 p-5">Notice List</h1>
+    <h1 className="text-xl font-semibold text-[#0284C7] p-5">Notice List</h1>
 
     <Tablenav setActive={setActive} setSearch={setSearch} route={'/dashboard/addnotice'}/>
 

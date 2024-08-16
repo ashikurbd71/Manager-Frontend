@@ -121,7 +121,7 @@ console.log(items)
         </Link> */}
 
              {/* View Icon */}
-          <Link to={`/public/reportdtails/${row.original.id}`}>
+          <Link to={`/dashboard/reportdtails/${row.original.id}`}>
           <FaEye title="View Deatails"  className=" text-yellow-600 cursor-pointer"  />
           </Link>
           
@@ -187,7 +187,7 @@ console.log(items)
     <Helmet><title>Manager || Monthly Report</title></Helmet>
 
     
-    <h1 className="text-lg font-semibold text-[#0284C7] p-5">Monthly Report</h1>
+    <h1 className="text-xl font-semibold text-[#0284C7] p-5">Monthly Report</h1>
 
     <MonthlyReportnav    setActive={setActive} setSearch={setSearch} />
 
