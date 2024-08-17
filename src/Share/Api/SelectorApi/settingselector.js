@@ -41,3 +41,11 @@ export const getMember = async () => {
     console.log("data", data);
     return data
 }
+
+export const getManager = async () => {
+
+    const { data } = await axoissecure.get(`/manager`)
+    console.log("data", data);
+    return data
+}
+

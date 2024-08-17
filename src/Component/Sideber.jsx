@@ -115,6 +115,18 @@ const Sideber = () => {
             <h1 className="text-lg font-medium">Users Role</h1>
           </div>
         </NavLink>
+
+        <NavLink
+          to="/dashboard/managerrole"
+          className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? "bg-[#0284C7]   pt-2 rounded-md text-white " : ""
+          }
+        >
+          <div className="flex justify-center   px-5  pb-2 hover:text-gray-600 items-center gap-1">
+            <LuServer className="text-lg" />
+            <h1 className="text-lg font-medium">Manager Role</h1>
+          </div>
+        </NavLink>
         {/* setting */}
 
         <div>

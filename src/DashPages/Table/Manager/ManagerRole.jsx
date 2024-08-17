@@ -16,7 +16,7 @@ import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 
 
 
-const UserList = () => {
+const ManagerRole = () => {
   const [search, setSearch] = useState("");
   const [rowPerPage, setRowPerPage] = useState(5);
   const [page, setPage] = useState(1);
@@ -210,25 +210,27 @@ console.log(items)
   };
 
  
-
-
-
   const data = useMemo(() => {
     return items
       .map(item => ({
         ...item,
         // Assuming `item` contains a list of roles and `item.manager` is available
         sl: rowPerPage === "All" ? 0 : 0, // Placeholder, will be updated later
-        name: item.userName?.name || '', // Default to empty string if no manager name
+        name: item.manager?.name || '', // Default to empty string if no manager name
         role: item.role,
         email: item.email,
       }))
-      .filter(item => item.role === "Member") // Filter to keep only items with role "Manager"
+      .filter(item => item.role === "Manager") // Filter to keep only items with role "Manager"
       .map((item, index) => ({
         ...item,
         sl: rowPerPage === "All" ? index + 1 : index + 1 + (page - 1) * rowPerPage,
       }));
   }, [items, rowPerPage, page]);
+  
+  
+  
+ 
+  
   const {
     getTableProps,
     getTableBodyProps,
@@ -244,12 +246,12 @@ console.log(items)
  {/* <Updateuser isOpen={isOpen} setIsOpen={setIsOpen} update={update} refetch={refetch} /> */}
     {/* <useHelmet name={'Manager || De list'} /> */}
 
-    <Helmet><title>Manager || User List</title></Helmet>
+    <Helmet><title>Manager || Manager Role List</title></Helmet>
 
     
-    <h1 className="text-xl font-semibold text-[#0284C7] p-5">User List</h1>
+    <h1 className="text-xl font-semibold text-[#0284C7] p-5">Manager Role List</h1>
 
-    <Tablenav    setActive={setActive} setSearch={setSearch} route={'/dashboard/adduser'}/>
+    <Tablenav    setActive={setActive} setSearch={setSearch} route={'/dashboard/addmanagerrole'}/>
 
  
     <div className="px-6 mb-10 bg-gray-100 rounded-lg">
@@ -292,4 +294,4 @@ console.log(items)
   );
 };
 
-export default UserList;
+export default ManagerRole;

@@ -40,6 +40,9 @@ import ReportDetails from "../DashPages/Details/MyReport/ReportDetails";
 import MyreportDetails from "../DashPages/Details/MyReport/MyreportDetails";
 import UserList from "../DashPages/Table/User/UserList";
 import Adduser from "../DashPages/Form/User/Adduser";
+import ManagerRole from "../DashPages/Table/Manager/ManagerRole";
+import AddManagerRole from "../DashPages/Form/Manager/AddManagerRole";
+import Login from "../Auth/Login";
 
 const router = createBrowserRouter([
 
@@ -217,6 +220,15 @@ const router = createBrowserRouter([
   element:<Adduser/>
 },
 
+{
+  path: "/dashboard/managerrole",
+  element:<ManagerRole/>
+},
+
+{
+  path: "/dashboard/addmanagerrole",
+  element:<AddManagerRole/>},
+
     // setting
 
     // departmnet
@@ -264,7 +276,14 @@ const router = createBrowserRouter([
       }
 
     ]// Changed the case to match convention and added closing tags
+
+  
   },
+
+{
+path:"/login",
+element : <Login/>
+}
 
   
 ]);
