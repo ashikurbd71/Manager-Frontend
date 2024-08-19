@@ -3,30 +3,45 @@ import img from "../assets/manager.png";
 import {useFormik } from "formik";
 import axoissecure from '../Hooks/Axoisscure';
 import { toast } from 'react-toastify';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { getTokenFromLocalStorage, setTokenToLocalStorage } from './token';
 const Login = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
 
-    const formik = useFormik({
-        initialValues: {
-            bloodgroup: "",
-          
-        },
+  const token = getTokenFromLocalStorage();
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
 
-        onSubmit: async (values, { resetForm }) => {
-          console.log(values)
-          try {
-            await axoissecure.post("/auth/login", {
-              username: values.username,
-              password: values.password,
-            });
-            console.log("Product added successfully:", values);
-            toast.success("Login successfully!");
-            resetForm();
-          } catch (error) {
-            toast.error("Incorrect Password or Email");
-            console.error("Error adding Blood Group:", error);
-          }
-        },
-      });
+    },
+    onSubmit: async (values, { resetForm }) => {
+      console.log(values);
+      try {
+        const response = await axoissecure.post("/auth/login", {
+          username: values.username,
+          password: values.password,
+        });
+  
+        if (response.status === 201) {
+          const { access_token } = response.data;
+  
+          // Set the token in localStorage
+          setTokenToLocalStorage(access_token);
+          console.log("Login successful:", values);
+          toast.success("Login successfully!");
+          navigate(location?.state ? location.state : "/");
+  
+          resetForm();
+        }
+      } catch (error) {
+        toast.error("Incorrect Password or Email");
+        console.error("Error logging in:", error);
+      }
+    },
+  });
+  
     
     
     return (
