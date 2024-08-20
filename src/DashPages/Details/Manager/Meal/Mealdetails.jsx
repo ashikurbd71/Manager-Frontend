@@ -8,6 +8,7 @@ import axoissecure from "../../../../Hooks/Axoisscure";
 import DashCustomNav from "../../../../Share/Formnav";
 import { MdContactEmergency } from "react-icons/md";
 import MealEmergency from "../../../Update/MealManager/MealEmergency/MealEmergency";
+import GuestMeal from "../../../Update/MealManager/MealEmergency/GuestMeal";
 
 const Mealdetails = () => {
   const [member, setMember] = useState();
@@ -73,10 +74,15 @@ const Mealdetails = () => {
   const extramoney = (extra / totalitem).toFixed(2);
 
   const [isOpen, setIsOpen] = useState(null);
+  const [isOpens, setIsOpens] = useState(null);
   const [update, setUpdate] = useState();
 
   const openModal = (id) => {
     setIsOpen(true);
+    setUpdate(id);
+  };
+  const openModals = (id) => {
+    setIsOpens(true);
     setUpdate(id);
   };
 
@@ -86,18 +92,25 @@ const Mealdetails = () => {
         <title>Manager || Meal details</title>
       </Helmet>
       <MealEmergency isOpen={isOpen} setIsOpen={setIsOpen} update={update} refetch={refetch} />
+      <GuestMeal isOpen={isOpens} setIsOpen={setIsOpens} update={update} refetch={refetch} />
       <DashCustomNav name={"Meal details"} listroute={"/dashboard/mealmanagelist"} />
 
       <div className="px-10 pb-10">
         <div className="flex  justify-end gap-5 pb-5">
           <div
             onClick={() => openModal(member)}
-            className="flex border-2 bg-red-500  cursor-pointer item items-center px-3 py-1 gap-1"
+            className="flex border-2 bg-red-500 rounded-md  cursor-pointer item items-center px-3 py-1 gap-1"
           >
-            <h1 className="text-lg font-medium text-white">Emergency</h1>
+            <h1 className="text-lg font-medium text-white">Loan</h1>
+          </div>
+          <div
+            onClick={() => openModals(member)}
+            className="flex border-2 bg-blue-500 rounded-md  cursor-pointer item items-center px-3 py-1 gap-1"
+          >
+            <h1 className="text-lg font-medium text-white">Guest On</h1>
           </div>
 
-          <div className="flex border-2 cursor-pointer item items-center px-3 py-1 gap-1">
+          <div className="flex border-2 rounded-md cursor-pointer item items-center px-3 py-1 gap-1">
             <FaPrint className="text-bl text-blue-400" />
             <h1 className="text-lg font-medium text-gray-500"> Print</h1>
           </div>

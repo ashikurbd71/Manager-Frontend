@@ -338,7 +338,7 @@ const MealManage = () => {
       totaltk : item?.addMoney,
       totalmeal: item?.totalMeal,
       meal : item?.eatMeal,
-      memberblance :item?.blance ,
+      memberblance :item?.blance,
       memberbloan : item?.loan || "00",
       extra :  (extra / meal).toFixed(2) || 'loading...',
     //   startDate: item?.startDate?.split('T')[0],

@@ -119,7 +119,7 @@ const ManagerUpdate = () => {
         }});
         console.log("Product added successfully:", values);
         toast.success("Manager Added successfully!");
-        resetForm();
+        refetch();
       } catch (error) {
         toast.error("Error adding Manager");
         console.error("Error adding Manager:", error);

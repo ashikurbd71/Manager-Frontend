@@ -10,7 +10,7 @@ import axoissecure from '../../../../Hooks/Axoisscure';
 
 
   
-const MealEmergency = ({isOpen,setIsOpen,update,refetch}) => {
+const GuestMeal = ({isOpen,setIsOpen,update,refetch}) => {
 
     console.log(update?.name)
 
@@ -20,7 +20,7 @@ const MealEmergency = ({isOpen,setIsOpen,update,refetch}) => {
 
     const formik = useFormik({
         initialValues: {
-          loan: "",
+       
           guest : ""
           
         },
@@ -29,16 +29,15 @@ const MealEmergency = ({isOpen,setIsOpen,update,refetch}) => {
           console.log(values)
           try {
             await axoissecure.patch(`/mealmanage/${update?.id}`, {
-
-              
-              loan:  parseInt(update?.loan) + parseInt(values.loan) ,
-              blance: parseInt(update?.blance) + parseInt(values?.loan) || parseInt(update?.blance ),
-              
+         
+              guest : parseInt(values?.guest),
+              blance : parseInt(update?.blance ) - ( 35 *  parseInt(values.guest)) || parseInt(update?.blance ),
+              eatMeal : parseInt(update?.eatMeal) + parseInt(values.guest) || parseInt(update?.eatMeal)
             
              
             });
             console.log("Product added successfully:", values);
-            toast.success("Emergency Help  successful!");
+            toast.success("Guest Help  successful!");
             refetch();
             setIsOpen(false)
 
@@ -68,27 +67,26 @@ const MealEmergency = ({isOpen,setIsOpen,update,refetch}) => {
         >
           <div className="grid  grid-cols-1 gap-3">
 
-            {/* institute */}
+           
+
+            {/* short name */}
             <div className="flex flex-col">
-              <label htmlFor="loan" className="pb-1 text-[#726f6f]">
-                1. Loan {" "}
-          
+              <label htmlFor="name" className="pb-1 text-[#726f6f]">
+                1. Total Guest {" "}
+              
               </label>
               <input
               placeholder="00"
-                id="loan"
-                name="loan"
+                id="guest"
+                name="guest"
                            className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
                 type="text"
                 onChange={formik.handleChange}
-              
                 onBlur={formik.handleBlur}
-                value={formik.values.loan}
+                value={formik.values.guest}
               />
            
             </div>
-
-          
                   
 
           </div>
@@ -117,4 +115,4 @@ const MealEmergency = ({isOpen,setIsOpen,update,refetch}) => {
     );
 };
 
-export default MealEmergency;
+export default GuestMeal;

@@ -13,70 +13,70 @@ import { getBlood, getDepartment, getInstitute, getSemister } from "../../Share/
 
 // Validation Schema
 const Schema = Yup.object().shape({
-  name: Yup.string()
-  .label('Name')
-  .required(),
+  // name: Yup.string()
+  // .label('Name')
+  // .required(),
 
-  fatherName: Yup.string()
-  .label('Father Name')
-  .required(),
+  // fatherName: Yup.string()
+  // .label('Father Name')
+  // .required(),
 
-  motherName: Yup.string()
-  .label('Mother Name')
-  .required(),
+  // motherName: Yup.string()
+  // .label('Mother Name')
+  // .required(),
 
-  session: Yup.string()
-  .label('Session')
-  .required(),
+  // session: Yup.string()
+  // .label('Session')
+  // .required(),
 
-  number: Yup.string()
-  .matches(/^(01[3-9]\d{8})$/, 'Please provide a valid number')
-     .typeError('Please Provide Valid Number')
-     .label("Number")
-    .required(),
-    motherNumber: Yup.string()
-  .matches(/^(01[3-9]\d{8})$/, 'Please provide a valid number')
-     .typeError('Please Provide Valid Number')
-     .label("Mother Number")
-    .required(),
-    fatherNumber: Yup.string()
-  .matches(/^(01[3-9]\d{8})$/, 'Please provide a valid number')
-     .typeError('Please Provide Valid Number')
-     .label("Father Number")
-    .required(),
-    institute: Yup.string()
-    .label('Institute Name')
-    .required(),
-    department: Yup.string().required().label('Department'),
+  // number: Yup.string()
+  // .matches(/^(01[3-9]\d{8})$/, 'Please provide a valid number')
+  //    .typeError('Please Provide Valid Number')
+  //    .label("Number")
+  //   .required(),
+  //   motherNumber: Yup.string()
+  // .matches(/^(01[3-9]\d{8})$/, 'Please provide a valid number')
+  //    .typeError('Please Provide Valid Number')
+  //    .label("Mother Number")
+  //   .required(),
+  //   fatherNumber: Yup.string()
+  // .matches(/^(01[3-9]\d{8})$/, 'Please provide a valid number')
+  //    .typeError('Please Provide Valid Number')
+  //    .label("Father Number")
+  //   .required(),
+  //   institute: Yup.string()
+  //   .label('Institute Name')
+  //   .required(),
+  //   department: Yup.string().required().label('Department'),
     
-    nid: Yup.string()
-    .matches( /^\d{17}$/i,"Please Provide Valid Nid Number"),
+  //   nid: Yup.string()
+  //   .matches( /^\d{17}$/i,"Please Provide Valid Nid Number"),
 
-    BrithCertifecate: Yup.string()
-    .matches( /^\d{17}$/i,"Please Provide Valid Brith Certifecate Number"),
+  //   BrithCertifecate: Yup.string()
+  //   .matches( /^\d{17}$/i,"Please Provide Valid Brith Certifecate Number"),
 
-    department: Yup.string()
-    .label('Departmnet')
-    .required(),
-    blood: Yup.string()
-    .label('Blood')
-    .required(),
-    date: Yup.string()
-    .label('Joining Date')
-    .required(),
+  //   department: Yup.string()
+  //   .label('Departmnet')
+  //   .required(),
+  //   blood: Yup.string()
+  //   .label('Blood')
+  //   .required(),
+  //   date: Yup.string()
+  //   .label('Joining Date')
+  //   .required(),
 
-    address: Yup.string()
-    .label('Address')
-    .required(),
+  //   address: Yup.string()
+  //   .label('Address')
+  //   .required(),
 
-    semister: Yup.string()
-    .label('Semister')
-    .required(),
+  //   semister: Yup.string()
+  //   .label('Semister')
+  //   .required(),
 
-    email: Yup.string()
-    .label('Email')
-    .matches( /^[^\s@]+@[^\s@]+\.[^\s@]+$/,'Please provide Valid Email')
-    .required(),
+  //   email: Yup.string()
+  //   .label('Email')
+  //   .matches( /^[^\s@]+@[^\s@]+\.[^\s@]+$/,'Please provide Valid Email')
+  //   .required(),
     
 });
 

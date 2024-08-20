@@ -49,13 +49,24 @@ const ReportDetails = () => {
       <DashCustomNav name={"Report Details"} listroute={"/dashboard/monthlyreport"} />
 
       <div className="px-10 pb-10">
-      <div className='flex  justify-end  pb-5'>
+      <div className='flex  justify-end gap-4  pb-5'>
+
+{
+
+  data?.reportStatus === 'Approved' ? <>
+  
+  
+<div className='flex border-2 bg-[#0284C7] rounded-md   item items-center px-3 py-1 gap-1'>
+
+<h1 className='text-lg font-medium text-white'>{data?.reportStatus} </h1>
+</div>
+  </> : ""
+}
 
 <div className='flex border-2 cursor-pointer item items-center px-3 py-1 gap-1'>
 <FaPrint className='text-bl text-blue-400'/>
 <h1 className='text-lg font-medium text-gray-500'> Print</h1>
 </div>
-
 </div>
 
         <div className=" bg-white min min-h-screen">

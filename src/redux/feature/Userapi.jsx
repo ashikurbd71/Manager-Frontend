@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
 import { setUser } from './auth';
 import axoissecure from '../../Hooks/Axoisscure';
 

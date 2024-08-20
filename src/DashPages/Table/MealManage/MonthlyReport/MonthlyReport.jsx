@@ -129,7 +129,7 @@ console.log(items)
           {/* <FaTrashAlt title="Delete" onClick={() => handleDelete(row.original.id)} className="  text-red-500 cursor-pointer"  /> */}
           
           {
-            row.original.reportStatus === "Approve" ? "" : <FaPaperPlane onClick={() => HandleApprove(row.original)} title="Approve"  className=" text-blue-600 cursor-pointer"  />
+            row.original.reportStatus === "Approved" ? "" : <FaPaperPlane onClick={() => HandleApprove(row.original)} title="Approve"  className=" text-blue-600 cursor-pointer"  />
           }
        
         
