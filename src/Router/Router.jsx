@@ -43,6 +43,9 @@ import Adduser from "../DashPages/Form/User/Adduser";
 import ManagerRole from "../DashPages/Table/Manager/ManagerRole";
 import AddManagerRole from "../DashPages/Form/Manager/AddManagerRole";
 import Login from "../Auth/Login";
+import PostDetails from './../DashPages/Form/CreatePost/PostLayout/Postpage/PostDetails';
+import PostAbout from "../DashPages/Form/CreatePost/PostLayout/PostAbout";
+import Postphoto from "../DashPages/Form/CreatePost/PostLayout/Postpage/Postphoto";
 
 const router = createBrowserRouter([
 
@@ -55,7 +58,27 @@ const router = createBrowserRouter([
     children:[
       {
         path: "/public/profilecard",
-        element:<ProfileCard/>
+        element:<ProfileCard/>,
+        children:[{
+     path:"/public/profilecard",
+     element : <PostDetails/>
+        },
+
+        {
+          path:"/public/profilecard/about",
+          element : <PostAbout/>
+             },
+
+             {
+              path:"/public/profilecard/photo",
+              element : <Postphoto/>
+                 }
+          
+
+
+      
+      
+      ]
       },
       {
         path: "/public/notice",
@@ -91,7 +114,12 @@ const router = createBrowserRouter([
       {
         path: "/public/addmyreport",
         element:<AddMyReport/>
-      }
+      },
+
+      // post
+
+
+
 
     ]
    }
@@ -224,6 +252,7 @@ const router = createBrowserRouter([
   path: "/dashboard/managerrole",
   element:<ManagerRole/>
 },
+
 
 {
   path: "/dashboard/addmanagerrole",
