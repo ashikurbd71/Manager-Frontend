@@ -22,8 +22,11 @@ const CreatePost = ({ isOpen, setIsOpen, update, refetch }) => {
         formData.append('email', 'ovi@gmail.com');
         formData.append('date', new Date().toISOString());
         formData.append('title', values.title);
-        
-       formData.append(`profile`, values.images);
+     // Append images in the format [0: {path: 'file_path'}, ...]
+values.images.forEach((image, index) => {
+  formData.append(`profile[${index}][path]`, image); // Assuming `image` is the file object
+});
+
         
       
         
@@ -57,7 +60,6 @@ const CreatePost = ({ isOpen, setIsOpen, update, refetch }) => {
   });
   
 
-  // const formik = useFormik({
   //   initialValues: {
       
   //     images : [],
@@ -93,10 +95,30 @@ const CreatePost = ({ isOpen, setIsOpen, update, refetch }) => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
+  
+    // Create new image previews
     const newImages = files.map(file => URL.createObjectURL(file));
     setImagePreviews(prev => [...prev, ...newImages]);
-    formik.setFieldValue('images', [...formik.values.images, ...files]);
+  
+    // Append new files to formik values
+    const updatedImages = [...formik.values.images, ...files];
+    formik.setFieldValue('images', updatedImages);
+  
+    // Prepare the images array in the format you need: [0: { path: 'file_path' }]
+    const imagesArray = updatedImages.map((file, index) => ({
+      path: URL.createObjectURL(file)
+    }));
+  
+    // If you need to convert this into a structure like [0: {path: 'file_path'}, ...]
+    const imagesObject = {};
+    imagesArray.forEach((image, index) => {
+      imagesObject[index] = image;
+    });
+  
+    // If needed, you can update FormData or pass this object to your form submission
+    console.log(imagesObject);
   };
+  
 
   const handleImageDelete = (index) => {
     const newPreviews = imagePreviews.filter((_, i) => i !== index);

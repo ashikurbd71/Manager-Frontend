@@ -20,7 +20,7 @@ const PublicGallery = () => {
       console.log(items)
 
 
-       const i = items?.profile?.map((i) => i.path)
+       const i = items?.map((i) => i.profile)
 
        console.log(i)
       
