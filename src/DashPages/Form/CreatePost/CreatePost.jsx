@@ -23,9 +23,9 @@ const CreatePost = ({ isOpen, setIsOpen, update, refetch }) => {
         formData.append('date', new Date().toISOString());
         formData.append('title', values.title);
      // Append images in the format [0: {path: 'file_path'}, ...]
-values.images.forEach((image, index) => {
-  formData.append(`profile[${index}][path]`, image); // Assuming `image` is the file object
-});
+     values.images.forEach((image, index) => {
+    formData.append(`profile[${index}][path]`, image); 
+     });
 
         
       
@@ -43,9 +43,7 @@ values.images.forEach((image, index) => {
   
         // Make the POST request with FormData
         await axoissecure.post('/image', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+          
         });
   
         toast.success('Post uploaded successfully!');
@@ -100,23 +98,32 @@ values.images.forEach((image, index) => {
     const newImages = files.map(file => URL.createObjectURL(file));
     setImagePreviews(prev => [...prev, ...newImages]);
   
-    // Append new files to formik values
+    // Append new files to Formik values
     const updatedImages = [...formik.values.images, ...files];
     formik.setFieldValue('images', updatedImages);
   
-    // Prepare the images array in the format you need: [0: { path: 'file_path' }]
-    const imagesArray = updatedImages.map((file, index) => ({
+    // Prepare the images array in the format you need: [{ path: 'file_path' }, ...]
+    const imagesArray = updatedImages.map(file => ({
       path: URL.createObjectURL(file)
     }));
   
-    // If you need to convert this into a structure like [0: {path: 'file_path'}, ...]
-    const imagesObject = {};
-    imagesArray.forEach((image, index) => {
-      imagesObject[index] = image;
-    });
+    // Convert this array into a structure like {0: {path: 'file_path'}, 1: {path: 'file_path'}, ...}
+    const imagesObject = imagesArray.reduce((acc, image, index) => {
+      acc[index] = image;
+      return acc;
+    }, {});
   
     // If needed, you can update FormData or pass this object to your form submission
     console.log(imagesObject);
+  
+    // Example: Append images to FormData
+    const formData = new FormData();
+    files.forEach((file, index) => {
+      formData.append(`images[${index}]`, file);
+    });
+  
+    // Log or use formData as needed
+    console.log([...formData.entries()]);
   };
   
 

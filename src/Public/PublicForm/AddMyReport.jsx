@@ -34,7 +34,7 @@ const AddMyReport = () => {
           totaltk: "",
           totalmeal : "",
           extratk : "",
-          bazarkari : "",
+          bazarkari : [],
           comments : "",
           image : "",
 
@@ -147,25 +147,29 @@ const AddMyReport = () => {
             {/* institute */}
 
             <div className="flex flex-col">
-              <label htmlFor="bazarkari" className="pb-1 text-[#726f6f]">
-                1. Bazarkari {" "}
-                <span className="text-xl font-semibold text-red-500">*</span>
-              </label>
-              <Select
-              placeholder="Select Name"
-                id="bazarkari"
-                name="bazarkari"
-                isMulti
-                styles={customStylesS}
-                options={InstituteOptions}
-                onChange={(option) => formik.setFieldValue("bazarkari", option.value)}
-                onBlur={formik.handleBlur}
-                value={InstituteOptions.find(option => option.value === formik.values.bazarkari)}
-              />
-              {formik.touched.bazarkari && formik.errors.bazarkari ? (
-                <div className="text-red-600">{formik.errors.bazarkari}</div>
-              ) : null}
-            </div>
+  <label htmlFor="bazarkari" className="pb-1 text-[#726f6f]">
+    1. Bazarkari {" "}
+    <span className="text-xl font-semibold text-red-500">*</span>
+  </label>
+  <Select
+    placeholder="Select Name"
+    id="bazarkari"
+    name="bazarkari"
+    isMulti
+    styles={customStylesS}
+    options={InstituteOptions}
+    onChange={(options) => {
+      const selectedValues = options ? options.map(option => option.value) : [];
+      formik.setFieldValue("bazarkari", selectedValues);
+    }}
+    onBlur={formik.handleBlur}
+    value={InstituteOptions.filter(option => formik.values.bazarkari.includes(option.value))}
+  />
+  {formik.touched.bazarkari && formik.errors.bazarkari ? (
+    <div className="text-red-600">{formik.errors.bazarkari}</div>
+  ) : null}
+</div>
+
 
 
 
