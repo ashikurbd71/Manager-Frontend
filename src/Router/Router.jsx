@@ -46,6 +46,9 @@ import Login from "../Auth/Login";
 import PostDetails from './../DashPages/Form/CreatePost/PostLayout/Postpage/PostDetails';
 import PostAbout from "../DashPages/Form/CreatePost/PostLayout/PostAbout";
 import Postphoto from "../DashPages/Form/CreatePost/PostLayout/Postpage/Postphoto";
+import Bazarlist from "../DashPages/Table/Bazarlist/Bazarlist";
+import AddBazarlist from "../DashPages/Form/Bazarlist/AddBazarlist";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
 
@@ -136,7 +139,7 @@ const router = createBrowserRouter([
       
       {
         path: "/dashboard/memberlist",
-        element:<ProductList/>
+        element: <PrivateRoute roles={["Manager","Super Admin"]}><ProductList/></PrivateRoute>
     },
     {
       path: "/dashboard/addmember",
@@ -204,6 +207,20 @@ const router = createBrowserRouter([
 },
 
 
+// bazarlist
+
+
+
+
+{
+  path: "/dashboard/bazalist",
+  element:<Bazarlist/>
+},
+
+{
+  path: "/dashboard/addbazalist",
+  element:<AddBazarlist/>
+},
 
 
    

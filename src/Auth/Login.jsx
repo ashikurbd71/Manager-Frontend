@@ -23,6 +23,8 @@ const Login = () => {
           username: values.username,
           password: values.password,
         });
+
+         console.log(response)
   
         if (response.status === 201) {
           const { access_token } = response.data;

@@ -1,12 +1,12 @@
 export const setTokenToLocalStorage = (token) => {
-    localStorage.setItem('token', token);
+    localStorage.setItem('managertoken', token);
   };
   
   export const getTokenFromLocalStorage = () => {
-    return localStorage.getItem('token');
+    return localStorage.getItem('managertoken');
   };
   
   export const removeTokenFromLocalStorage = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('managertoken');
   };
   

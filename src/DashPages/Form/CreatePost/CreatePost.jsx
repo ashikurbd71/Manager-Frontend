@@ -6,140 +6,66 @@ import axoissecure from '../../../Hooks/Axoisscure';
 import { toast } from 'react-toastify';
 
 const CreatePost = ({ isOpen, setIsOpen, update, refetch }) => {
-  const [imagePreviews, setImagePreviews] = useState([]);
+  const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
+
+
 
   const formik = useFormik({
     initialValues: {
-      title: '',
-      images: [],
+      title: "",
+      image: "",
+    
+     
     },
+
     onSubmit: async (values, { resetForm }) => {
       console.log(values);
       try {
-        // Create a FormData object
-        const formData = new FormData();
-        formData.append('email', 'ovi@gmail.com');
-        formData.append('date', new Date().toISOString());
-        formData.append('title', values.title);
-     // Append images in the format [0: {path: 'file_path'}, ...]
-     values.images.forEach((image, index) => {
-    formData.append(`profile[${index}][path]`, image); 
-     });
-
+        await axoissecure.post("/image", {
+          email: 'ovi@gmail.com',
+          date: new Date().toISOString(),
+         
+          title: values.title,
+          profile: values.image,
+         
         
-      
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-      
-  
-        // Make the POST request with FormData
-        await axoissecure.post('/image', formData, {
-          
-        });
-  
-        toast.success('Post uploaded successfully!');
-        resetForm(); // Reset the form after successful submission
-        // refetch();
-        setIsOpen(false);
+        },{    headers: {
+          "Content-Type": "multipart/form-data",
+        }});
+        console.log("Product added successfully:", values);
+        toast.success("Manager Added successfully!");
+        resetForm();
       } catch (error) {
-        toast.error('Error uploading images');
-        console.error('Error uploading images:', error);
+        toast.error("Error adding Manager");
+        console.error("Error adding Manager:", error);
       }
     },
   });
-  
 
-  //   initialValues: {
-      
-  //     images : [],
-
-      
-      
-  //   },
-
-  //   onSubmit: async (values, { resetForm }) => {
-  //     console.log(values)
-  //     try {
-  //       await axoissecure.post("/image", {
-         
-
-  //         email : "uuu@gmail.com",
-  //         date : new Date(),
-  //         title : values.title,
-  //         profile : values.images,
-     
-     
-  //       },{    headers: {
-  //         "Content-Type": "multipart/form-data",
-  //       }})
-  //       console.log("Product added successfully:", values);
-  //       toast.success("Report Send  successfully!");
-  //       resetForm(); 
-  //     } catch (error) {
-  //       toast.error("error report sending ");
-  //       console.error("Error adding Institute:", error);
-  //     }
-  //   },
-  // });
 
   const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-  
-    // Create new image previews
-    const newImages = files.map(file => URL.createObjectURL(file));
-    setImagePreviews(prev => [...prev, ...newImages]);
-  
-    // Append new files to Formik values
-    const updatedImages = [...formik.values.images, ...files];
-    formik.setFieldValue('images', updatedImages);
-  
-    // Prepare the images array in the format you need: [{ path: 'file_path' }, ...]
-    const imagesArray = updatedImages.map(file => ({
-      path: URL.createObjectURL(file)
-    }));
-  
-    // Convert this array into a structure like {0: {path: 'file_path'}, 1: {path: 'file_path'}, ...}
-    const imagesObject = imagesArray.reduce((acc, image, index) => {
-      acc[index] = image;
-      return acc;
-    }, {});
-  
-    // If needed, you can update FormData or pass this object to your form submission
-    console.log(imagesObject);
-  
-    // Example: Append images to FormData
-    const formData = new FormData();
-    files.forEach((file, index) => {
-      formData.append(`images[${index}]`, file);
-    });
-  
-    // Log or use formData as needed
-    console.log([...formData.entries()]);
+    const file = e.target.files[0];
+    if (file) {
+      const newImagePreview = URL.createObjectURL(file);
+      setImagePreview(newImagePreview);
+      formik.setFieldValue('image', file);
+    }
   };
-  
 
-  const handleImageDelete = (index) => {
-    const newPreviews = imagePreviews.filter((_, i) => i !== index);
-    const newImages = formik.values.images.filter((_, i) => i !== index);
-    setImagePreviews(newPreviews);
-    formik.setFieldValue('images', newImages);
+  const handleImageDelete = () => {
+    setImagePreview(null);
+    formik.setFieldValue('image', null);
   };
 
   const handleDrop = (e) => {
     e.preventDefault();
-    const files = Array.from(e.dataTransfer.files);
-    const newImages = files.map(file => URL.createObjectURL(file));
-    setImagePreviews(prev => [...prev, ...newImages]);
-    formik.setFieldValue('images', [...formik.values.images, ...files]);
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      const newImagePreview = URL.createObjectURL(file);
+      setImagePreview(newImagePreview);
+      formik.setFieldValue('image', file);
+    }
   };
 
   const handleCancel = () => {
@@ -151,13 +77,13 @@ const CreatePost = ({ isOpen, setIsOpen, update, refetch }) => {
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       <form
         onSubmit={formik.handleSubmit}
-        className="w-[400px]"
+        className="lg:w-[400px]"
       >
         <div className=" p-4">
   
-  <div className='flex justify-between items-center'>
+  <div className='flex lg:justify-between  items-center'>
     <div></div>
-    <div onClick={handleCancel} className='text-3xl text-gray-500 font-semibold cursor-pointer'>x</div>
+    <div onClick={handleCancel} className='text-3xl text-gray-500 font-semibold lg:pb-0 pb-5 cursor-pointer'>x</div>
   </div>
 
           <div className="flex items-center">
@@ -176,7 +102,7 @@ const CreatePost = ({ isOpen, setIsOpen, update, refetch }) => {
           <textarea
   className="w-full border-2 rounded-md border-gray-200 h-20 text-sm text-gray-700 focus:outline-none"
   placeholder="What's on your mind?"
-  name="title"  // Add the name attribute here
+  name="title"
   onChange={formik.handleChange}
   onBlur={formik.handleBlur}
   value={formik.values.title}
@@ -189,16 +115,14 @@ const CreatePost = ({ isOpen, setIsOpen, update, refetch }) => {
             onDragOver={(e) => e.preventDefault()}
           >
             <label htmlFor="image" className="pb-1 text-[#726f6f]">
-              Add Photos/Videos{' '}
-         
+              Add Photo
             </label>
             <input
               ref={fileInputRef}
               id="image"
-              name="images"
+              name="image"
               type="file"
               accept="image/*"
-              multiple
               className="hidden"
               onChange={handleImageChange}
             />
@@ -208,24 +132,20 @@ const CreatePost = ({ isOpen, setIsOpen, update, refetch }) => {
                 onClick={() => fileInputRef.current.click()}
               />
             </div>
-            {imagePreviews.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-2">
-                {imagePreviews.map((src, index) => (
-                  <div key={index} className="relative">
-                    <img
-                      src={src}
-                      alt={`Preview ${index}`}
-                      className="max-w-[80px] h-[60px] object-cover border-2 border-dashed"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => handleImageDelete(index)}
-                      className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 text-xs"
-                    >
-                      X
-                    </button>
-                  </div>
-                ))}
+            {imagePreview && (
+              <div className="relative mt-2">
+                <img
+                  src={imagePreview}
+                  alt="Preview"
+                  className="max-w-[80px] h-[60px] object-cover border-2 border-dashed"
+                />
+                <button
+                  type="button"
+                  onClick={handleImageDelete}
+                  className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 text-xs"
+                >
+                  X
+                </button>
               </div>
             )}
           </div>
