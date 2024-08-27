@@ -3,18 +3,20 @@ import { FaFlag, FaImages, FaVideo } from 'react-icons/fa6';
 
 import { NavLink, Outlet } from 'react-router-dom';
 import CreatePost from '../../DashPages/Form/CreatePost/CreatePost';
+import useAuth from '../../Provider/UseAuth/useAuth';
 
 function ProfileCard() {
   const [activeTab, setActiveTab] = useState('Posts');
 
   const [isOpen, setIsOpen] = useState(null)
   const[update,setUpdate] = useState()
-
+  const{user} = useAuth()
 
   const openModal = (id) => {
     setIsOpen(true)
     setUpdate(id)
   }
+  const image = `${import.meta.env.VITE_API_URL}${"/"}${user?.userName?.profile}`;
   return (
     <div className="flex flex-col justify-center items-center lg:mt-0 my-14 lg:h-[100vh]">
       <div className="relative flex flex-col items-center rounded-[10px] border-[1px] border-gray-200 w-[400px] mx-auto p-4 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:bg-navy-800 dark:text-white dark:shadow-none">
@@ -27,21 +29,21 @@ function ProfileCard() {
           <div className="absolute -bottom-12 flex h-[87px] w-[87px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400 dark:border-navy-700">
             <img 
               className="h-full w-full rounded-full" 
-              src="https://horizon-tailwind-react-git-tailwind-components-horizon-ui.vercel.app/static/media/avatar11.1060b63041fdffa5f8ef.png" 
+              src={image}
               alt="Avatar" 
             />
           </div>
         </div>
         <div className="mt-10 mb-4 flex flex-col items-center">
           <h4 className="text-xl font-bold text-navy-700 dark:text-white">Adela Parkson</h4>
-          <p className="text-base  font-semibold text-gray-600">Ashikur Rahman Ovi</p>
+          <p className="text-base  font-semibold text-gray-600">{user?.userName?.name}</p>
         </div>
 
         <div className="  bg-white  p-3 border rounded-md w-full">
       <div className="flex items-center space-x-4">
         <img
           className="w-10 h-10 rounded-full"
-          src="https://horizon-tailwind-react-git-tailwind-components-horizon-ui.vercel.app/static/media/avatar11.1060b63041fdffa5f8ef.png" 
+          src={image}
           alt="Profile"
         />
         {/* <input

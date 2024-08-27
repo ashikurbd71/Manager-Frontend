@@ -4,13 +4,14 @@ import Modal from '../../../Share/CustomModal/CustomModal';
 import { useFormik } from 'formik';
 import axoissecure from '../../../Hooks/Axoisscure';
 import { toast } from 'react-toastify';
+import useAuth from '../../../Provider/UseAuth/useAuth';
 
 const CreatePost = ({ isOpen, setIsOpen, update, refetch }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
 
-
-
+  const { user, isLoading: userLoading } = useAuth();
+  const image = `${import.meta.env.VITE_API_URL}${"/"}${user?.userName?.profile}`;
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -23,18 +24,24 @@ const CreatePost = ({ isOpen, setIsOpen, update, refetch }) => {
       console.log(values);
       try {
         await axoissecure.post("/image", {
-          email: 'ovi@gmail.com',
+          
+
+          user : user?.email,
           date: new Date().toISOString(),
-         
           title: values.title,
           profile: values.image,
-         
-        
+
+
+
+
+
+              
         },{    headers: {
           "Content-Type": "multipart/form-data",
         }});
         console.log("Product added successfully:", values);
         toast.success("Manager Added successfully!");
+        setIsOpen(false)
         resetForm();
       } catch (error) {
         toast.error("Error adding Manager");
@@ -89,12 +96,12 @@ const CreatePost = ({ isOpen, setIsOpen, update, refetch }) => {
           <div className="flex items-center">
             <img
               className="w-10 h-10 rounded-full"
-              src="https://horizon-tailwind-react-git-tailwind-components-horizon-ui.vercel.app/static/media/avatar11.1060b63041fdffa5f8ef.png" 
+              src={image}
               alt="Profile"
             />
             <div>
             <div className="ml-3 tetx-md text-gray-600 font-bold">
-             Ashikur Rahman Ovi
+            {user?.userName?.name}
             </div>
             </div>
           </div>
