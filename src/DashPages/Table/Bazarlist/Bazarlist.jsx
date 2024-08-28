@@ -34,7 +34,7 @@ const Bazarlist = () => {
   
   const { data: items = [], refetch } = useQuery({
     queryKey: [
-      "notice",
+      "bazarlist",
       search,
       rowPerPage,
       page,
@@ -48,14 +48,14 @@ const Bazarlist = () => {
 
         if (active) {
           const res = await axoissecure.get(
-            `/notice/search?query=${search}&limit=${limit}&page=${page}`
+            `/bazalist/search?query=${search}&limit=${limit}&page=${page}`
           );
           setStat(res.data?.meta);
 
           return res?.data?.items;
         } else {
           const res = await axoissecure.get(
-            `/notice/search?limit=${limit}&page=${page}`
+            `/bazalist/search?limit=${limit}&page=${page}`
           );
           setStat(res.data?.meta);
 
@@ -80,8 +80,8 @@ console.log(items)
         accessor: 'date'
       },
       {
-        Header: "BazarKari",
-        accessor: 'bazarkari'
+        Header: "Manager",
+        accessor: 'man'
       },
    
      
@@ -97,7 +97,7 @@ console.log(items)
            {/* Edit Icon */}
            {/*  */}
          
-         <Link to={`/dashboard/updatenotice/${row.original.id}`}>
+         <Link to={`/dashboard/updatebazarlist/${row.original.id}`}>
          <FaEdit title="Edit" className=" text-green-500 cursor-pointer" />
          </Link>
           
@@ -105,7 +105,7 @@ console.log(items)
           <FaTrashAlt title="Delete" onClick={() => handleDelete(row.original.id)} className="  text-red-500 cursor-pointer"  />
           
           {/* View Icon */}
-          <Link to={`/dashboard/detailsnotice/${row.original.id}`}>
+          <Link to={`/dashboard/bazarlistdeatils/${row.original.id}`}>
           <FaEye title="View Deatails"  className=" text-yellow-600 cursor-pointer"  />
           </Link>
        
@@ -134,7 +134,7 @@ console.log(items)
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        axoissecure.delete(`/notice/${_id}`).then((res) => {
+        axoissecure.delete(`/bazarlist/${_id}`).then((res) => {
           if (res.status === 200) {
             Swal.fire({
               title: "Deleted!",
@@ -155,10 +155,10 @@ console.log(items)
     items?.map((item, index) => ({
       ...item,
       sl: index + 1,
-      assigner : item?.assigner,
-      title : item?.noticetitle,
-      position : item?.position,
-      date: item?.date?.split('T')[0],
+ 
+    
+      man : item?.manager,
+      date: item?.listMonth?.split('T')[0],
 
     })), [items]
   );

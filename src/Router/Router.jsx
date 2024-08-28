@@ -49,6 +49,7 @@ import Postphoto from "../DashPages/Form/CreatePost/PostLayout/Postpage/Postphot
 import Bazarlist from "../DashPages/Table/Bazarlist/Bazarlist";
 import AddBazarlist from "../DashPages/Form/Bazarlist/AddBazarlist";
 import PrivateRoute from "./PrivateRoute";
+import Bazarlistdetails from "../DashPages/Details/Bazarlist/Bazarlistdetails";
 
 const router = createBrowserRouter([
 
@@ -221,6 +222,13 @@ const router = createBrowserRouter([
   path: "/dashboard/addbazalist",
   element:<AddBazarlist/>
 },
+
+{
+  path: "/dashboard/bazarlistdeatils/:id",
+  element:<Bazarlistdetails/>
+},
+
+
 
 
    
