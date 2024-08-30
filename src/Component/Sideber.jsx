@@ -6,11 +6,13 @@ import { MdArrowDropDown, MdArrowRight, MdFoodBank, MdOutlineDashboard, MdOutlin
 import img from "../assets/manager.png";
 import { LuCircleDot } from "react-icons/lu";
 import { FaUserGear } from "react-icons/fa6";
-import { TbNews } from "react-icons/tb";
+import { TbFileReport, TbNews } from "react-icons/tb";
 import { FaAward } from "react-icons/fa";
 import { GoReport } from "react-icons/go";
 import { LuServer } from "react-icons/lu";
 import { FaListCheck } from "react-icons/fa6";
+import { BiPhotoAlbum } from "react-icons/bi";
+import { VscGitPullRequestGoToChanges } from "react-icons/vsc";
 const Sideber = () => {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
 
@@ -21,7 +23,7 @@ const Sideber = () => {
   return (
     <>
       {" "}
-      <div className="flex flex-col gap-3 pt-4 h-full bg-[#CCD3CA] items-center">
+      <div className="flex flex-col gap-3 overflow-y-auto py-4 h-full bg-[#CCD3CA] items-center">
         <div className="flex justify-items-center mb-5 items-center">
           <img src={img} alt="" className="w-8 h-8" />
           <h1 className="text-2xl font-bold text-black ">
@@ -99,7 +101,19 @@ const Sideber = () => {
           }
         >
           <div className="flex justify-center pb-2 ml-4 hover:text-gray-600 items-center gap-1">
-            <GoReport className="text-lg" />
+            <VscGitPullRequestGoToChanges  className="text-lg" />
+            <h1 className="text-lg font-medium">Report Request</h1>
+          </div>
+        </NavLink>
+
+        <NavLink
+          to="/dashboard/reports"
+          className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? "bg-[#0284C7] px-6 pt-2 rounded-md text-white " : ""
+          }
+        >
+          <div className="flex justify-center pb-2 ml-4 hover:text-gray-600 items-center gap-1">
+            <TbFileReport  className="text-lg" />
             <h1 className="text-lg font-medium">Monthly Report</h1>
           </div>
         </NavLink>
@@ -117,6 +131,20 @@ const Sideber = () => {
           </div>
         </NavLink>
 
+          
+        <NavLink
+          to="/dashboard/albumlist"
+          className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? "bg-[#0284C7] px-20 pt-2 rounded-md text-white " : ""
+          }
+        >
+          <div className="flex justify-center pb-2 -ml-14 hover:text-gray-600 items-center gap-1">
+            <BiPhotoAlbum className="text-lg" />
+            <h1 className="text-lg font-medium">Albums</h1>
+          </div>
+        </NavLink>
+
+        
         
         <NavLink
           to="/dashboard/userlist"
@@ -190,11 +218,23 @@ const Sideber = () => {
                 to="/dashboard/setting/bloodgrouplist"
                 className={({ isActive }) => (isActive ? "text-[#0284C7] " : "")}
               >
-                <div className="flex items-center  hover:text-gray-600 gap-1 ">
+                <div className="flex items-center  hover:text-gray-600 pb-2 gap-1 ">
                   <LuCircleDot className="text-lg" />
                   <h2 className="text-md font-medium">Blood Group</h2>
                 </div>
               </NavLink>
+
+              <NavLink
+                to="/dashboard/setting/information"
+                className={({ isActive }) => (isActive ? "text-[#0284C7]  " : "")}
+              >
+                <div className="flex items-center  hover:text-gray-600 gap-1 ">
+                  <LuCircleDot className="text-lg" />
+                  <h2 className="text-md font-medium">Information</h2>
+                </div>
+              </NavLink>
+
+              
             </div>
           )}
         </div>

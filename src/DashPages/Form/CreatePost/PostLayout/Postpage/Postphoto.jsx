@@ -101,14 +101,14 @@ const Postphoto = () => {
         <>
             <div className='p-2'>
                 <ResponsiveMasonry
-                    columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
+                    columnsCountBreakPoints={{ 150: 1, 750: 2, 900: 3 }}
                 >
                     <Masonry gutter='3px'>
                         {userImages.map((image, i) => (
-                            <div key={i} >
+                            <div key={i}  >
                                 <img
                                     src={`${import.meta.env.VITE_API_URL}/${image?.profile}`}
-                                    style={{ width: "100%", display: "block", cursor: "pointer",height:"60px" }}
+                                    style={{ width: "100%", display: "block", cursor: "pointer", height:"80px" }}
                                     alt=""
                                     onClick={() => viewImage(image, i)}
                                     className='border-2 border-transparent  hover:border-[#0284C7]'

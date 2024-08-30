@@ -15,7 +15,7 @@ import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 
 
 
-const Bazarlist = () => {
+const AlbumList = () => {
 
   const [search, setSearch] = useState("");
   const [rowPerPage, setRowPerPage] = useState(5);
@@ -34,7 +34,7 @@ const Bazarlist = () => {
   
   const { data: items = [], refetch } = useQuery({
     queryKey: [
-      "bazarlist",
+      "image",
       search,
       rowPerPage,
       page,
@@ -48,14 +48,14 @@ const Bazarlist = () => {
 
         if (active) {
           const res = await axoissecure.get(
-            `/bazalist/search?query=${search}&limit=${limit}&page=${page}`
+            `/image/search?query=${search}&limit=${limit}&page=${page}`
           );
           setStat(res.data?.meta);
 
           return res?.data?.items;
         } else {
           const res = await axoissecure.get(
-            `/bazalist/search?limit=${limit}&page=${page}`
+            `/image/search?limit=${limit}&page=${page}`
           );
           setStat(res.data?.meta);
 
@@ -80,10 +80,11 @@ console.log(items)
         accessor: 'date'
       },
       {
-        Header: "Manager",
-        accessor: 'man'
+        Header: "Email",
+        accessor: 'email'
       },
-   
+  
+
      
    
    
@@ -97,22 +98,24 @@ console.log(items)
            {/* Edit Icon */}
            {/*  */}
          
-         <Link to={`/dashboard/updatebazarlist/${row.original.id}`}>
-         <FaEdit title="Edit" className=" text-green-500 cursor-pointer" />
-         </Link>
+       
           
           {/* Delete Icon */}
           <FaTrashAlt title="Delete" onClick={() => handleDelete(row.original.id)} className="  text-red-500 cursor-pointer"  />
           
           {/* View Icon */}
-          <Link to={`/dashboard/bazarlistdeatils/${row.original.id}`}>
+          <Link to={`/dashboard/albumdetails/${row.original.id}`}>
           <FaEye title="View Deatails"  className=" text-yellow-600 cursor-pointer"  />
           </Link>
        
           
           {/* Disable Icon */}
          
-        
+          {
+            row?.original?.status === 1 ?  
+            <FaBan title="Disable" onClick={() => handleDisable(row.original.id)} className=" text-red-600 cursor-pointer" />    :  
+            <IoCheckmarkDoneCircleOutline title="Enable" onClick={() => handleEnable(row.original.id)} className=" text-green-600 text-lg cursor-pointer" />
+          }
          </div>
         </>
       )
@@ -134,7 +137,7 @@ console.log(items)
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        axoissecure.delete(`/bazalist/${_id}`).then((res) => {
+        axoissecure.delete(`/image/${_id}`).then((res) => {
           if (res.status === 200) {
             Swal.fire({
               title: "Deleted!",
@@ -149,16 +152,66 @@ console.log(items)
     });
   };
 
+  const handleDisable = (_id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to be disable this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Disable it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        axoissecure.patch(`/image/disable/${_id}`).then((res) => {
+          if (res.status === 200) {
+            Swal.fire({
+              title: "Disabled!",
+              text: "Your file has been disabled.",
+              icon: "success",
+            });
+
+          refetch();
+          }
+        });
+      }
+    });
+  }
+
+  const handleEnable = (_id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to be enable this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Enable it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        axoissecure.patch(`/image/enable/${_id}`).then((res) => {
+          if (res.status === 200) {
+            Swal.fire({
+              title: "Enabled!",
+              text: "Your file has been Enabled.",
+              icon: "success",
+            });
+
+          refetch();
+          }
+        });
+      }
+    });
+  }
+
 
 
   const data = React.useMemo(() => 
     items?.map((item, index) => ({
       ...item,
       sl: index + 1,
- 
-    
-      man : item?.manager,
-      date: item?.listMonth?.split('T')[0],
+      email : item?.user,
+      date: item?.date?.split('T')[0],
 
     })), [items]
   );
@@ -176,12 +229,12 @@ console.log(items)
 
     <useHelmet name={'Manager || Member list'} />
 
-    <Helmet><title>Manager || Bazar list</title></Helmet>
+    <Helmet><title>Manager || Album list</title></Helmet>
 
     
-    <h1 className="text-xl font-semibold text-[#0284C7] p-5">Bazar List</h1>
+    <h1 className="text-xl font-semibold text-[#0284C7] p-5">Album List</h1>
 
-    <Tablenav setActive={setActive} setSearch={setSearch} route={'/dashboard/addbazalist'}/>
+    <Tablenav setActive={setActive} setSearch={setSearch} route={'/dashboard/addnotice'}/>
 
  
     <div className="px-6 bg-gray-100 rounded-lg">
@@ -220,4 +273,4 @@ console.log(items)
   );
 };
 
-export default Bazarlist;
+export default AlbumList;

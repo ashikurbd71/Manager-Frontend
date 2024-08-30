@@ -39,7 +39,7 @@ import UpdateReport from "../DashPages/Update/MyReport/UpdateReport";
 import ReportDetails from "../DashPages/Details/MyReport/ReportDetails";
 import MyreportDetails from "../DashPages/Details/MyReport/MyreportDetails";
 import UserList from "../DashPages/Table/User/UserList";
-import Adduser from "../DashPages/Form/User/Adduser";
+import Adduser from "../DashPages/Form/User/Adduser"
 import ManagerRole from "../DashPages/Table/Manager/ManagerRole";
 import AddManagerRole from "../DashPages/Form/Manager/AddManagerRole";
 import Login from "../Auth/Login";
@@ -50,6 +50,14 @@ import Bazarlist from "../DashPages/Table/Bazarlist/Bazarlist";
 import AddBazarlist from "../DashPages/Form/Bazarlist/AddBazarlist";
 import PrivateRoute from "./PrivateRoute";
 import Bazarlistdetails from "../DashPages/Details/Bazarlist/Bazarlistdetails";
+import UpdateBazarlist from "../DashPages/Update/Bazarlist/UpdateBazarlist";
+import AlbumList from "../DashPages/Table/Album/AlbumList";
+import AlbumDetails from "../DashPages/Details/AlbumsList/AlbumDetails";
+import Information from "../DashPages/Table/Setting/Information";
+import AddInformation from "../DashPages/Form/Setting/AddInformation";
+import Report from "../DashPages/Table/Report/Report";
+import DonwloadReport from "../DashPages/Table/Report/DonwloadReport";
+import Dashboard from "../DashPages/Table/Dashboard/Dashboard";
 
 const router = createBrowserRouter([
 
@@ -137,15 +145,27 @@ const router = createBrowserRouter([
     element: <Layout />, 
     children:[
 
-      
+      {
+        path: "/",
+        element: <Dashboard/>
+    },
       {
         path: "/dashboard/memberlist",
-        element: <PrivateRoute roles={["Manager","Super Admin"]}><ProductList/></PrivateRoute>
+        element: <PrivateRoute><ProductList/></PrivateRoute>
     },
     {
       path: "/dashboard/addmember",
       element:<AddProduct/>
   },
+  {
+    path: "/dashboard/reports",
+    element:<Report/>
+},
+
+{
+  path: "/dashboard/downloadreports",
+  element:<DonwloadReport/>
+},
   {
     path: "/dashboard/updatemember/:id",
     element:<MemberUpdate/>
@@ -216,6 +236,21 @@ const router = createBrowserRouter([
 {
   path: "/dashboard/bazalist",
   element:<Bazarlist/>
+},
+
+{
+  path: "/dashboard/updatebazarlist/:id",
+  element:<UpdateBazarlist/>
+},
+
+{
+  path: "/dashboard/albumlist",
+  element:<AlbumList/>
+},
+
+{
+  path: "/dashboard/albumdetails/:id",
+  element:<AlbumDetails/>
 },
 
 {
@@ -290,6 +325,14 @@ const router = createBrowserRouter([
     {
       path: "/dashboard/setting/departmentlist",
       element:<DepartmnetList/>
+    },
+    {
+      path: "/dashboard/setting/information",
+      element:<Information/>
+    },
+    {
+      path: "/dashboard/setting/addinformation",
+      element:<AddInformation/>
     },
     {
       path: "/dashboard/setting/adddepartment",

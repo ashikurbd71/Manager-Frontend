@@ -5,14 +5,16 @@ import useAuth from '../Provider/UseAuth/useAuth';
 
 const Navber = () => {
     const navigate = useNavigate()
+
     const [isOpen, setIsOpen] = useState(false);
     const handleLogout = () => {
     
         removeTokenFromLocalStorage();
         navigate("/login");
+        setUser(null)
       };
 
-      const { user} = useAuth();
+      const { user ,setUser} = useAuth();
 
       console.log(user)
 

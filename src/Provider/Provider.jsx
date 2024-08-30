@@ -8,11 +8,11 @@ import axoissecure from "../Hooks/Axoisscure";
 export const AuthContext = createContext(null);
 
 const Provider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
 
-
+ 
   const { data, refetch, isLoading, error } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["getuser"],
     queryFn: async () => {
       try {
         const res = await axoissecure.get(`/users/get/single-user`);
@@ -40,7 +40,7 @@ const Provider = ({ children }) => {
         refetch,
         isLoading,
         error,
-       
+        setUser
     
       }}
     >
