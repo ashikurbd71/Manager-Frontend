@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
@@ -6,6 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { Helmet } from "react-helmet";
 import DashCustomNav from "../../../Share/Formnav";
 import axoissecure from './../../../Hooks/Axoisscure';
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 // Validation Schema
 const Schema = Yup.object().shape({
@@ -26,7 +28,24 @@ const Schema = Yup.object().shape({
     .required('Meal charge is required'),
 });
 
-const AddInformation = () => {
+const UpdateInfromation = () => {
+
+     const { id }= useParams()
+
+     const { data, refetch } = useQuery({
+        queryKey: ["info"],
+        queryFn: async () => {
+          try {
+            const res = await axoissecure.get(`/information/${id}`);
+            console.log(res.data);
+          
+            return res.data;
+          } catch (error) {
+            console.error("Error fetching data:", error);
+            throw error;
+          }
+        },
+      });
   const formik = useFormik({
     initialValues: {
       department: "",
@@ -37,27 +56,39 @@ const AddInformation = () => {
     validationSchema: Schema,
     onSubmit: async (values, { resetForm }) => {
       try {
-        await axoissecure.post("/information", {
+        await axoissecure.patch(`/information/${id}`, {
           name: values.name,
           location: values.location,
           phone: values.phone,
           mealCharge: values.meal,
         });
-        console.log("Information added successfully:", values);
-        toast.success("Information added successfully!");
-        resetForm();
+        console.log("Information Update successfully:", values);
+        toast.success("Information Update successfully!");
+        refetch();
       } catch (error) {
-        toast.error("Error adding Information");
-        console.error("Error adding Information:", error);
+        toast.error("Error Update Information");
+        console.error("Error Update Information:", error);
       }
     },
   });
 
+  useEffect(() => {
+    if (data) {
+        formik.setValues({
+          name: data.name || "",
+          location: data.location || "",
+          phone: data.phone || "",
+          meal: data.mealCharge || "",
+
+        });
+    }
+}, [data]);
+
   return (
     <>
-      <DashCustomNav name={"Add Information"} listroute={'/dashboard/setting/information'} />
+      <DashCustomNav name={"Update Information"} listroute={'/dashboard/setting/information'} />
       <div className="p-8">
-        <Helmet><title>Manager || Add Information</title></Helmet>
+        <Helmet><title>Manager || Update Information</title></Helmet>
         <div>
           <form
             onSubmit={formik.handleSubmit}
@@ -172,4 +203,4 @@ const AddInformation = () => {
   );
 };
 
-export default AddInformation;
+export default UpdateInfromation;

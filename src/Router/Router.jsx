@@ -58,6 +58,7 @@ import AddInformation from "../DashPages/Form/Setting/AddInformation";
 import Report from "../DashPages/Table/Report/Report";
 import DonwloadReport from "../DashPages/Table/Report/DonwloadReport";
 import Dashboard from "../DashPages/Table/Dashboard/Dashboard";
+import UpdateInfromation from "../DashPages/Update/Information/UpdateInfromation";
 
 const router = createBrowserRouter([
 
@@ -151,7 +152,7 @@ const router = createBrowserRouter([
     },
       {
         path: "/dashboard/memberlist",
-        element: <PrivateRoute><ProductList/></PrivateRoute>
+        element:<ProductList/>
     },
     {
       path: "/dashboard/addmember",
@@ -295,6 +296,14 @@ const router = createBrowserRouter([
   path: "/dashboard/reportdtails/:id",
   element:<ReportDetails/>
 },
+
+{
+  path: "/dashboard/updateinfo/:id",
+  element:<UpdateInfromation/>
+},
+
+
+
 
 // user
 
