@@ -225,7 +225,21 @@ const MealManage = () => {
     });
   }
 
+  const { data: item,  } = useQuery({
+    queryKey: ["information"],
+    queryFn: async () => {
+      try {
+        const res = await axoissecure.get(`/information`);
+        console.log(res.data);
+        return res.data[0];
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+      }
+    },
+  });
 
+console.log(item)
  
   const takeIt = async (money) => {
     Swal.fire({
@@ -235,13 +249,13 @@ const MealManage = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, take it $35!",
+      confirmButtonText: `Yes, take it $${item?.mealCharge}!`,
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
          
           
-          const newCostTk = money.blance - 35;
+          const newCostTk = money.blance - item?.mealCharge;
           const costMeal = parseInt(money.eatMeal)  + 1;
 
           
@@ -360,7 +374,7 @@ const MealManage = () => {
   const formattedDate = new Date().toLocaleDateString('en-GB', options);
 
 
-  const daliyamount = onmeal * 35
+  const daliyamount = onmeal * item?.mealCharge
 
   return (
 

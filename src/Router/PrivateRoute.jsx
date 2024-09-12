@@ -4,6 +4,7 @@ import { FaSpinner } from "react-icons/fa6";
 import { getTokenFromLocalStorage } from "../Auth/token";
 
 import useAuth from "../Provider/UseAuth/useAuth";
+import { CgSearchLoading } from "react-icons/cg";
 
 
 const PrivateRoute = ({ children, roles = [] }) => {
@@ -28,7 +29,7 @@ const PrivateRoute = ({ children, roles = [] }) => {
   if (isLoading || userLoading) {
     return (
       <div className="min-h-screen flex justify-center items-center">
-        <FaSpinner className="text-[70px] animate-spin text-primary" />
+        <CgSearchLoading  className="text-[70px] animate-ping text-primary" />
       </div>
     );
   }

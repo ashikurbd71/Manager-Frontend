@@ -49,6 +49,22 @@ const Bazarlistdetails = () => {
   const monthName = date.toLocaleString('default', { month: 'long' }); // "August"
   console.log(monthName);
 
+  
+  const { data: item,  } = useQuery({
+    queryKey: ["information"],
+    queryFn: async () => {
+      try {
+        const res = await axoissecure.get(`/information`);
+        console.log(res.data);
+        return res.data[0];
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+      }
+    },
+  });
+
+
   return (
     <>
       <Helmet><title>Manager || Bazarlist Details</title></Helmet>
@@ -66,8 +82,8 @@ const Bazarlistdetails = () => {
        
 
             <h1 className='text-center text-2xl font-bold text-[#0284C7]  '>{monthName } BazarList </h1>
-            <h1 className='text-center text-lg font-semibold text-gray-500  '> Vai Vai Chatrabash </h1>
-            <h1 className='text-center font-normal -mt-1 pb-4 text-gray-600'>Rangpur,Shalbon</h1>
+            <h1 className='text-center text-lg font-semibold text-gray-500  '> {item?.name}</h1>
+            <h1 className='text-center font-normal -mt-1 pb-4 text-gray-600'>{item.location}</h1>
           
 
       

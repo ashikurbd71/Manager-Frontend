@@ -16,6 +16,20 @@ const GuestMeal = ({isOpen,setIsOpen,update,refetch}) => {
 
     
    
+  const { data: item,  } = useQuery({
+    queryKey: ["information"],
+    queryFn: async () => {
+      try {
+        const res = await axoissecure.get(`/information`);
+        console.log(res.data);
+        return res.data[0];
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+      }
+    },
+  });
+
 
 
     const formik = useFormik({
@@ -31,7 +45,7 @@ const GuestMeal = ({isOpen,setIsOpen,update,refetch}) => {
             await axoissecure.patch(`/mealmanage/${update?.id}`, {
          
               guest : parseInt(values?.guest),
-              blance : parseInt(update?.blance ) - ( 35 *  parseInt(values.guest)) || parseInt(update?.blance ),
+              blance : parseInt(update?.blance ) - ( item?.mealCharge *  parseInt(values.guest)) || parseInt(update?.blance ),
               eatMeal : parseInt(update?.eatMeal) + parseInt(values.guest) || parseInt(update?.eatMeal)
             
              

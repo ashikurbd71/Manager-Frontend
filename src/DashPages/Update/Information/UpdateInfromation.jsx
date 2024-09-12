@@ -32,20 +32,21 @@ const UpdateInfromation = () => {
 
      const { id }= useParams()
 
-     const { data, refetch } = useQuery({
-        queryKey: ["info"],
-        queryFn: async () => {
-          try {
-            const res = await axoissecure.get(`/information/${id}`);
-            console.log(res.data);
-          
-            return res.data;
-          } catch (error) {
-            console.error("Error fetching data:", error);
-            throw error;
-          }
-        },
-      });
+     const { data: item, refetch } = useQuery({
+      queryKey: ["information"],
+      queryFn: async () => {
+        try {
+          const res = await axoissecure.get(`/information`);
+          console.log(res.data);
+          return res.data[0];
+        } catch (error) {
+          console.error("Error fetching data:", error);
+          throw error;
+        }
+      },
+    });
+  
+  console.log(item)
   const formik = useFormik({
     initialValues: {
       department: "",
@@ -73,16 +74,16 @@ const UpdateInfromation = () => {
   });
 
   useEffect(() => {
-    if (data) {
+    if (item) {
         formik.setValues({
-          name: data.name || "",
-          location: data.location || "",
-          phone: data.phone || "",
-          meal: data.mealCharge || "",
+          name: item.name || "",
+          location: item.location || "",
+          phone: item.phone || "",
+          meal: item.mealCharge || "",
 
         });
     }
-}, [data]);
+}, [item]);
 
   return (
     <>

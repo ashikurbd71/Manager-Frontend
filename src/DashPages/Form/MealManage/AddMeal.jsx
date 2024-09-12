@@ -8,6 +8,7 @@ import { Helmet } from "react-helmet";
 import DashCustomNav from "../../../Share/Formnav";
 import axoissecure from "../../../Hooks/Axoisscure";
 import { getMember } from "../../../Share/Api/SelectorApi/settingselector";
+import { useQuery } from "@tanstack/react-query";
 
 
 
@@ -77,6 +78,19 @@ const AddMeal = () => {
     },
   });
 
+  const { data: item, refetch } = useQuery({
+    queryKey: ["information"],
+    queryFn: async () => {
+      try {
+        const res = await axoissecure.get(`/information`);
+        console.log(res.data);
+        return res.data[0];
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+      }
+    },
+  });
 
   // style
 
@@ -148,11 +162,12 @@ const AddMeal = () => {
 
    
     useEffect(() => {
-      if (formik.values.taka) {
-        const calculatedTotalMeal = (parseFloat(formik.values.taka) / 35).toFixed();
+      if (formik.values.taka && item?.mealCharge) {
+        const calculatedTotalMeal = (parseFloat(formik.values.taka) / item?.mealCharge).toFixed();
         formik.setFieldValue('totalmeal', calculatedTotalMeal);
       }
-    }, [formik.values.taka]);
+    }, [formik.values.taka, item?.mealCharge]);
+    
   
 
 

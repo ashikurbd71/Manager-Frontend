@@ -5,6 +5,8 @@ import DashCustomNav from '../../../Share/Formnav';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import axoissecure from './../../../Hooks/Axoisscure';
+import { usePDF } from "react-to-pdf";
+import { MdDownloading } from 'react-icons/md';
 const MemberDetails = () => {
  const[member,setMember] = useState()
   const { id } = useParams();
@@ -23,6 +25,30 @@ const MemberDetails = () => {
       }
     },
   });
+  const [loading, setLoading] = useState(false);
+  const options = {
+    overrides: {
+      canvas: {
+        useCORS: true,
+      },
+    },
+  };
+
+  const { toPDF, targetRef } = usePDF(
+    {
+      filename: `memberdetails.pdf`,
+    },
+    options
+  );
+
+  const handleCardDownload = async () => {
+    setLoading(true);
+    try {
+      await toPDF();
+    } finally {
+      setLoading(false);
+    }
+  };
 
   console.log(member)
 
@@ -54,14 +80,28 @@ const MemberDetails = () => {
 
           <div className='flex  justify-end  pb-5'>
 
-            <div className='flex border-2 cursor-pointer item items-center px-3 py-1 gap-1'>
-            <FaPrint className='text-bl text-blue-400'/>
-            <h1 className='text-lg font-medium text-gray-500'> Print</h1>
+          <div className="w-100 flex flex-grow flex-col pb-3 items-end justify-start">
+            <div className="flex flex-row space-x-3">
+              {/* Follow Button */}
+              <button
+                onClick={() => handleCardDownload()}
+                className="flex rounded-md bg-blue-500/80 px-5 py-2 text-white"
+              >
+                {loading ? (
+                  <div className="flex items-center gap-2">
+                    <span>Printing</span>
+                    <MdDownloading  className="text-[20px] animate-ping text-white" />
+                  </div>
+                ) : (
+                  <h1 className='fon font-semibold'>Download</h1>
+                )}
+              </button>
             </div>
+          </div>
 
           </div>
 
-          <div className=' bg-white min min-h-screen'>
+          <div  ref={targetRef} className=' bg-white min min-h-screen'>
 
   <div className='  justify-items-center items-center p-10 flex'>
   <img src={image} alt=""  className=' object-cover w-[200px] h-[200px] border-2 rounded-lg '/>

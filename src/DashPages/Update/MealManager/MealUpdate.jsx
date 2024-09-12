@@ -68,7 +68,19 @@ const MealUpdate = ({isOpen,setIsOpen,update,refetch}) => {
    
     
     
-    
+  const { data: item,  } = useQuery({
+    queryKey: ["information"],
+    queryFn: async () => {
+      try {
+        const res = await axoissecure.get(`/information`);
+        console.log(res.data);
+        return res.data[0];
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+      }
+    },
+  });
     
     
       
@@ -96,7 +108,7 @@ const MealUpdate = ({isOpen,setIsOpen,update,refetch}) => {
     const balance = parseFloat(formik.values.taka) || 0;
     const newBalance = addMoney + balance;
     // formik.setFieldValue('taka', newBalance.toFixed(2));
-    const totalMeals = (newBalance / 35).toFixed();
+    const totalMeals = (newBalance / item?.mealCharge).toFixed();
     formik.setFieldValue('totalmeal', totalMeals);
   }, [formik.values.addmoney]);
 

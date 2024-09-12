@@ -14,7 +14,7 @@ const axoissecure = axios.create({
 
 // Set up an interceptor to dynamically add the token before each request
 axoissecure.interceptors.request.use((config) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("managertoken");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

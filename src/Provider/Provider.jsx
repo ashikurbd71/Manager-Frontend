@@ -30,8 +30,11 @@ const Provider = ({ children }) => {
   useEffect(() => {
     if (data && !isLoading) {
       setUser(data);
+      console.log(data,"kkhkhuguhg")
     }
   }, [data, isLoading]);
+
+
 
   return (
     <AuthContext.Provider
