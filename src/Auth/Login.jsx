@@ -27,13 +27,16 @@ const Login = () => {
          console.log(response)
   
         if (response.status === 201) {
-          const { access_token } = response.data;
+          const { access_token,role } = response.data;
   
           // Set the token in localStorage
           setTokenToLocalStorage(access_token);
           console.log("Login successful:", values);
           toast.success("Login successfully!");
-          navigate(location?.state ? location.state : "/");
+          {
+            ["Super Admin","Manager"].some(roles => role?.includes(roles)) ?      navigate(location?.state ? location.state : "/") :  navigate(location?.state ? location.state : "/public") 
+          }
+     
   
           resetForm();
         }

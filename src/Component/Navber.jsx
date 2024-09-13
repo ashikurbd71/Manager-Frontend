@@ -5,7 +5,7 @@ import useAuth from '../Provider/UseAuth/useAuth';
 
 const Navber = () => {
     const navigate = useNavigate()
-
+    const { user ,setUser} = useAuth();
     const [isOpen, setIsOpen] = useState(false);
     const handleLogout = () => {
     
@@ -14,7 +14,7 @@ const Navber = () => {
         setUser(null)
       };
 
-      const { user ,setUser} = useAuth();
+     
 
       console.log(user)
 

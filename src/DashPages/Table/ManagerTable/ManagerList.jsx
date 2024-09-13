@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import Pagination from "../../../Share/PaginationTable/Pagination";
 
-
+import * as XLSX from "xlsx";
 
 
 
@@ -222,6 +222,37 @@ const ManagerList = () => {
 
     })), [items]
   );
+
+  const handleAllExport = async () => {
+    try {
+      const response = await axoissecure.get(
+        `/manager/search?limit=100000000&page=1`
+      );
+      const allData = response.data.items;
+
+      const filteredData = allData?.map((item, index) => ({
+      sl: index + 1 + (page - 1) * rowPerPage,
+      name : item?.name,
+      number : item?.number,
+      startDate: item?.startDate?.split('T')[0],
+      endDate: item?.endDate?.split('T')[0],
+      position : item?.position,
+      }));
+
+      const worksheet = XLSX.utils.json_to_sheet(filteredData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "All Managerlist");
+
+      XLSX.writeFile(workbook, "Managerlist.xlsx");
+    } catch (error) {
+      console.error("Error exporting data:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "An error occurred while exporting data.",
+        icon: "error",
+      });
+    }
+  };
   const {
     getTableProps,
     getTableBodyProps,
@@ -241,7 +272,7 @@ const ManagerList = () => {
     
     <h1 className="text-xl font-semibold text-[#0284C7] p-5">Manager List</h1>
 
-    <Tablenav setActive={setActive} setSearch={setSearch} route={'/dashboard/addmanager'}/>
+    <Tablenav setActive={setActive}  handleExcell={handleAllExport} setSearch={setSearch} route={'/dashboard/addmanager'}/>
 
  
     <div className="px-6 bg-gray-100 rounded-lg">

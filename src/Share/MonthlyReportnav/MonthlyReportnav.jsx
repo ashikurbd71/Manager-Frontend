@@ -2,7 +2,7 @@ import React from 'react';
 import { FaPlus } from "react-icons/fa6";
 import { TbTableExport } from "react-icons/tb";
 import { Link } from 'react-router-dom';
-const MonthlyReportnav = ({route,setSearch,setActive}) => {
+const MonthlyReportnav = ({route,setSearch,setActive,handleAllExport}) => {
     return (
        <>
           <div className="mx-6 px-5 mt-4 pt-2 lg:h-[60px] bg-white">
@@ -27,7 +27,7 @@ const MonthlyReportnav = ({route,setSearch,setActive}) => {
  
    
 
-<button className=' text-sm  '>
+<button onClick={handleAllExport} className=' text-sm  '>
 
 <div className='flex text-white bg-[#0284C7] border-2 px-2 py-2 rounded-md gap-1 justify-items-center items-center'>
  

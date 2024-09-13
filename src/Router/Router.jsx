@@ -67,24 +67,24 @@ const router = createBrowserRouter([
    {
 
     path: "/public",
-    element: <PublicLyaout/>, 
+    element: <PrivateRoute roles={["Super Admin","Member"]}><PublicLyaout/> </PrivateRoute>, 
     children:[
       {
         path: "/public/profilecard",
-        element:<ProfileCard/>,
+        element: <PrivateRoute roles={["Super Admin","Member"]}><ProfileCard/></PrivateRoute>,
         children:[{
      path:"/public/profilecard",
-     element : <PostDetails/>
+     element : <PrivateRoute roles={["Super Admin","Member"]}><PostDetails/> </PrivateRoute>
         },
 
         {
           path:"/public/profilecard/about",
-          element : <PostAbout/>
+          element : <PrivateRoute roles={["Super Admin","Member"]}> <PostAbout/> </PrivateRoute>
              },
 
              {
               path:"/public/profilecard/photo",
-              element : <Postphoto/>
+              element :  <PrivateRoute roles={["Super Admin","Member"]}> <Postphoto/></PrivateRoute>
                  }
           
 
@@ -95,42 +95,42 @@ const router = createBrowserRouter([
       },
       {
         path: "/public/notice",
-        element:<PublicNoitice/>
+        element: <PrivateRoute roles={["Super Admin","Member"]}> <PublicNoitice/></PrivateRoute>
       },
       {
         path: "/public/deatailsnotice/:id",
-        element:<NoticeDetailsPub/>
+        element: <PrivateRoute roles={["Super Admin","Member"]}><NoticeDetailsPub/> </PrivateRoute>
       },
       {
         path: "/public/gallery",
-        element:<PublicGallery/>
+        element: <PrivateRoute roles={["Super Admin","Member"]}><PublicGallery/> </PrivateRoute>
       },
 
       {
         path: "/public/myreport",
-        element:<MyReport/>
+        element: <PrivateRoute roles={["Super Admin","Member"]}><MyReport/> </PrivateRoute>
       },
 
       
       {
         path: "/public/updatereport/:id",
-        element:<UpdateReport/>
+        element: <PrivateRoute roles={["Super Admin","Member"]}><UpdateReport/> </PrivateRoute>
       },
 
   
 
       {
         path: "/public/myreportdtails/:id",
-        element:<MyreportDetails/>
+        element: <PrivateRoute roles={["Super Admin","Member"]}><MyreportDetails/> </PrivateRoute>
       },
 
       {
         path: "/public/addmyreport",
-        element:<AddMyReport/>
+        element: <PrivateRoute roles={["Super Admin","Member"]}><AddMyReport/> </PrivateRoute>
       },
 
       // post
-
+      
 
 
 
@@ -143,89 +143,89 @@ const router = createBrowserRouter([
 
   {
     path: "/",
-    element: <Layout />, 
+    element:  <PrivateRoute roles={["Super Admin","Manager"]}><Layout /></PrivateRoute>,
     children:[
 
       {
         path: "/",
-        element: <Dashboard/>
+        element:  <PrivateRoute roles={["Super Admin","Manager"]}><Dashboard/></PrivateRoute>
     },
       {
         path: "/dashboard/memberlist",
-        element:<ProductList/>
+        element: <PrivateRoute roles={["Super Admin","Manager"]}><ProductList/></PrivateRoute>
     },
     {
       path: "/dashboard/addmember",
-      element:<AddProduct/>
+      element:<PrivateRoute roles={["Super Admin","Manager"]}><AddProduct/></PrivateRoute>
   },
   {
     path: "/dashboard/reports",
-    element:<Report/>
+    element:<PrivateRoute roles={["Super Admin","Manager"]}><Report/></PrivateRoute>
 },
 
 {
   path: "/dashboard/downloadreports",
-  element:<DonwloadReport/>
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><DonwloadReport/></PrivateRoute>
 },
   {
     path: "/dashboard/updatemember/:id",
-    element:<MemberUpdate/>
+    element: <PrivateRoute roles={["Super Admin","Manager"]}><MemberUpdate/></PrivateRoute>
 },
         {
           path: "/dashboard/memberdeatils/:id",
-          element:<MemberDetails/>
+          element: <PrivateRoute roles={["Super Admin","Manager"]}><MemberDetails/></PrivateRoute>
       },
       {
         path: "/dashboard/managerlist",
-        element:<ManagerList/>
+        element: <PrivateRoute roles={["Super Admin"]}><ManagerList/></PrivateRoute>
     },
     {
       path: "/dashboard/addmanager",
-      element:<AddManager/>
+      element: <PrivateRoute roles={["Super Admin"]}><AddManager/></PrivateRoute>
   },
   {
     path: "/dashboard/updatemanager/:id",
-    element:<ManagerUpdate/>
+    element: <PrivateRoute roles={["Super Admin"]}><ManagerUpdate/></PrivateRoute>
 },
 
 {
   path: "/dashboard/detailsmanager/:id",
-  element:<ManagerDetails/>
+  element: <PrivateRoute roles={["Super Admin"]}><ManagerDetails/></PrivateRoute>
 },
 
 {
   path: "/dashboard/mealmanagelist",
-  element:<MealManage/>
+  element:<PrivateRoute roles={["Super Admin","Manager"]}><MealManage/></PrivateRoute>
 },
 
 {
   path: "/dashboard/addmeal",
-  element:<AddMeal/>
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><AddMeal/></PrivateRoute>
 },
 
 {
   path: "/dashboard/detailsmeal/:id",
-  element:<Mealdetails/>
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><Mealdetails/></PrivateRoute>
 },
 
 {
   path: "/dashboard/addextra",
-  element:<AddExtra/>
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><AddExtra/></PrivateRoute>
 },
 
 {
   path: "/dashboard/extralist",
-  element:<ExtraMealList/>
+  element:<PrivateRoute roles={["Super Admin","Manager"]}><ExtraMealList/> </PrivateRoute>
 },
 
 {
   path: "/dashboard/monthlyreport",
-  element:<MonthlyReport/>
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><MonthlyReport/></PrivateRoute>
 },
 
 {
   path: "/dashboard/monthlyreportupdate/:id",
-  element:<MonyhlyReportUpdate/>
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><MonyhlyReportUpdate/></PrivateRoute>
 },
 
 
@@ -236,32 +236,32 @@ const router = createBrowserRouter([
 
 {
   path: "/dashboard/bazalist",
-  element:<Bazarlist/>
+  element:<PrivateRoute roles={["Super Admin","Manager"]}><Bazarlist/> </PrivateRoute>
 },
 
 {
   path: "/dashboard/updatebazarlist/:id",
-  element:<UpdateBazarlist/>
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><UpdateBazarlist/> </PrivateRoute>
 },
 
 {
   path: "/dashboard/albumlist",
-  element:<AlbumList/>
+  element:<PrivateRoute roles={["Super Admin","Manager"]}><AlbumList/>  </PrivateRoute>
 },
 
 {
   path: "/dashboard/albumdetails/:id",
-  element:<AlbumDetails/>
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><AlbumDetails/> </PrivateRoute>
 },
 
 {
   path: "/dashboard/addbazalist",
-  element:<AddBazarlist/>
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><AddBazarlist/></PrivateRoute>
 },
 
 {
   path: "/dashboard/bazarlistdeatils/:id",
-  element:<Bazarlistdetails/>
+  element:<PrivateRoute roles={["Super Admin","Manager"]}><Bazarlistdetails/> </PrivateRoute>
 },
 
 
@@ -273,33 +273,33 @@ const router = createBrowserRouter([
 
   {
     path: "/dashboard/noticelist",
-    element:<NoticeList/>
+    element: <PrivateRoute roles={["Super Admin","Manager"]}><NoticeList/></PrivateRoute>
 },
 {
   path: "/dashboard/addnotice",
-  element:<AddNotice/>
+  element:<PrivateRoute roles={["Super Admin","Manager"]}><AddNotice/> </PrivateRoute>
 },
 
 {
   path: "/dashboard/updatenotice/:id",
-  element:<UpdateNotice/>
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><UpdateNotice/></PrivateRoute>
 },
 
 {
   path: "/dashboard/detailsnotice/:id",
-  element:<NoticeDetails/>
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><NoticeDetails/></PrivateRoute>
 },
 
 // repoptr
 
 {
   path: "/dashboard/reportdtails/:id",
-  element:<ReportDetails/>
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><ReportDetails/></PrivateRoute>
 },
 
 {
   path: "/dashboard/updateinfo/:id",
-  element:<UpdateInfromation/>
+  element: <PrivateRoute roles={["Super Admin"]}><UpdateInfromation/></PrivateRoute>
 },
 
 
@@ -309,23 +309,23 @@ const router = createBrowserRouter([
 
 {
   path: "/dashboard/userlist",
-  element:<UserList/>
+  element: <PrivateRoute roles={["Manager"]}><UserList/></PrivateRoute>
 },
 
 {
   path: "/dashboard/adduser",
-  element:<Adduser/>
+  element:<PrivateRoute roles={["Manager"]}><Adduser/> </PrivateRoute>
 },
 
 {
   path: "/dashboard/managerrole",
-  element:<ManagerRole/>
+  element: <PrivateRoute roles={["Super Admin"]}><ManagerRole/></PrivateRoute>
 },
 
 
 {
   path: "/dashboard/addmanagerrole",
-  element:<AddManagerRole/>},
+  element: <PrivateRoute roles={["Super Admin"]}><AddManagerRole/></PrivateRoute> },
 
     // setting
 
@@ -333,52 +333,52 @@ const router = createBrowserRouter([
 
     {
       path: "/dashboard/setting/departmentlist",
-      element:<DepartmnetList/>
+      element:<PrivateRoute roles={["Super Admin"]}><DepartmnetList/> </PrivateRoute> 
     },
     {
       path: "/dashboard/setting/information",
-      element:<Information/>
+      element: <PrivateRoute roles={["Super Admin"]}><Information/> </PrivateRoute> 
     },
     {
       path: "/dashboard/setting/addinformation",
-      element:<AddInformation/>
+      element:<PrivateRoute roles={["Super Admin"]}><AddInformation/> </PrivateRoute> 
     },
     {
       path: "/dashboard/setting/adddepartment",
-      element:<AddDepartment/>
+      element: <PrivateRoute roles={["Super Admin"]}><AddDepartment/> </PrivateRoute> 
     },
 
     // institute
      
     {
       path: "/dashboard/setting/institutelist",
-      element:<InstituteList/>
+      element: <PrivateRoute roles={["Super Admin"]}><InstituteList/> </PrivateRoute> 
     },
     {
       path: "/dashboard/setting/addinstitute",
-      element:<AddInstitute/>
+      element: <PrivateRoute roles={["Super Admin"]}><AddInstitute/></PrivateRoute> 
     },
 
     // semister
 
     {
       path: "/dashboard/setting/semisterlist",
-      element:<SemisterList/>
+      element: <PrivateRoute roles={["Super Admin"]}><SemisterList/></PrivateRoute> 
     },
     {
       path: "/dashboard/setting/addsemister",
-      element:<AddSemister/>
+      element: <PrivateRoute roles={["Super Admin"]}><AddSemister/></PrivateRoute> 
     },
 
        // BloodGroup
 
        {
         path: "/dashboard/setting/bloodgrouplist",
-        element:<BloodGroupList/>
+        element: <PrivateRoute roles={["Super Admin"]}><BloodGroupList/></PrivateRoute> 
       },
       {
         path: "/dashboard/setting/addbloodgroup",
-        element:<AddBloodGroup/>
+        element: <PrivateRoute roles={["Super Admin"]}><AddBloodGroup/></PrivateRoute> 
       }
 
     ]// Changed the case to match convention and added closing tags

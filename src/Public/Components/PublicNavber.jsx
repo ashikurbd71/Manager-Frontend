@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import img from "../../assets/manager.png";
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { TbNews } from "react-icons/tb";
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai"; // Import icons for open and close
@@ -8,12 +8,22 @@ import { TfiGallery } from "react-icons/tfi";
 import Marquee from 'react-fast-marquee';
 import { MdFoodBank } from 'react-icons/md';
 import { GoReport } from 'react-icons/go';
+import useAuth from '../../Provider/UseAuth/useAuth';
+import { removeTokenFromLocalStorage } from '../../Auth/token';
 const PublicNavber = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+    const navigate = useNavigate()
+    const { user ,setUser} = useAuth();
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
+
+    const handleLogout = () => {
+    
+        removeTokenFromLocalStorage();
+        navigate("/login");
+        setUser(null)
+      };
 
     return (
         <>
@@ -77,11 +87,11 @@ const PublicNavber = () => {
 
                 {/* logout */}
                 <div className="hidden md:flex">
-                    <Link to="/logout">
-                        <button className="rounded-lg bg-sky-600 px-6 py-2 text-white transition-all duration-300 hover:scale-90">
+              
+                        <button onClick={handleLogout} className="rounded-lg bg-sky-600 px-6 py-2 text-white transition-all duration-300 hover:scale-90">
                             Log Out
                         </button>
-                    </Link>
+                 
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -143,11 +153,11 @@ const PublicNavber = () => {
                             <h1 className="text-lg font-medium">Profile</h1>
                         </div>
                     </NavLink>
-                    <Link to="/logout" onClick={toggleMobileMenu}>
-                        <button className="w-full rounded-lg bg-sky-600 px-6 py-2 text-white transition-all duration-300 hover:scale-90">
+              
+                        <button onClick={handleLogout} className="w-full rounded-lg bg-sky-600 px-6 py-2 text-white transition-all duration-300 hover:scale-90">
                             Log Out
                         </button>
-                    </Link>
+               
                 </div>
             )}
 

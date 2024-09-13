@@ -16,6 +16,7 @@ import Tablenav from "../../Share/Tablenav";
 
 import Pagination from "../../Share/PaginationTable/Pagination";
 import Marquee from "react-fast-marquee";
+import useAuth from "../../Provider/UseAuth/useAuth";
 
 
 
@@ -28,7 +29,7 @@ const MyReport = () => {
   const [page, setPage] = useState(1);
   const [stat, setStat] = useState();
   const [active, setActive] = useState(0);
-
+  const { user } = useAuth();
 
   useEffect(() => {
     if (active === 1) {
@@ -74,7 +75,9 @@ const MyReport = () => {
     },
   });
 
+  const userData = items?.filter((item) => item?.sender?.userName?.email === user?.userName?.email);
 
+  console.log(userData)
 console.log(items)
   const columns = React.useMemo(() => [
     {
@@ -165,7 +168,7 @@ console.log(items)
 
 
   const data = React.useMemo(() => 
-    items?.map((item, index) => ({
+    userData?.map((item, index) => ({
       ...item,
       sl: rowPerPage === "All" ? index + 1 : index + 1 + (page - 1) * rowPerPage,
       date: item?.date?.split('T')[0],

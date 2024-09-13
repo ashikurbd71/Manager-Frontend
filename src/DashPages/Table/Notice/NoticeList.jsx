@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 
 
-
+import * as XLSX from "xlsx";
 
 
 
@@ -226,6 +226,37 @@ console.log(items)
 
     })), [items]
   );
+
+  const handleAllExport = async () => {
+    try {
+      const response = await axoissecure.get(
+        `/notice/search?limit=100000000&page=1`
+      );
+      const allData = response.data.items;
+
+      const filteredData = allData?.map((item, index) => ({
+      sl: index + 1 + (page - 1) * rowPerPage,
+      assigner : item?.assigner,
+      title : item?.noticetitle,
+      position : item?.position,
+      date: item?.date?.split('T')[0],
+
+      }));
+
+      const worksheet = XLSX.utils.json_to_sheet(filteredData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "All Noticelist");
+
+      XLSX.writeFile(workbook, "Noticelist.xlsx");
+    } catch (error) {
+      console.error("Error exporting data:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "An error occurred while exporting data.",
+        icon: "error",
+      });
+    }
+  };
   const {
     getTableProps,
     getTableBodyProps,
@@ -245,7 +276,7 @@ console.log(items)
     
     <h1 className="text-xl font-semibold text-[#0284C7] p-5">Notice List</h1>
 
-    <Tablenav setActive={setActive} setSearch={setSearch} route={'/dashboard/addnotice'}/>
+    <Tablenav handleExcell={handleAllExport} setActive={setActive} setSearch={setSearch} route={'/dashboard/addnotice'}/>
 
  
     <div className="px-6 bg-gray-100 rounded-lg">

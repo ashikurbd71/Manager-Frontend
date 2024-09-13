@@ -8,7 +8,7 @@ import axoissecure from "../Hooks/Axoisscure";
 export const AuthContext = createContext(null);
 
 const Provider = ({ children }) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
 
  
   const { data, refetch, isLoading, error } = useQuery({

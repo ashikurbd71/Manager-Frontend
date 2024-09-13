@@ -4,7 +4,7 @@ import { useTable } from "react-table";
 import { FaEdit, FaTrashAlt, FaEye, FaBan } from 'react-icons/fa';
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-
+import * as XLSX from "xlsx";
 import Tablenav from './../../Share/Tablenav';
 import axoissecure from './../../Hooks/Axoisscure';
 import Swal from "sweetalert2";
@@ -225,6 +225,40 @@ const ProductList = () => {
 
     })), [items]
   );
+
+  const handleAllExport = async () => {
+    try {
+      const response = await axoissecure.get(
+        `/members/search?limit=100000000&page=1`
+      );
+      const allData = response.data.items;
+
+      const filteredData = allData?.map((item, index) => ({
+      sl: index + 1 + (page - 1) * rowPerPage,
+      name : item?.name,
+      number : item?.number,
+      institute : item?.instituteName?.shortName,
+      department : item?.department?.shortName,
+      semister: item?.semister?.shortName,
+      email: item?.email,
+      date: item?.joiningDate?.split('T')[0],
+
+      }));
+
+      const worksheet = XLSX.utils.json_to_sheet(filteredData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "All Memberlist");
+
+      XLSX.writeFile(workbook, "Allmemberlist.xlsx");
+    } catch (error) {
+      console.error("Error exporting data:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "An error occurred while exporting data.",
+        icon: "error",
+      });
+    }
+  };
   const {
     getTableProps,
     getTableBodyProps,
@@ -244,7 +278,7 @@ const ProductList = () => {
     
     <h1 className="text-xl font-semibold text-[#0284C7] p-5">Member List</h1>
 
-    <Tablenav setSearch={setSearch} setActive={setActive} route={'/dashboard/addmember'}/>
+    <Tablenav setSearch={setSearch}   handleExcell={handleAllExport} setActive={setActive} route={'/dashboard/addmember'}/>
 
  
     <div className="px-6 bg-gray-100 rounded-lg">

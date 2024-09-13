@@ -4,7 +4,7 @@ import { useTable } from "react-table";
 import { FaEdit, FaTrashAlt, FaEye, FaBan, FaPaperPlane } from 'react-icons/fa';
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-
+import * as XLSX from "xlsx";
 
 import { toast } from "react-toastify";
 
@@ -169,6 +169,37 @@ console.log(items)
 
     })), [items]
   );
+
+  const handleAllExport = async () => {
+    try {
+      const response = await axoissecure.get(
+        `/report/search?limit=100000000&page=1`
+      );
+      const allData = response.data.items;
+
+      const filteredData = allData?.map((item, index) => ({
+      sl: index + 1 + (page - 1) * rowPerPage,
+      totaltk: item?.totalTk,
+      meal: item?.totalMeal,
+      extratk: item?.extraTk,
+      reportStatus: item?.reportStatus,
+      date : item?.date.split('T')[0]
+      }));
+
+      const worksheet = XLSX.utils.json_to_sheet(filteredData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "All Reportlist");
+
+      XLSX.writeFile(workbook, "Reportlist.xlsx");
+    } catch (error) {
+      console.error("Error exporting data:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "An error occurred while exporting data.",
+        icon: "error",
+      });
+    }
+  };
   const {
     getTableProps,
     getTableBodyProps,
@@ -189,7 +220,7 @@ console.log(items)
     
     <h1 className="text-xl font-semibold text-[#0284C7] p-5">Monthly Report</h1>
 
-    <MonthlyReportnav    setActive={setActive} setSearch={setSearch} />
+    <MonthlyReportnav handleAllExport={handleAllExport}   setActive={setActive} setSearch={setSearch} />
 
  
     <div className="px-6 mb-10 bg-gray-100 rounded-lg">

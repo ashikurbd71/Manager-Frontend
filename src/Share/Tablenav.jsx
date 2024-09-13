@@ -2,7 +2,7 @@ import React from 'react';
 import { FaPlus } from "react-icons/fa6";
 import { TbTableExport } from "react-icons/tb";
 import { Link } from 'react-router-dom';
-const Tablenav = ({route,setSearch,setActive}) => {
+const Tablenav = ({route,setSearch,setActive,handleExcell}) => {
     return (
        <>
           <div className="mx-6 px-5 mt-4 pt-2 lg:h-[60px] bg-white">
@@ -38,7 +38,7 @@ Add New
 
    </Link>
 
-<button className=' text-sm font-semibold  '>
+<button    onClick={handleExcell} className=' text-sm font-semibold  '>
 
 <div className='flex text-white bg-[#0284C7] border-2 px-2 py-2 rounded-md gap-1 justify-items-center items-center'>
  

@@ -5,7 +5,7 @@ import { FaEdit, FaTrashAlt, FaEye, FaBan } from 'react-icons/fa';
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 
-
+import * as XLSX from "xlsx";
 
 import { toast } from "react-toastify";
 
@@ -94,6 +94,12 @@ console.log(items)
       accessor: 'extra'
     },
 
+    {
+
+      Header: "Remark",
+      accessor: 'remark'
+    },
+
   
     {
       Header: "Action",
@@ -174,9 +180,39 @@ console.log(items)
       sl: rowPerPage === "All" ? index + 1 : index + 1 + (page - 1) * rowPerPage,
       date: item?.date?.split("T")[0],
       extra: item?.extraMoney,
+      remark : item?.comments
 
     })), [items]
   );
+
+  const handleAllExport = async () => {
+    try {
+      const response = await axoissecure.get(
+        `/mealextra/search?limit=100000000&page=1`
+      );
+      const allData = response.data.items;
+
+      const filteredData = allData?.map((item, index) => ({
+      sl: index + 1 + (page - 1) * rowPerPage,
+      date: item?.date?.split("T")[0],
+      extra: item?.extraMoney,
+      remark : item?.comments
+      }));
+
+      const worksheet = XLSX.utils.json_to_sheet(filteredData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "All extralist");
+
+      XLSX.writeFile(workbook, "extralist.xlsx");
+    } catch (error) {
+      console.error("Error exporting data:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "An error occurred while exporting data.",
+        icon: "error",
+      });
+    }
+  };
   const {
     getTableProps,
     getTableBodyProps,
@@ -215,7 +251,7 @@ console.log(items)
     
 
 
-    <ExtraMealNav totalextrameal={extra}   setActive={setActive} setSearch={setSearch} route={'/dashboard/addextra'}/>
+    <ExtraMealNav totalextrameal={extra} handleAllExport={handleAllExport}   setActive={setActive} setSearch={setSearch} route={'/dashboard/addextra'}/>
 
  
     <div className="px-6 mb-10 bg-gray-100 rounded-lg">

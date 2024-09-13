@@ -2,7 +2,7 @@ import React from 'react';
 import { FaPlus } from "react-icons/fa6";
 import { TbTableExport } from "react-icons/tb";
 import { Link } from 'react-router-dom';
-const ExtraMealNav = ({route,setSearch,setActive,totalextrameal}) => {
+const ExtraMealNav = ({route,setSearch,setActive,totalextrameal,handleAllExport}) => {
     return (
        <>
           <div className="mx-6 px-5 mt-4 pt-2 lg:h-[100px] bg-white">
@@ -27,7 +27,7 @@ const ExtraMealNav = ({route,setSearch,setActive,totalextrameal}) => {
     <Link to={route}>
    <button className=' text-sm  font-semibold '>
 
-<div className='flex bg-[#0284C7] text-white border-2 px-2 py-2 rounded-md gap-1 justify-items-center items-center'>
+<div  className='flex bg-[#0284C7] text-white border-2 px-2 py-2 rounded-md gap-1 justify-items-center items-center'>
  
 Add Extra
 <FaPlus className=''/>
@@ -37,7 +37,7 @@ Add Extra
 
    </Link>
 
-<button className=' text-lsm font-semibold  '>
+<button onClick={handleAllExport} className=' text-lsm font-semibold  '>
 
 <div className='flex bg-[#0284C7] text-white border-2 px-2 py-2 rounded-md gap-1 justify-items-center items-center'>
  

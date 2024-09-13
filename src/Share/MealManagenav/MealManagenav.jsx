@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaPlus } from "react-icons/fa6";
 import { TbTableExport } from "react-icons/tb";
 import { Link } from 'react-router-dom';
-const MealManagenav = ({route,setSearch,setActive,daliyamount,onmeal,secondroute,formattedDate}) => {
+const MealManagenav = ({route,setSearch,setActive,daliyamount,onmeal,secondroute,formattedDate,handleAllExport}) => {
 
 
     const [isOpen, setIsOpen] = useState(null)
@@ -64,7 +64,7 @@ Add Meal
 
    </Link>
 
-<button className=' text-lsm font-semibold  '>
+<button onClick={handleAllExport} className=' text-lsm font-semibold  '>
 
 <div className='flex bg-[#0284C7] text-white border-2 px-2 py-2 rounded-md gap-1 justify-items-center items-center'>
  

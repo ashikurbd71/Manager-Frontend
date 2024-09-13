@@ -17,7 +17,7 @@ import MealUpdate from "../../Update/MealManager/MealUpdate";
 import moment from "moment-timezone";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 
-
+import * as XLSX from "xlsx";
 
 
 
@@ -239,6 +239,8 @@ const MealManage = () => {
     },
   });
 
+
+
 console.log(item)
  
   const takeIt = async (money) => {
@@ -361,6 +363,39 @@ console.log(item)
 
     })), [items]
   );
+
+  const handleAllExport = async () => {
+    try {
+      const response = await axoissecure.get(
+        `/mealmanage/search?limit=100000000&page=1`
+      );
+      const allData = response.data.items;
+
+      const filteredData = allData?.map((item, index) => ({
+      sl: index + 1 + (page - 1) * rowPerPage,
+      name : item?.member?.name,
+      totaltk : item?.addMoney,
+      totalmeal: item?.totalMeal,
+      meal : item?.eatMeal,
+      memberblance :item?.blance,
+      memberbloan : item?.loan || "00",
+      extra :  (extra / meal).toFixed(2) || 'loading...',
+      }));
+
+      const worksheet = XLSX.utils.json_to_sheet(filteredData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "All Meallist");
+
+      XLSX.writeFile(workbook, "Meallist.xlsx");
+    } catch (error) {
+      console.error("Error exporting data:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "An error occurred while exporting data.",
+        icon: "error",
+      });
+    }
+  };
   const {
     getTableProps,
     getTableBodyProps,
@@ -389,7 +424,7 @@ console.log(item)
     
     <h1 className="text-xl font-semibold text-[#0284C7] p-5">Meal Manage</h1>
 
-    <MealManagenav onmeal={onmeal} daliyamount={daliyamount} formattedDate={formattedDate} setActive={setActive} setSearch={setSearch} secondroute={'/dashboard/extralist'} route={'/dashboard/addmeal'}/>
+    <MealManagenav onmeal={onmeal} handleAllExport={handleAllExport} daliyamount={daliyamount} formattedDate={formattedDate} setActive={setActive} setSearch={setSearch} secondroute={'/dashboard/extralist'} route={'/dashboard/addmeal'}/>
 
  
     <div className="px-6 pb-10 bg-gray-100 rounded-lg">
