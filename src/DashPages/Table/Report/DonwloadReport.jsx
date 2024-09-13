@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axoissecure from '../../../Hooks/Axoisscure';
 import { useQuery } from '@tanstack/react-query';
 import { FaPrint } from 'react-icons/fa6';
-
+import { usePDF } from "react-to-pdf";
+import { MdDownloading } from 'react-icons/md';
 const DonwloadReport = () => {
 
     const { data, refetch } = useQuery({
@@ -35,18 +36,65 @@ const DonwloadReport = () => {
         },
       });
 
+
+      
+  const [loading, setLoading] = useState(false);
+  const options = {
+    overrides: {
+      canvas: {
+        useCORS: true,
+      },
+    },
+  };
+
+  const { toPDF, targetRef } = usePDF(
+    {
+      filename: `monthlyreportdetails.pdf`,
+    },
+    options
+  );
+
+  const handleCardDownload = async () => {
+    setLoading(true);
+    try {
+      await toPDF();
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+
     return (
   <>
      <div className='flex  justify-end  mt-16 pr-8 py-4'>
 
-<div className='flex border-2 cursor-pointer item items-center px-3 py-1 gap-1'>
-<FaPrint className='text-bl text-blue-400'/>
-<h1 className='text-lg font-medium text-gray-500'> Print</h1>
+     <div className='flex  justify-end  pb-5'>
+
+<div className="w-100 flex flex-grow flex-col pb-3 items-end justify-start">
+  <div className="flex flex-row space-x-3">
+    {/* Follow Button */}
+    <button
+      onClick={() => handleCardDownload()}
+      className="flex rounded-md bg-blue-500/80 px-5 py-2 text-white"
+    >
+      {loading ? (
+        <div className="flex items-center gap-2">
+          <span>Printing</span>
+          <MdDownloading  className="text-[20px] animate-ping text-white" />
+        </div>
+      ) : (
+        <h1 className='fon font-semibold'>Download</h1>
+      )}
+    </button>
+  </div>
+</div>
+
 </div>
 
 </div>
  
- <div className='bg-white p-5  mx-8'>
+ <div ref={targetRef} className='bg-white p-5  mx-8'>
 
   <h1 className='text-center font-semibold pb-4 text-xl'>Monthly Report</h1>
  
