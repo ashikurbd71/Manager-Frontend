@@ -8,9 +8,13 @@ import { getMember } from '../../Share/Api/SelectorApi/settingselector';
 import axoissecure from '../../Hooks/Axoisscure';
 import * as Yup from "yup";
 import { toast } from 'react-toastify';
+import useAuth from '../../Provider/UseAuth/useAuth';
 
 // / Validation Schema
 const Schema = Yup.object().shape({
+
+
+
   // totaltk: Yup.string()
   // .label('Total Tk')
   // .required(),
@@ -28,6 +32,8 @@ const Schema = Yup.object().shape({
 });
 
 const AddMyReport = () => {
+
+  const {user} = useAuth()
   const fileInputRef = useRef();
     const formik = useFormik({
         initialValues: {
@@ -47,6 +53,8 @@ const AddMyReport = () => {
           console.log(values)
           try {
             await axoissecure.post("/report", {
+
+              sender : user,
               bazarKari1:{
                 id: values?.bazarkari && parseInt(values?.bazarkari),
               },

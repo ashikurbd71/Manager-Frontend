@@ -113,7 +113,7 @@ const AddBazarlist = () => {
       console.log(values);
       try {
         await axoissecure.post("/bazalist", {
-          manager : user?.userName?.name,
+          manager : user?.manager?.name,
           listMonth : new Date(),
           date1: values.date1 || null,
           day1: values.day1 || null,
@@ -237,7 +237,7 @@ const AddBazarlist = () => {
           bazarkari230: values.bazarkari230|| null,
           status: "1", // Additional static field
         });
-        console.log("Institute added successfully:", values);
+        console.log("Bazarlist Create successfully:", values);
         toast.success("Institute Added successfully!");
         resetForm();
       } catch (error) {

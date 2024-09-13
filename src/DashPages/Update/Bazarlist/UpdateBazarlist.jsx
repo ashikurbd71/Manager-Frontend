@@ -136,7 +136,7 @@ const UpdateBazarlist = () => {
       console.log(values);
       try {
         await axoissecure.patch(`/bazalist/${id}`, {
-          manager : user?.userName?.name,
+          manager : user?.manager?.name,
           listMonth : new Date(),
           date1: values.date1 || null,
           day1: values.day1 || null,

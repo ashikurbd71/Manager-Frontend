@@ -6,10 +6,10 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axoissecure from "../../../../Hooks/Axoisscure";
 import DashCustomNav from "../../../../Share/Formnav";
-import { MdContactEmergency } from "react-icons/md";
+import { MdContactEmergency, MdDownloading } from "react-icons/md";
 import MealEmergency from "../../../Update/MealManager/MealEmergency/MealEmergency";
 import GuestMeal from "../../../Update/MealManager/MealEmergency/GuestMeal";
-
+import { usePDF } from "react-to-pdf";
 const Mealdetails = () => {
   const [member, setMember] = useState();
   const { id } = useParams();
@@ -30,6 +30,32 @@ const Mealdetails = () => {
   });
 
   console.log(member);
+
+  const [loading, setLoading] = useState(false);
+  const options = {
+    overrides: {
+      canvas: {
+        useCORS: true,
+      },
+    },
+  };
+
+  const { toPDF, targetRef } = usePDF(
+    {
+      filename: `mealdetails.pdf`,
+    },
+    options
+  );
+
+  const handleCardDownload = async () => {
+    setLoading(true);
+    try {
+      await toPDF();
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   const join = member?.date;
   const parsedDate = new Date(join);
@@ -110,13 +136,24 @@ const Mealdetails = () => {
             <h1 className="text-lg font-medium text-white">Guest On</h1>
           </div>
 
-          <div className="flex border-2 rounded-md cursor-pointer item items-center px-3 py-1 gap-1">
-            <FaPrint className="text-bl text-blue-400" />
-            <h1 className="text-lg font-medium text-gray-500"> Print</h1>
+          <div className="flex  rounded-md cursor-pointer item items-center px-3 py-1 gap-1">
+          <button
+      onClick={() => handleCardDownload()}
+      className="flex rounded-md bg-blue-500/80 px-5 py-2 text-white"
+    >
+      {loading ? (
+        <div className="flex items-center gap-2">
+          <span>Printing</span>
+          <MdDownloading  className="text-[20px] animate-ping text-white" />
+        </div>
+      ) : (
+        <h1 className='fon font-semibold'>Download</h1>
+      )}
+    </button>
           </div>
         </div>
 
-        <div className=" bg-white min min-h-screen">
+        <div ref={targetRef} className=" bg-white min min-h-screen">
           <div className="  items-center p-10 flex"></div>
 
           <div className="flex flex-col mx-10 gap-1 ">

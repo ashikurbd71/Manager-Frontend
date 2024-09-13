@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import axoissecure from '../../../Hooks/Axoisscure';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import DashCustomNav from '../../../Share/Formnav';
 import { FaPrint } from 'react-icons/fa6';
-
+import { usePDF } from "react-to-pdf";
+import { MdDownloading } from 'react-icons/md';
 const Bazarlistdetails = () => {
   const { id } = useParams();
 
@@ -22,6 +23,34 @@ const Bazarlistdetails = () => {
       }
     },
   });
+
+  
+  const [loading, setLoading] = useState(false);
+  const options = {
+    overrides: {
+      canvas: {
+        useCORS: true,
+      },
+    },
+  };
+
+  const { toPDF, targetRef } = usePDF(
+    {
+      filename: `bazarlistdetails.pdf`,
+    },
+    options
+  );
+
+  const handleCardDownload = async () => {
+    setLoading(true);
+    try {
+      await toPDF();
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
 
   // Generate table rows based on the data
   const tableRows = [];
@@ -69,21 +98,36 @@ const Bazarlistdetails = () => {
     <>
       <Helmet><title>Manager || Bazarlist Details</title></Helmet>
       <DashCustomNav name={'Bazar List Details '} listroute={'/dashboard/bazalist'} />
-      <div className='flex  justify-end  pb-5 pr-5'>
+    
+      <div className='flex  justify-end  pb-5'>
 
-<div className='flex border-2 cursor-pointer item items-center px-3 py-1 gap-1'>
-<FaPrint className='text-bl text-blue-400'/>
-<h1 className='text-lg font-medium text-gray-500'> Print</h1>
+<div className="w-100 flex flex-grow flex-col pb-3 items-end justify-start">
+  <div className="flex flex-row space-x-3">
+    {/* Follow Button */}
+    <button
+      onClick={() => handleCardDownload()}
+      className="flex rounded-md bg-blue-500/80 px-5 py-2 text-white"
+    >
+      {loading ? (
+        <div className="flex items-center gap-2">
+          <span>Printing</span>
+          <MdDownloading  className="text-[20px] animate-ping text-white" />
+        </div>
+      ) : (
+        <h1 className='fon font-semibold'>Download</h1>
+      )}
+    </button>
+  </div>
 </div>
 
 </div>
-      <div className="container mx-auto bg-white p-4">
+      <div ref={targetRef} className="container mx-auto bg-white p-4">
 
        
 
             <h1 className='text-center text-2xl font-bold text-[#0284C7]  '>{monthName } BazarList </h1>
             <h1 className='text-center text-lg font-semibold text-gray-500  '> {item?.name}</h1>
-            <h1 className='text-center font-normal -mt-1 pb-4 text-gray-600'>{item.location}</h1>
+            <h1 className='text-center font-normal -mt-1 pb-4 text-gray-600'>{item?.location}</h1>
           
 
       

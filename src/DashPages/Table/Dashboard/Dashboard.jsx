@@ -32,7 +32,7 @@ const Dashboard = () => {
         queryKey: ["re"],
         queryFn: async () => {
           try {
-            const res = await axoissecure.get(`/report/totals/approved`);
+            const res = await axoissecure.get(`/report/approved-totals`);
     
       
             return res.data;
@@ -47,7 +47,7 @@ const Dashboard = () => {
         queryKey: ["readd"],
         queryFn: async () => {
           try {
-            const res = await axoissecure.get(`/mealmanage/totals/addMoney`);
+            const res = await axoissecure.get(`/mealmanage/total-add-money`);
     
       
             return res.data;
@@ -138,7 +138,7 @@ const Dashboard = () => {
 
 <div><TbMoneybag className='text-7xl'/></div>
 
- <h1 className='text-3xl font-bold text-[#0284C7]'>{addmoney?.totals?.addMoney || "00"}$</h1>
+ <h1 className='text-3xl font-bold text-[#0284C7]'>{addmoney?.totalAddMoney || "00"}$</h1>
 
  <h1 className='fon font-semibold  text-xl'>TOTAL MONEY</h1>
 
@@ -150,7 +150,7 @@ const Dashboard = () => {
 
 <div><GiMoneyStack className='text-7xl'/></div>
 
- <h1 className='text-3xl font-bold text-[#0284C7]'>{data?.totals?.totalTk || "00"}$</h1>
+ <h1 className='text-3xl font-bold text-[#0284C7]'>{data?.totalTk || "00"}$</h1>
 
  <h1 className='fon font-semibold  text-xl'>TOTAL COST</h1>
 
@@ -168,7 +168,7 @@ const Dashboard = () => {
     
     <div><IoFastFoodOutline className='text-7xl'/></div>
     
-     <h1 className='text-3xl font-bold text-[#0284C7]'>{data?.totals?.totalMeal || "00"} </h1>
+     <h1 className='text-3xl font-bold text-[#0284C7]'>{data?.totalMeal || "00"} </h1>
     
      <h1 className='fon font-semibold  text-xl'>TOTAL MEAL</h1>
     
@@ -183,7 +183,7 @@ const Dashboard = () => {
     
     <div><GiTakeMyMoney  className='text-7xl'/></div>
     
-     <h1 className='text-3xl font-bold text-[#0284C7]'>{data?.totals?.extraTk || "00"}$</h1>
+     <h1 className='text-3xl font-bold text-[#0284C7]'>{data?.totalTk || "00"}$</h1>
     
      <h1 className='fon font-semibold  text-xl'>TOTAL EXTRA</h1>
     

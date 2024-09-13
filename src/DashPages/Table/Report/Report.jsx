@@ -15,7 +15,7 @@ const Report = () => {
         queryKey: ["re"],
         queryFn: async () => {
           try {
-            const res = await axoissecure.get(`/report/totals/approved`);
+            const res = await axoissecure.get(`/report/approved-totals`);
     
       
             return res.data;
@@ -52,7 +52,7 @@ const Report = () => {
 
 <div><GiMoneyStack className='text-7xl'/></div>
 
- <h1 className='text-3xl font-bold text-[#0284C7]'>{data?.totals?.totalTk || "00"}$</h1>
+ <h1 className='text-3xl font-bold text-[#0284C7]'>{data?.extraTk|| "00"}$</h1>
 
  <h1 className='fon font-semibold  text-xl'>TOTAL MONEY</h1>
 
@@ -66,7 +66,7 @@ const Report = () => {
 
 <div><IoFastFoodOutline className='text-7xl'/></div>
 
- <h1 className='text-3xl font-bold text-[#0284C7]'>{data?.totals?.totalMeal || "00"}</h1>
+ <h1 className='text-3xl font-bold text-[#0284C7]'>{data?.totalMeal || "00"}</h1>
 
  <h1 className='fon font-semibold  text-xl'>TOTAL MEAL</h1>
 
@@ -81,7 +81,7 @@ const Report = () => {
 
 <div><GiTakeMyMoney  className='text-7xl'/></div>
 
- <h1 className='text-3xl font-bold text-[#0284C7]'>{data?.totals?.extraTk || "00"}$</h1>
+ <h1 className='text-3xl font-bold text-[#0284C7]'>{data?.totalTk || "00"}$</h1>
 
  <h1 className='fon font-semibold  text-xl'>TOTAL EXTRA</h1>
 

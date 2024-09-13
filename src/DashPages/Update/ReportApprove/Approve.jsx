@@ -28,7 +28,7 @@ const Approve = ({isOpen,setIsOpen,update,refetch}) => {
           try {
             await axoissecure.patch(`/report/${update?.id}`, {
                 reportStatus: values.reportStatus,
-              feedBack : values.feedback,
+               feedBack : values.feedback,
              
             });
             console.log("Report Approve successfully:", values);
@@ -111,7 +111,7 @@ const Approve = ({isOpen,setIsOpen,update,refetch}) => {
           
             <div className="flex mt-2 flex-col">
               <label htmlFor="reportStatus"  className="pb-1 text-[#726f6f]">
-                5. Status{" "}
+                1. Status{" "}
                
               </label>
               <Select
