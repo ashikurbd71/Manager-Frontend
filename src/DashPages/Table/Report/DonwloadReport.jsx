@@ -9,7 +9,7 @@ const DonwloadReport = () => {
         queryKey: ["re"],
         queryFn: async () => {
           try {
-            const res = await axoissecure.get(`/report/totals/approved`);
+            const res = await axoissecure.get(`/report/approved-totals`);
     
       
             return res.data;
@@ -24,7 +24,7 @@ const DonwloadReport = () => {
         queryKey: ["readd"],
         queryFn: async () => {
           try {
-            const res = await axoissecure.get(`/mealmanage/totals/addMoney`);
+            const res = await axoissecure.get(`/mealmanage/total-add-money`);
     
       
             return res.data;
@@ -47,6 +47,8 @@ const DonwloadReport = () => {
 </div>
  
  <div className='bg-white p-5  mx-8'>
+
+  <h1 className='text-center font-semibold pb-4 text-xl'>Monthly Report</h1>
  
  <div className="text-gray-700 ">
   <div className="overflow-x-auto">
@@ -57,22 +59,22 @@ const DonwloadReport = () => {
 
       <tr>
           <td className="px-4 py-2 font-bold border border-gray-200">TOTAL MONEY</td>
-          <td className="px-4 py-2 border font-semibold text-gray-600 border-gray-200">{addmoney?.totals?.addMoney}$</td>
+          <td className="px-4 py-2 border font-semibold text-gray-600 border-gray-200">{addmoney?.totalAddMoney}$</td>
         </tr>
       <tr>
           <td className="px-4 py-2 font-bold border border-gray-200">TOTAL COST</td>
-          <td className="px-4 py-2 border font-semibold text-gray-600 border-gray-200">{data?.totals?.totalTk}$</td>
+          <td className="px-4 py-2 border font-semibold text-gray-600 border-gray-200">{data?.totalTk}$</td>
         </tr>
 
         <tr>
           <td className="px-4 py-2 font-bold border border-gray-200">TOTAL MEAL</td>
-          <td className="px-4 py-2 border fon font-semibold text-gray-600 border-gray-200">{data?.totals?.totalMeal}</td>
+          <td className="px-4 py-2 border fon font-semibold text-gray-600 border-gray-200">{data?.totalMeal}</td>
         </tr>
 
 
         <tr>
           <td className="px-4 py-2 font-bold border border-gray-200">TOTAL EXTRA</td>
-          <td className="px-4 py-2 border font-semibold text-gray-600 border-gray-200">{data?.totals?.extraTk}$</td>
+          <td className="px-4 py-2 border font-semibold text-gray-600 border-gray-200">{data?.extraTk}$</td>
         </tr>
 
         
