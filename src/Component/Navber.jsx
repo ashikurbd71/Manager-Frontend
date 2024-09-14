@@ -68,7 +68,7 @@ const Navber = () => {
         <div className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-20">
           <div className="py-1">
           
-          <Link to={"/dashboard/change-pass"}>
+          <Link to={"/dashboard/chnagepass"}>
                   <div className="" role="none">
                     <a
                       className="block px-4 py-2 text-sm font-semibold text-gray-600 hover:text-[#0284C7] hover:bg-secondary"

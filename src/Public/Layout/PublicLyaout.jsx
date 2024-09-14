@@ -2,8 +2,29 @@ import React from 'react';
 import PublicNavber from '../Components/PublicNavber';
 import { Outlet } from 'react-router-dom';
 import Marquee from 'react-fast-marquee';
+import { useQuery } from '@tanstack/react-query';
+import axoissecure from '../../Hooks/Axoisscure';
 
 const PublicLyaout = () => {
+
+  const { data, refetch } = useQuery({
+    queryKey: ["no"],
+    queryFn: async () => {
+      try {
+        const res = await axoissecure.get(`/notice`);
+        console.log(res.data);
+   
+        return res.data;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+      }
+    },
+  });
+
+  console.log(data,"gfgdgdgd")
+
+  
     return (
      <>
      
@@ -23,7 +44,12 @@ const PublicLyaout = () => {
         speed={50}
         gradient={false}
       >
-       <h1>I love You Afrin</h1>
+   {data?.map((item, index) => (
+  <span key={index} className="mx-4">
+    {Array.isArray(item?.noticetitle) ? item?.noticetitle.join(" , ") : item?.noticetitle}
+  </span>
+))}
+
       </Marquee>
     </div>
   </div>

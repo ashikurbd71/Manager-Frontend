@@ -49,14 +49,14 @@ const MyreportDetails = () => {
       <DashCustomNav name={"Report Details"} listroute={"/public/myreport"} />
 
       <div className="px-10 ">
-      <div className='flex  justify-end  pb-5'>
+      {/* <div className='flex  justify-end  pb-5'>
 
 <div className='flex border-2 cursor-pointer item items-center px-3 py-1 gap-1'>
 <FaPrint className='text-bl text-blue-400'/>
 <h1 className='text-lg font-medium text-gray-500'> Print</h1>
 </div>
 
-</div>
+</div> */}
 
         <div className=" bg-white ">
        

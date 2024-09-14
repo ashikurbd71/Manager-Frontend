@@ -59,6 +59,9 @@ import Report from "../DashPages/Table/Report/Report";
 import DonwloadReport from "../DashPages/Table/Report/DonwloadReport";
 import Dashboard from "../DashPages/Table/Dashboard/Dashboard";
 import UpdateInfromation from "../DashPages/Update/Information/UpdateInfromation";
+import Forbidden from "../Share/Errorpage/Forbidden";
+import UpdatePass from "../Share/Updatepassword/UpdatePass";
+import UpdatePubliPass from "../Share/Updatepassword/UpdatePubliPass";
 
 const router = createBrowserRouter([
 
@@ -106,6 +109,10 @@ const router = createBrowserRouter([
         element: <PrivateRoute roles={["Super Admin","Member"]}><PublicGallery/> </PrivateRoute>
       },
 
+      {
+        path: "/public/publichnagepass",
+        element: <PrivateRoute roles={["Super Admin","Member",]}><UpdatePubliPass/></PrivateRoute>
+      },
       {
         path: "/public/myreport",
         element: <PrivateRoute roles={["Super Admin","Member"]}><MyReport/> </PrivateRoute>
@@ -302,6 +309,13 @@ const router = createBrowserRouter([
   element: <PrivateRoute roles={["Super Admin"]}><UpdateInfromation/></PrivateRoute>
 },
 
+{
+  path: "/dashboard/chnagepass",
+  element: <PrivateRoute roles={["Super Admin","Manager",]}><UpdatePass/></PrivateRoute>
+},
+
+
+// password
 
 
 
@@ -390,6 +404,14 @@ const router = createBrowserRouter([
 path:"/login",
 element : <Login/>
 }
+
+,
+
+
+{
+  path:"/forbidden",
+  element : <Forbidden/>
+  }
 
   
 ]);

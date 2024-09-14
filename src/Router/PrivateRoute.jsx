@@ -38,7 +38,7 @@ const PrivateRoute = ({ children, roles = [] }) => {
     // Check if user has one of the required roles or is a Super Admin
     const userRoles = user?.role || null;
     const isSuperAdmin = userRoles.includes("Super Admin");
-    const hasRequiredRole = roles.length === 0 || roles.some(role => userRoles.includes(role));
+    const hasRequiredRole = roles.length === 0 || roles.some(role => userRoles?.includes(role));
 
     if (isSuperAdmin || hasRequiredRole) {
       return children;

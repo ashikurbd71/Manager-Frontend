@@ -39,7 +39,7 @@ const NoticeDetailsPub = () => {
      
         <div className='lg:px-24 px-5 pb-10'>
      
-
+{/* 
           <div className='flex  justify-end  pb-5'>
 
             <div className='flex border-2 cursor-pointer item items-center px-2 lg:px-3 py-1 gap-1'>
@@ -47,7 +47,7 @@ const NoticeDetailsPub = () => {
             <h1 className='lg:text-lg font-medium text-gray-500'>Download</h1>
             </div>
 
-          </div>
+          </div> */}
 
           <div className=' bg-white   min-h-screen '>
 
