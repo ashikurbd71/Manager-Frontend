@@ -65,7 +65,7 @@ const AddManager = () => {
       institute: "",
       department: "",
       title: "",
-      title: "",
+  
       startDate: '',
       endDate: '',
       image: '',

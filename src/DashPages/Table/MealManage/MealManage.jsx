@@ -251,13 +251,13 @@ console.log(item)
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: `Yes, take it $${item?.mealCharge}!`,
+      confirmButtonText: `Yes, take it $35!`,
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
          
           
-          const newCostTk = money.blance - item?.mealCharge;
+          const newCostTk = money.blance - 35;
           const costMeal = parseInt(money.eatMeal)  + 1;
 
           
@@ -409,7 +409,7 @@ console.log(item)
   const formattedDate = new Date().toLocaleDateString('en-GB', options);
 
 
-  const daliyamount = onmeal * item?.mealCharge
+  const daliyamount = onmeal * 35
 
   return (
 

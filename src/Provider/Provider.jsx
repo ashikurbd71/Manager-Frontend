@@ -29,7 +29,7 @@ const Provider = ({ children }) => {
 
   useEffect(() => {
     if (data && !isLoading) {
-      setUser(data);
+      setUser(data || null);
       console.log(data,"kkhkhuguhg")
     }
   }, [data, isLoading]);

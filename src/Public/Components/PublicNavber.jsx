@@ -39,7 +39,7 @@ const PublicNavber = () => {
                 <Link to={'/public'}>
                     <div className="flex cursor-pointer items-center">
                         <img src={img} alt="Manager Logo" className="w-8 h-8"/>
-                        <h1 className="text-2xl font-bold text-black ml-2"><span className="text-[#0284C7]">Man</span>ager</h1>
+                        <h1 className="text-xl font-bold text-black ml-2"><span className="text-[#0284C7]">Man</span>ager</h1>
                     </div>
                 </Link>
 
@@ -159,7 +159,7 @@ const PublicNavber = () => {
                 {/* Mobile Menu Button */}
                 <div className="md:hidden flex items-center">
                 {
-    user?.email ?   <h1 className='text-md font-bold text-gray-600 pt-1 border-r-2  border-gray-500 px-4'>{user?.userName?.name}</h1>: <Link to={'/login'}>
+    user?.email ?   <h1 className='text-sm font-bold text-gray-600 pt-1 border-r-2  border-gray-500 px-4'>{user?.userName?.name}</h1>: <Link to={'/login'}>
     <button className="rounded-lg bg-sky-600 px-6 py-2 text-white transition-all duration-300 hover:scale-90">Log In</button>
     </Link>
 }

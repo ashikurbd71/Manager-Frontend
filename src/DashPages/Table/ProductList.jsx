@@ -18,7 +18,7 @@ import Pagination from "../../Share/PaginationTable/Pagination";
 const ProductList = () => {
 
   const [search, setSearch] = useState("");
-  const [rowPerPage, setRowPerPage] = useState(5);
+  const [rowPerPage, setRowPerPage] = useState(15);
   const [page, setPage] = useState(1);
   const [stat, setStat] = useState();
   const [active, setActive] = useState(0);

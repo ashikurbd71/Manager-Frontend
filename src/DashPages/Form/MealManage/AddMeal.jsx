@@ -162,11 +162,11 @@ const AddMeal = () => {
 
    
     useEffect(() => {
-      if (formik.values.taka && item?.mealCharge) {
-        const calculatedTotalMeal = (parseFloat(formik.values.taka) / item?.mealCharge).toFixed();
+      if (formik.values.taka) {
+        const calculatedTotalMeal = (parseFloat(formik.values.taka) / 35).toFixed();
         formik.setFieldValue('totalmeal', calculatedTotalMeal);
       }
-    }, [formik.values.taka, item?.mealCharge]);
+    }, [formik.values.taka, ]);
     
   
 
