@@ -108,7 +108,7 @@ const MealUpdate = ({isOpen,setIsOpen,update,refetch}) => {
     const balance = parseFloat(formik.values.taka) || 0;
     const newBalance = addMoney + balance;
     // formik.setFieldValue('taka', newBalance.toFixed(2));
-    const totalMeals = (newBalance / item?.mealCharge).toFixed();
+    const totalMeals = (newBalance / 35).toFixed();
     formik.setFieldValue('totalmeal', totalMeals);
   }, [formik.values.addmoney]);
 

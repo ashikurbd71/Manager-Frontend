@@ -133,20 +133,26 @@ const MealManage = () => {
         <>
          <div className="flex w-full mx-auto  items-center gap-2 ">
            {/* Edit Icon */}
-           {/*  */}
-         
+           <FaEdit title="Meal Edit"  onClick={() => openModal(row.original)} className=" text-green-500 cursor-pointer" />
+           {
+            row?.original?.status === 1 &&
+            <>
+              
+       
+   
+       <FaTrashAlt title="Delete" onClick={() => handleDelete(row.original.id)} className="  text-red-500 cursor-pointer"  />
+       
+  
+       <Link  to={`/dashboard/detailsmeal/${row.original.id}`}>
+       <FaEye title="View Deatails"  className=" text-yellow-600 cursor-pointer"  />
+       </Link>
     
-         <FaEdit title="Meal Edit"  onClick={() => openModal(row.original)} className=" text-green-500 cursor-pointer" />
-       
-          
-          {/* Delete Icon */}
-          <FaTrashAlt title="Delete" onClick={() => handleDelete(row.original.id)} className="  text-red-500 cursor-pointer"  />
-          
-          {/* View Icon */}
-          <Link  to={`/dashboard/detailsmeal/${row.original.id}`}>
-          <FaEye title="View Deatails"  className=" text-yellow-600 cursor-pointer"  />
-          </Link>
-       
+   <FaMoneyBillTransfer title="Money" onClick={() => takeIt(row.original)} className="  text-green-500 cursor-pointer"  />
+            
+            </>
+            }
+    
+      
           
           {/* Disable Icon */}
           {
@@ -155,7 +161,6 @@ const MealManage = () => {
             <IoCheckmarkDoneCircleOutline title="Meal On" onClick={() => handleEnable(row.original)} className="text-green-600 text-lg cursor-pointer" />
           }
 
-      <FaMoneyBillTransfer title="Money" onClick={() => takeIt(row.original)} className="  text-green-500 cursor-pointer"  />
          </div>
         </>
       )
