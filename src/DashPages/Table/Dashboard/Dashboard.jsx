@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { TbMoneybag } from 'react-icons/tb';
 import { FaAnglesRight, FaUsers } from 'react-icons/fa6';
 import { Helmet } from 'react-helmet';
+import { MdOutlineAccountBalanceWallet } from 'react-icons/md';
 
     
 
@@ -126,9 +127,9 @@ const Dashboard = () => {
 
 <div><FaUsers className='text-7xl'/></div>
 
- <h1 className='text-3xl font-bold text-[#0284C7]'>{stat?.statusOneCount || "00"}</h1>
+ <h1 className='text-3xl font-bold text-[#0284C7]'>{stat?.totalItems || "00"}</h1>
 
- <h1 className='fon font-semibold  text-xl'>ACTIVE MEMBERS</h1>
+ <h1 className='fon font-semibold  text-xl'>Total MEMBERS</h1>
 
 </div>
            </div>
@@ -145,6 +146,19 @@ const Dashboard = () => {
 </div>
            </div>
 
+           
+         <div className='bg-white border-dotted border-2 p-5 shadow-lg'>
+           <div className='flex flex-col gap-3 items-center'>
+
+<div><MdOutlineAccountBalanceWallet className='text-7xl'/></div>
+
+ <h1 className='text-3xl font-bold text-[#0284C7]'>{parseInt(stat?.totalBlance) - 2271  || "00"}$</h1>
+
+ <h1 className='fon font-semibold  text-xl'>BALANCE</h1>
+
+</div>
+           </div>
+
            <div className='bg-white border-dotted border-2 p-5 shadow-lg'>
            <div className='flex flex-col gap-3 items-center'>
 
@@ -157,13 +171,7 @@ const Dashboard = () => {
 </div>
            </div>
 
-
-         
-
-         </div>
-         <div className='grid grid-cols-2 mt-5 gap-5'>
-          
-          <div className='bg-white border-dotted border-2 p-5 shadow-lg'>
+           <div className='bg-white border-dotted border-2 p-5 shadow-lg'>
                <div className='flex flex-col gap-3 items-center'>
     
     <div><IoFastFoodOutline className='text-7xl'/></div>
@@ -189,10 +197,16 @@ const Dashboard = () => {
     
     </div>
                </div>
+         
+
+         </div>
+      
+          
+   
           </div>
    
       
-    </div>
+  
       
       </>
     );

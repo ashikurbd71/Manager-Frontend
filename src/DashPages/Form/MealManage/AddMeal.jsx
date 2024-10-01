@@ -18,9 +18,6 @@ const Schema = Yup.object().shape({
   .label('Name')
   .required(),
 
-  taka: Yup.string()
-  .label('Add Money')
-  .required(),
 
   
 
@@ -33,13 +30,12 @@ const today = new Date()
 const AddMeal = () => {
 
 
-
   
   const formik = useFormik({
     initialValues: {
       name: "",
       memberemail : "",
-      membernumber: "",
+      loan: "",
       taka: "",
       totalmeal: "",
      
@@ -53,9 +49,12 @@ const AddMeal = () => {
 
 
          
-          addMoney: values.taka,
-          totalMeal: values.totalmeal,
-          blance : values.taka,
+          addMoney: values.loan ?  parseInt(values.taka) - parseInt(values.loan) : values.taka || 0,
+          totalMeal: values.loan ? ((parseInt(values.taka) - parseInt(values.loan) ) / 35).toFixed() : values.totalmeal || 0,
+
+
+          blance :  values.loan ?  parseInt(values.taka) - parseInt(values.loan) : values.taka || 0,
+          loan : values.taka ? "0" : values.loan || 0,
           date : today,
           member: {
             id: values?.name && parseInt(values?.name),
@@ -92,6 +91,9 @@ const AddMeal = () => {
     },
   });
 
+
+
+  
   // style
 
   const customStyles = {
@@ -168,7 +170,15 @@ const AddMeal = () => {
       }
     }, [formik.values.taka, ]);
     
+    useEffect(() => {
+      if (formik.values.taka) {
+        const calculatedAddMoney = (
+          parseInt(formik.values.taka || 0) - parseInt(formik.values.loan || 0)
+        ).toFixed(2);
   
+        formik.setFieldValue("Money", calculatedAddMoney);
+      }
+    }, [formik.values.taka, formik.values.loan, formik.setFieldValue]);
 
 
 
@@ -209,9 +219,10 @@ const AddMeal = () => {
           </div>
 
           {/* Add Money */}
+
           <div className="flex pt-2 flex-col">
             <label htmlFor="taka" className="pb-1 text-[#726f6f]">
-              2. Add Money <span className="text-xl font-semibold text-red-500">*</span>
+              2. Add Money 
             </label>
             <input
               placeholder="00$"
@@ -223,15 +234,31 @@ const AddMeal = () => {
               onBlur={formik.handleBlur}
               value={formik.values.taka}
             />
-            {formik.touched.taka && formik.errors.taka ? (
-              <div className="text-red-600">{formik.errors.taka}</div>
-            ) : null}
+            
+          </div>
+
+
+          <div className="flex pt-2 flex-col">
+            <label htmlFor="taka" className="pb-1 text-[#726f6f]">
+              3. Loan 
+            </label>
+            <input
+              placeholder="00$"
+              id="loan"
+              name="loan"
+              className="py-2 text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
+              type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.loan}
+            />
+           
           </div>
 
           {/* Total Meal */}
           <div className="flex flex-col">
             <label htmlFor="totalmeal" className="pb-1 text-[#726f6f]">
-              3. Total Meal <span className="text-xl font-semibold text-red-500">*</span>
+              4. Total Meal 
             </label>
             <input
               id="totalmeal"

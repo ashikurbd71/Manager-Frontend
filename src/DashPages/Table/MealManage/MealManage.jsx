@@ -25,7 +25,7 @@ import * as XLSX from "xlsx";
 const MealManage = () => {
 
   const [search, setSearch] = useState("");
-  const [rowPerPage, setRowPerPage] = useState(5);
+  const [rowPerPage, setRowPerPage] = useState(30);
   const [page, setPage] = useState(1);
   const [stat, setStat] = useState();
   const [active, setActive] = useState(0);
@@ -357,7 +357,7 @@ console.log(item)
       sl: index + 1,
       name : item?.member?.name,
       totaltk : item?.addMoney,
-      totalmeal: item?.totalMeal,
+      totalmeal: item?.totalMeal ? item?.totalMeal : "00" ,
       meal : item?.eatMeal,
       memberblance :item?.blance,
       memberbloan : item?.loan || "00",
