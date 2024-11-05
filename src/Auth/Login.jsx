@@ -55,14 +55,14 @@ const Login = () => {
       <div className='mt-[150px] px-5 w-full'>
 
       <div className="group mx-auto flex  w-full max-w-xl rounded-lg border border-blue-400 bg-white text-blue-400 shadow-lg dark:bg-zinc-900">
-            <div className="relative hidden min-h-[110%]  w-1/3 overflow-hidden bg-blue-400 sm:block">
-                <h1 className="absolute bottom-3 right-3 text-right text-2xl font-semibold text-white">
+            <div className="relative hidden min-h-[110%]  w-2/5 overflow-hidden bg-blue-400 sm:block">
+                <h1 className="absolute bottom-3 right-3 text-right text-2xl font-semibold text-yell  text-stone-700">
                     Hey! <br /> Welcome to
                     <br />  <div className="flex justify-items-center mb-5 items-center">
-          <img src={img} alt="" className="w-8 h-8" />
+   
           <h1 className="text-2xl font-bold text-black ">
             {" "}
-            <span>Man</span>ager
+            <span>STAY<span className='text text-white'>MANAGER</span></span>
           </h1>
         </div>
                 </h1>

@@ -57,7 +57,7 @@ const Adduser = () => {
             
             })
             console.log("User Added successfully:", values);
-            toast.success("Report Send  successfully!");
+            toast.success("User Added   successfully!");
             resetForm(); 
           } catch (error) {
             toast.error("error report sending ");

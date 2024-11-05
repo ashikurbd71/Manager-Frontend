@@ -29,10 +29,10 @@ const Sideber = () => {
       {" "}
       <div className="flex flex-col gap-3 overflow-y-auto py-4 h-full bg-[#CCD3CA] items-center">
         <div className="flex justify-items-center mb-5 items-center">
-          <img src={img} alt="" className="w-8 h-8" />
+          
           <h1 className="text-2xl font-bold text-black ">
             {" "}
-            <span className="text-[#0284C7]">Man</span>ager
+            STAY<span className="text-[#0284C7]">MANAGER</span>
           </h1>
         </div>
 

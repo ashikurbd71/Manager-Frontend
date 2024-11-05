@@ -40,7 +40,7 @@ const CreatePost = ({ isOpen, setIsOpen, update, refetch }) => {
           "Content-Type": "multipart/form-data",
         }});
         console.log("Product added successfully:", values);
-        toast.success("Manager Added successfully!");
+        toast.success("Post Upload successfully!");
         setIsOpen(false)
         resetForm();
       } catch (error) {
