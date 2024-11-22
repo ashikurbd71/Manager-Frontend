@@ -52,7 +52,7 @@ const Report = () => {
 
 <div><GiMoneyStack className='text-7xl'/></div>
 
- <h1 className='text-3xl font-bold text-[#0284C7]'>{data?.extraTk|| "00"}$</h1>
+ <h1 className='text-3xl font-bold text-[#0284C7]'>{data?.totalTk|| "00"}$</h1>
 
  <h1 className='fon font-semibold  text-xl'>TOTAL MONEY</h1>
 
@@ -81,7 +81,7 @@ const Report = () => {
 
 <div><GiTakeMyMoney  className='text-7xl'/></div>
 
- <h1 className='text-3xl font-bold text-[#0284C7]'>{data?.totalTk || "00"}$</h1>
+ <h1 className='text-3xl font-bold text-[#0284C7]'>{data?.extraTk || "00"}$</h1>
 
  <h1 className='fon font-semibold  text-xl'>TOTAL EXTRA</h1>
 

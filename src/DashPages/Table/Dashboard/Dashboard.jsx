@@ -129,7 +129,7 @@ const Dashboard = () => {
 
  <h1 className='text-3xl font-bold text-[#0284C7]'>{stat?.totalItems || "00"}</h1>
 
- <h1 className='fon font-semibold  text-xl'>Total MEMBERS</h1>
+ <h1 className='fon font-semibold  text-xl'>TOTAL MEMBER</h1>
 
 </div>
            </div>

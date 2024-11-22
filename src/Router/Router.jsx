@@ -62,6 +62,10 @@ import UpdateInfromation from "../DashPages/Update/Information/UpdateInfromation
 import Forbidden from "../Share/Errorpage/Forbidden";
 import UpdatePass from "../Share/Updatepassword/UpdatePass";
 import UpdatePubliPass from "../Share/Updatepassword/UpdatePubliPass";
+import CashinList from "../DashPages/Table/Cashin/CashinList";
+import CashoutList from "../DashPages/Table/Cashout/CashoutList";
+import AddCash from "../DashPages/Form/Cashin/AddCash";
+import CashinInvoice from "../DashPages/Details/Cashin/CashinInvoice";
 
 const router = createBrowserRouter([
 
@@ -295,6 +299,35 @@ const router = createBrowserRouter([
 {
   path: "/dashboard/detailsnotice/:id",
   element: <PrivateRoute roles={["Super Admin","Manager"]}><NoticeDetails/></PrivateRoute>
+},
+
+// chasin
+
+
+{
+  path: "/dashboard/cashinlist",
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><CashinList/></PrivateRoute>
+},
+
+
+{
+  path: "/dashboard/addCashin",
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><AddCash/></PrivateRoute>
+},
+
+{
+  path: "/dashboard/Cashininvoice/:id",
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><CashinInvoice/></PrivateRoute>
+},
+
+
+
+// chasout
+
+
+{
+  path: "/dashboard/cashoutlist",
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><CashoutList/></PrivateRoute>
 },
 
 // repoptr

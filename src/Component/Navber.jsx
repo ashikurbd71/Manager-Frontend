@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { removeTokenFromLocalStorage } from '../Auth/token';
 import useAuth from '../Provider/UseAuth/useAuth';
+import image1 from '../assets/manager.png'
 
 const Navber = () => {
     const navigate = useNavigate()
@@ -43,12 +44,19 @@ const Navber = () => {
           onClick={() => setIsOpen(!isOpen)}
           className="flex items-center space-x-2 focus:outline-none"
         >
+         {
+
+          user?.image ?  <img
+          src={image}// Replace with the actual path to your image
+          alt="User"
+          className="w-10 h-10 rounded-full"
+        /> : <img
+        src={image1}// Replace with the actual path to your image
+        alt="User"
+        className="w-10 h-10 rounded-full"
+      />
+         }
          
-          <img
-            src={image}// Replace with the actual path to your image
-            alt="User"
-            className="w-10 h-10 rounded-full"
-          />
           <svg
             className="w-6 h-6 text-[#0284C7] "
             fill="currentColor"

@@ -62,7 +62,7 @@ const Login = () => {
    
           <h1 className="text-2xl font-bold text-black ">
             {" "}
-            <span>STAY<span className='text text-white'>MANAGER</span></span>
+            <span>MEAL<span className='text text-white'>MAMA</span></span>
           </h1>
         </div>
                 </h1>

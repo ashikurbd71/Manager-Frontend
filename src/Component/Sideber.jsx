@@ -1,8 +1,8 @@
 // src/Sidebar.js
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FaMagnet, FaMoneyBillTransfer, FaUserPlus } from "react-icons/fa6";
-import { MdArrowDropDown, MdArrowRight, MdFoodBank, MdOutlineDashboard, MdOutlineSettings } from "react-icons/md";
+import { FaMagnet, FaMoneyBillTransfer, FaUserPlus, FaUsers } from "react-icons/fa6";
+import { MdArrowDropDown, MdArrowRight, MdFoodBank, MdOutlineDashboard, MdOutlineHomeWork, MdOutlineSettings } from "react-icons/md";
 import img from "../assets/manager.png";
 import { LuCircleDot } from "react-icons/lu";
 import { FaUserGear } from "react-icons/fa6";
@@ -14,6 +14,7 @@ import { FaListCheck } from "react-icons/fa6";
 import { BiPhotoAlbum } from "react-icons/bi";
 import { VscGitPullRequestGoToChanges } from "react-icons/vsc";
 import useAuth from "../Provider/UseAuth/useAuth";
+import { GiMoneyStack } from "react-icons/gi";
 const Sideber = () => {
 
     const {user} = useAuth()
@@ -32,9 +33,22 @@ const Sideber = () => {
           
           <h1 className="text-2xl font-bold text-black ">
             {" "}
-            STAY<span className="text-[#0284C7]">MANAGER</span>
+            MEAL <span className="text-[#0284C7]">MAMA</span>
           </h1>
         </div>
+
+        <NavLink
+          to="/"
+          className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? " bg-[#0284C7] px-9 pt-1 rounded-md text-white " : ""
+          }
+        >
+          <div className="flex ml-2 justify-center pb-2 hover:text-gray-600 items-center gap-1">
+            <MdOutlineDashboard className="text-lg" />
+            <h1 className="text-lg font-medium">Hostel Report</h1>
+          </div>
+        </NavLink>
+
 
         <NavLink
           to="/"
@@ -42,11 +56,74 @@ const Sideber = () => {
             isPending ? "pending" : isActive ? " bg-[#0284C7] px-10 pt-1 rounded-md text-white " : ""
           }
         >
-          <div className="flex -ml-3 justify-center pb-2 hover:text-gray-600 items-center gap-1">
+          <div className="flex -ml-2 justify-center pb-2 hover:text-gray-600 items-center gap-1">
             <MdOutlineDashboard className="text-lg" />
-            <h1 className="text-lg font-medium">Dashboard</h1>
+            <h1 className="text-lg font-medium">Meal Report</h1>
           </div>
         </NavLink>
+
+        <NavLink
+to="/dashboard/reports"
+className={({ isActive, isPending }) =>
+  isPending ? "pending" : isActive ? "bg-[#0284C7] px-6 pt-2 rounded-md text-white " : ""
+}
+>
+<div className="flex justify-center pb-2 ml-4 hover:text-gray-600 items-center gap-1">
+<MdOutlineDashboard className="text-lg" />
+  <h1 className="text-lg font-medium">Monthly Report</h1>
+</div>
+</NavLink>
+
+
+{["Super Admin", "Manager"].some(role => user?.role?.includes(role)) && (
+  <NavLink
+    to="/dashboard/memberlist"
+    className={({ isActive, isPending }) =>
+      isPending
+        ? "pending"
+        : isActive
+        ? "bg-[#0284C7] px-[85px] pt-1 rounded-md text-white"
+        : ""
+    }
+  >
+    <div className="flex justify-center pb-2 -ml-[73px] hover:text-gray-600 items-center gap-1">
+      <MdOutlineHomeWork  className="text-lg" />
+      <h1 className="text-lg font-medium">Room</h1>
+    </div>
+  </NavLink>
+)}
+
+
+{["Super Admin","Manager"].some(role => user?.role?.includes(role)) && (
+
+<NavLink
+to="/dashboard/cashinlist"
+className={({ isActive, isPending }) =>
+  isPending ? "pending" : isActive ? "bg-[#0284C7] px-[75px] pt-1 rounded-md text-white " : ""
+}
+>
+<div className="flex justify-center -ml-14 pb-2 hover:text-gray-600 items-center gap-1">
+  <GiMoneyStack className="text-lg" />
+  <h1 className="text-lg font-medium">Cash In</h1>
+</div>
+</NavLink>
+       )}
+
+{["Super Admin","Manager"].some(role => user?.role?.includes(role)) && (
+
+<NavLink
+to="/dashboard/cashoutlist"
+className={({ isActive, isPending }) =>
+  isPending ? "pending" : isActive ? "bg-[#0284C7] px-[60px] pt-1 rounded-md text-white " : ""
+}
+>
+<div className="flex justify-center -ml-10 pb-2 hover:text-gray-600 items-center gap-1">
+  <FaMoneyBillTransfer className="text-lg" />
+  <h1 className="text-lg font-medium">Cash Out</h1>
+</div>
+</NavLink>
+       )}
+        
         {["Super Admin", "Manager"].some(role => user?.role?.includes(role)) && (
   <NavLink
     to="/dashboard/memberlist"
@@ -54,16 +131,18 @@ const Sideber = () => {
       isPending
         ? "pending"
         : isActive
-        ? "bg-[#0284C7] px-6 pt-1 rounded-md text-white"
+        ? "bg-[#0284C7] px-16 pt-1 rounded-md text-white"
         : ""
     }
   >
-    <div className="flex justify-center pb-2 hover:text-gray-600 items-center gap-1">
-      <FaUserPlus className="text-lg" />
-      <h1 className="text-lg font-medium"> Add Member</h1>
+    <div className="flex justify-center pb-2 -ml-12 hover:text-gray-600 items-center gap-1">
+      <FaUsers  className="text-lg" />
+      <h1 className="text-lg font-medium"> Member</h1>
     </div>
   </NavLink>
 )}
+
+
 
      
 
@@ -73,22 +152,27 @@ const Sideber = () => {
 <NavLink
 to="/dashboard/managerlist"
 className={({ isActive, isPending }) =>
-  isPending ? "pending" : isActive ? "bg-[#0284C7] px-6 pt-1 rounded-md text-white " : ""
+  isPending ? "pending" : isActive ? "bg-[#0284C7] px-16 pt-1 rounded-md text-white " : ""
 }
 >
-<div className="flex justify-center pb-2 hover:text-gray-600 items-center gap-1">
+<div className="flex justify-center pb-2 -ml-12 hover:text-gray-600 items-center gap-1">
   <FaUserGear className="text-lg" />
-  <h1 className="text-lg font-medium"> Add Manager</h1>
+  <h1 className="text-lg font-medium"> Manager</h1>
 </div>
 </NavLink>
         )}
+
+
+
+
+       
        
        {["Super Admin","Manager"].some(role => user?.role?.includes(role)) && (
 
 <NavLink
 to="/dashboard/noticelist"
 className={({ isActive, isPending }) =>
-  isPending ? "pending" : isActive ? "bg-[#0284C7] px-10 pt-1 rounded-md text-white " : ""
+  isPending ? "pending" : isActive ? "bg-[#0284C7] px-12 pt-1 rounded-md text-white " : ""
 }
 >
 <div className="flex justify-center -ml-6 pb-2 hover:text-gray-600 items-center gap-1">
@@ -97,7 +181,8 @@ className={({ isActive, isPending }) =>
 </div>
 </NavLink>
        )}
-       
+
+
 
        {["Super Admin","Manager"].some(role => user?.role?.includes(role)) && (
   <NavLink
@@ -129,20 +214,7 @@ className={({ isActive, isPending }) =>
 
       )}
 
-{["Super Admin","Manager"].some(role => user?.role?.includes(role)) && (
 
-<NavLink
-to="/dashboard/reports"
-className={({ isActive, isPending }) =>
-  isPending ? "pending" : isActive ? "bg-[#0284C7] px-6 pt-2 rounded-md text-white " : ""
-}
->
-<div className="flex justify-center pb-2 ml-4 hover:text-gray-600 items-center gap-1">
-  <TbFileReport  className="text-lg" />
-  <h1 className="text-lg font-medium">Monthly Report</h1>
-</div>
-</NavLink>
-)}
 
       
 {["Super Admin","Manager"].some(role => user?.role?.includes(role)) && (
