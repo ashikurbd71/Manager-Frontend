@@ -235,7 +235,7 @@ console.log(items)
       const filteredData = allData?.map((item, index) => ({
       sl: index + 1 + (page - 1) * rowPerPage,
       sl: index + 1,
-      name : item?.studentName?.name,
+      name : item?.name,
       amount : item?.amount,
       code : item?.code,
       date: item?.date?.split('T')[0],
