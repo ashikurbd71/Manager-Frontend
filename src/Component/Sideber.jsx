@@ -38,7 +38,7 @@ const Sideber = () => {
         </div>
 
         <NavLink
-          to="/"
+          to="/dashboard/hostelreport"
           className={({ isActive, isPending }) =>
             isPending ? "pending" : isActive ? " bg-[#0284C7] px-9 pt-1 rounded-md text-white " : ""
           }
@@ -77,7 +77,7 @@ className={({ isActive, isPending }) =>
 
 {["Super Admin", "Manager"].some(role => user?.role?.includes(role)) && (
   <NavLink
-    to="/dashboard/memberlist"
+    to="/dashboard/roomlist"
     className={({ isActive, isPending }) =>
       isPending
         ? "pending"

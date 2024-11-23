@@ -66,6 +66,12 @@ import CashinList from "../DashPages/Table/Cashin/CashinList";
 import CashoutList from "../DashPages/Table/Cashout/CashoutList";
 import AddCash from "../DashPages/Form/Cashin/AddCash";
 import CashinInvoice from "../DashPages/Details/Cashin/CashinInvoice";
+import RoomList from "../DashPages/Table/Room/RoomList";
+import AddRoom from "../DashPages/Form/Room/AddRoom";
+import RoomDetails from "../DashPages/Details/Room/RoomDetails";
+import AddCashout from "../DashPages/Form/Cashout/AddCashout";
+import CashoutInvoice from "../DashPages/Details/Cashout/CashoutInvoice";
+import HostelReport from "../DashPages/Table/HostelReport/HostelReport";
 
 const router = createBrowserRouter([
 
@@ -321,6 +327,33 @@ const router = createBrowserRouter([
 },
 
 
+// roomdetails
+
+{
+  path: "/dashboard/roomlist",
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><RoomList/></PrivateRoute>
+},
+
+{
+  path: "/dashboard/addroom",
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><AddRoom/></PrivateRoute>
+},
+
+
+{
+  path: "/dashboard/roomdetails/:id",
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><RoomDetails/></PrivateRoute>
+},
+
+
+
+{
+  path: "/dashboard/hostelreport",
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><HostelReport/></PrivateRoute>
+},
+
+
+
 
 // chasout
 
@@ -328,6 +361,16 @@ const router = createBrowserRouter([
 {
   path: "/dashboard/cashoutlist",
   element: <PrivateRoute roles={["Super Admin","Manager"]}><CashoutList/></PrivateRoute>
+},
+
+{
+  path: "/dashboard/addcashout",
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><AddCashout/></PrivateRoute>
+},
+
+{
+  path: "/dashboard/cashoutdetails/:id",
+  element: <PrivateRoute roles={["Super Admin","Manager"]}><CashoutInvoice/></PrivateRoute>
 },
 
 // repoptr

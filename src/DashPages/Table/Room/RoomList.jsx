@@ -12,10 +12,15 @@ import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 
 
 import * as XLSX from "xlsx";
+import { TbPlaceholder } from "react-icons/tb";
+import { MdPayment } from "react-icons/md";
+import UpdateRoom from "../../Update/Room/UpdateRoom";
+import UpdateRoomtwotwo from "../../Update/Room/UpdateRoomtwo";
+import UpdateRoomtwo from "../../Update/Room/UpdateRoomtwo";
 
 
 
-const CashoutList = () => {
+const RoomList = () => {
 
   const [search, setSearch] = useState("");
   const [rowPerPage, setRowPerPage] = useState(5);
@@ -34,7 +39,7 @@ const CashoutList = () => {
   
   const { data: items = [], refetch } = useQuery({
     queryKey: [
-      "Cashout",
+      "rooms",
       search,
       rowPerPage,
       page,
@@ -48,14 +53,14 @@ const CashoutList = () => {
 
         if (active) {
           const res = await axoissecure.get(
-            `/cashout/search?query=${search}&limit=${limit}&page=${page}`
+            `/rooms/search?query=${search}&limit=${limit}&page=${page}`
           );
           setStat(res.data?.meta);
 
           return res?.data?.items;
         } else {
           const res = await axoissecure.get(
-            `/cashout/search?limit=${limit}&page=${page}`
+            `/rooms/search?limit=${limit}&page=${page}`
           );
           setStat(res.data?.meta);
 
@@ -68,6 +73,9 @@ const CashoutList = () => {
     },
   });
 
+
+
+
 console.log(items)
   const columns = React.useMemo(() => [
     {
@@ -76,22 +84,26 @@ console.log(items)
     },
    
     {
-        Header: "Name",
-        accessor: 'name'
+        Header: "Room No.",
+        accessor: 'roomNumber'
       },
-
       {
-        Header: "Amount",
-        accessor: 'amount'
+        Header: "Floor",
+        accessor: 'floor'
       },
     {
-      Header: "Date",
-      accessor: 'date'
+      Header: "Seat",
+      accessor: 'seat'
     },
+
+    {
+        Header: "Booked",
+        accessor: 'count'
+      },
    
     {
-        Header: "Transaction",
-        accessor: "code",
+        Header: "Price",
+        accessor: "price",
       },
    
    
@@ -102,16 +114,41 @@ console.log(items)
       Cell: ({ row }) => (
         <>
          <div className="flex w-full mx-auto  items-center gap-2 ">
+       
+   
 
+
+            <FaTrashAlt
+            title="Delete"
+            onClick={() => handleDelete(row.original.id)}
+            className="text-red-500 cursor-pointer"
+          />
         
-          
-          {/* Delete Icon */}
-          <FaTrashAlt title="Delete" onClick={() => handleDelete(row.original.id)} className="  text-red-500 cursor-pointer"  />
-          
-          {/* View Icon */}
-          <Link to={`/dashboard/cashoutdetails/${row.original.id}`}>
-          <FaEye title="View Deatails"  className=" text-yellow-600 cursor-pointer"  />
-          </Link>
+   
+       {
+        row?.original?.count == 0 ? '' :   <Link to={`/dashboard/roomdetails/${row.original.id}`}>
+        <FaEye title="View Deatails"  className=" text-yellow-600 cursor-pointer"  />
+        </Link>
+       }
+        
+
+          {
+            row?.original?.count == 1 ||  row?.original?.count == 2 ?   <div title="Room-1"   className=" px-2 py-1 rounded-2xl bg-green-200"><h1 className="font font-semibold text-sm text-green-600">Booked-1</h1></div> : 
+            <MdPayment 
+            title="Room-1"
+            onClick={() => openModal(row.original)}
+            className="text-green-500 cursor-pointer"
+          />
+        }
+
+{
+            row?.original?.count == 2 ?   <div title="Room-2"  className=" px-2 py-1 rounded-2xl bg-green-200"><h1 className="font font-semibold text-sm text-green-600">Booked-2</h1></div> : 
+            <MdPayment 
+            title="Room-2"
+            onClick={() => openModals(row.original)}
+            className="text-blue-500 cursor-pointer"
+          />
+        }
        
           
           {/* Disable Icon */}
@@ -124,7 +161,26 @@ console.log(items)
   ], []);
 
 
-  
+
+  const [isOpen, setIsOpen] = useState(null)
+  const[update,setUpdate] = useState()
+
+
+  const openModal = (id) => {
+    setIsOpen(true)
+    setUpdate(id)
+  }
+
+
+
+  const [isOpens, setIsOpens] = useState(null)
+  const[updates,setUpdates] = useState()
+
+
+  const openModals = (id) => {
+    setIsOpens(true)
+    setUpdates(id)
+  }
 
 
   const handleDelete = (_id) => {
@@ -138,7 +194,7 @@ console.log(items)
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        axoissecure.delete(`/cashout/${_id}`).then((res) => {
+        axoissecure.delete(`/rooms/${_id}`).then((res) => {
           if (res.status === 200) {
             Swal.fire({
               title: "Deleted!",
@@ -159,10 +215,12 @@ console.log(items)
     items?.map((item, index) => ({
       ...item,
       sl: index + 1,
-      assigner : item?.assigner,
-      title : item?.Cashouttitle,
-      position : item?.position,
-      date: item?.date?.split('T')[0],
+      roomNumber : item?.roomNumber,
+      floor : item?.floor,
+      seat : item?.seat,
+    //   count: item?.date?.split('T')[0],
+      count : item?.count,
+      price : item?.price,
 
     })), [items]
   );
@@ -170,24 +228,25 @@ console.log(items)
   const handleAllExport = async () => {
     try {
       const response = await axoissecure.get(
-        `/cashout/search?limit=100000000&page=1`
+        `/cashin/search?limit=100000000&page=1`
       );
       const allData = response.data.items;
 
       const filteredData = allData?.map((item, index) => ({
       sl: index + 1 + (page - 1) * rowPerPage,
-      assigner : item?.assigner,
-      title : item?.Cashouttitle,
-      position : item?.position,
+      sl: index + 1,
+      name : item?.studentName?.name,
+      amount : item?.amount,
+      code : item?.code,
       date: item?.date?.split('T')[0],
 
       }));
 
       const worksheet = XLSX.utils.json_to_sheet(filteredData);
       const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "All Cashoutlist");
+      XLSX.utils.book_append_sheet(workbook, worksheet, "All RoomList");
 
-      XLSX.writeFile(workbook, "Cashoutlist.xlsx");
+      XLSX.writeFile(workbook, "RoomList.xlsx");
     } catch (error) {
       console.error("Error exporting data:", error);
       Swal.fire({
@@ -211,12 +270,14 @@ console.log(items)
 
     <useHelmet name={'Manager || Member list'} />
 
-    <Helmet><title>Manager || Cash Out list</title></Helmet>
+    <Helmet><title>Manager || Room list</title></Helmet>
 
     
-    <h1 className="text-xl font-semibold text-[#0284C7] p-5">Cash Out List</h1>
+   <UpdateRoom isOpen={isOpen} setIsOpen={setIsOpen} update={update} refetch={refetch} />
+   <UpdateRoomtwo isOpen={isOpens} setIsOpen={setIsOpens} update={updates} refetch={refetch} />
+    <h1 className="text-xl font-semibold text-[#0284C7] p-5"> Room List</h1>
 
-    <Tablenav handleExcell={handleAllExport} setActive={setActive} setSearch={setSearch} route={'/dashboard/addcashout'}/>
+    <Tablenav handleExcell={handleAllExport} setActive={setActive} setSearch={setSearch} route={'/dashboard/addroom'}/>
 
  
     <div className="px-6 bg-gray-100 rounded-lg">
@@ -255,4 +316,4 @@ console.log(items)
   );
 };
 
-export default CashoutList;
+export default RoomList;

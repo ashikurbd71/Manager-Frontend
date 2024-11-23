@@ -10,6 +10,7 @@ import Select from 'react-select'
 import { Helmet } from "react-helmet";
 import axoissecure from './../../Hooks/Axoisscure';
 import { getBlood, getDepartment, getInstitute, getSemister } from "../../Share/Api/SelectorApi/settingselector";
+import { useQuery } from "@tanstack/react-query";
 
 // Validation Schema
 const Schema = Yup.object().shape({
@@ -77,6 +78,10 @@ const Schema = Yup.object().shape({
   //   .label('Email')
   //   .matches( /^[^\s@]+@[^\s@]+\.[^\s@]+$/,'Please provide Valid Email')
   //   .required(),
+
+  // transaction: Yup.string()
+  // .required("Transaction number is required.")
+  // .min(6, "Transaction number must be at least 6 characters."),
     
 });
 
@@ -84,6 +89,8 @@ const AddProduct = () => {
   const [type,setType] = useState()
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef();
+
+
 
   
   const formik = useFormik({
@@ -109,6 +116,10 @@ const AddProduct = () => {
     },
     validationSchema: Schema,
     onSubmit: async (values, { resetForm }) => {
+
+
+    
+
       console.log(values)
       try {
         await axoissecure.post("/members", {
@@ -141,6 +152,7 @@ const AddProduct = () => {
           joiningDate : values.date || "",
           profile : values.image || "",
           email : values.email || "",
+          code : values.transaction 
       
           
           // date: new Date()?.split("T")[0],
@@ -158,6 +170,53 @@ const AddProduct = () => {
     },
   });
 
+
+
+  const { data: invoices } = useQuery({
+    queryKey: ["invo"],
+    queryFn: async () => {
+      try {
+        const res = await axoissecure.get(`/cashin`);
+        return res.data;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+      }
+    },
+  });
+
+  const invonnumber = formik.values.transaction;
+
+  const [debouncedTransaction, setDebouncedTransaction] = useState("");
+
+  // Debounce the transaction input
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedTransaction(invonnumber);
+    }, 500); // Adjust delay time as needed (500ms here)
+
+    return () => clearTimeout(handler);
+  }, [invonnumber]);
+
+  // Validate when the debounced value changes
+
+   const [invoName,setInvo] = useState('')
+  useEffect(() => {
+    if (debouncedTransaction && invoices) {
+      const matchedTransaction = invoices?.cashin?.find(
+        (invo) => invo?.code === debouncedTransaction
+      );
+      setInvo(matchedTransaction?.name)
+      if (!matchedTransaction) {
+        setInvo('')
+        toast.error(`Transaction number is invalid . Pay Fast`);
+       
+      } else {
+        toast.success("Transaction number is valid!");
+        console.log("Validated Transaction:", matchedTransaction);
+      }
+    }
+  }, [debouncedTransaction, invoices]);
 
   // style
 
@@ -289,6 +348,14 @@ const AddProduct = () => {
         [];
   
 
+        useEffect(() => {
+          if (invoName) {
+              formik.setValues({
+                name: invoName || "",
+    
+              });
+          }
+      }, [invoName]);
 
 
   return (
@@ -307,6 +374,30 @@ const AddProduct = () => {
         >
           <div className="grid  grid-cols-1 gap-4">
 
+
+            
+          <div className="">
+        <label htmlFor="transaction" className="mb-2 text-green-600 font-semibold">
+           Transaction Code{" "}
+          <span className="text-xl font-semibold text-red-500">*</span>
+        </label>
+        <input
+          id="transaction"
+          name="transaction"
+          className={`py-2 text-[#726f6f] border-2 mt-1 rounded-md border-gray-400 px-3 w-full ${
+            formik.touched.transaction && formik.errors.transaction ? "border-red-500" : ""
+          }`}
+          type="text"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.transaction}
+        />
+        {formik.touched.transaction && formik.errors.transaction && (
+          <p className="text-red-500 text-sm">{formik.errors.transaction}</p>
+        )}
+      </div>
+
+
             {/* Product SL */}
             <div className="flex flex-col">
               <label htmlFor="name" className="pb-1 text-[#726f6f]">
@@ -322,6 +413,7 @@ const AddProduct = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.name}
+                readOnly
               />
               {formik.touched.name && formik.errors.name ? (
                 <div className="text-red-600">{formik.errors.name}</div>
@@ -715,8 +807,7 @@ const AddProduct = () => {
               ) : null}
             </div>
 
-                 {/* photo */}
-                 <div className="flex pt-4  flex-col">
+            <div className="flex pt-4  flex-col">
               <label htmlFor="image" className="pb-1 text-[#726f6f]">
                 16. Photo{" "}
                 <span className="text-xl font-semibold text-red-500">*</span>
@@ -750,6 +841,9 @@ const AddProduct = () => {
               </button>
             </div>
 
+
+                 {/* photo */}
+            
 
           <div className="flex justify-end items-center gap-4">
             <button

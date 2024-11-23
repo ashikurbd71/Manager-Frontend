@@ -203,9 +203,17 @@ const MemberDetails = () => {
         </tr>
 
         <tr>
+          <td className="px-4 py-2 font-semibold border border-gray-200">Transaction Code</td>
+          <td className="px-4 py-2 border border-gray-200">{member?.code}</td>
+        </tr>
+
+        <tr>
           <td className="px-4 py-2 font-semibold border border-gray-200">Joining Date</td>
           <td className="px-4 py-2 border border-gray-200">{formattedDate}</td>
         </tr>
+
+
+    
      
       
       </tbody>

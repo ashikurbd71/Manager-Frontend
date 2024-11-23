@@ -5,7 +5,7 @@ import { MdDownloading } from "react-icons/md";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import axoissecure from "../../../Hooks/Axoisscure";
-const CashinInvoice = () => {
+const CashoutInvoice = () => {
   // Invoice data in JSON format
   const cash = {
     hostel: {
@@ -29,7 +29,7 @@ const CashinInvoice = () => {
 
   const { toPDF, targetRef } = usePDF(
     {
-      filename: `CasshinInvoice.pdf`,
+      filename: `CashoutInvoice.pdf`,
     },
     options
   );
@@ -50,7 +50,7 @@ const CashinInvoice = () => {
     queryKey: ["volunteer"],
     queryFn: async () => {
       try {
-        const res = await axoissecure.get(`/cashin/${id}`);
+        const res = await axoissecure.get(`/cashout/${id}`);
         console.log(res.data);
     
         return res.data;
@@ -133,6 +133,11 @@ const CashinInvoice = () => {
             <span className="text-gray-600">Amount</span>
             <span className="text-gray-800 font-medium">${data?.amount}</span>
           </div>
+
+          <div className="flex justify-between border-b py-2">
+            <span className="text-gray-600">Reason</span>
+            <span className="text-gray-800 font-medium">{data?.comment}</span>
+          </div>
           <div className="flex justify-between border-b py-2">
             <span className="text-gray-600">Transaction Code</span>
             <span className="text-gray-800 font-medium">{data?.code}</span>
@@ -154,4 +159,4 @@ const CashinInvoice = () => {
   );
 };
 
-export default CashinInvoice;
+export default CashoutInvoice;
