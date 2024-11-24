@@ -133,18 +133,18 @@ console.log(items)
         
 
           {
-            row?.original?.count == 1 ||  row?.original?.count == 2 ?   <div title="Room-1"   className=" px-2 py-1 rounded-2xl bg-green-200"><h1 className="font font-semibold text-sm text-green-600">Booked-1</h1></div> : 
+            row?.original?.count == 1 ||  row?.original?.count == 2 ?   <div title="Seat-1"   className=" px-2 py-1 rounded-2xl bg-green-200"><h1 className="font font-semibold text-sm text-green-600">Booked-1</h1></div> : 
             <MdPayment 
-            title="Room-1"
+            title="Seat-1"
             onClick={() => openModal(row.original)}
             className="text-green-500 cursor-pointer"
           />
         }
 
 {
-            row?.original?.count == 2 ?   <div title="Room-2"  className=" px-2 py-1 rounded-2xl bg-green-200"><h1 className="font font-semibold text-sm text-green-600">Booked-2</h1></div> : 
+            row?.original?.count == 2 ?   <div title="Seat-2"  className=" px-2 py-1 rounded-2xl bg-green-200"><h1 className="font font-semibold text-sm text-green-600">Booked-2</h1></div> : 
             <MdPayment 
-            title="Room-2"
+            title="Seat-2"
             onClick={() => openModals(row.original)}
             className="text-blue-500 cursor-pointer"
           />
