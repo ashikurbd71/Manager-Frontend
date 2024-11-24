@@ -35,8 +35,8 @@ function ProfileCard() {
           </div>
         </div>
         <div className="mt-10 mb-4 flex flex-col items-center">
-          <h4 className="text-xl font-bold text-navy-700 dark:text-white">Adela Parkson</h4>
-          <p className="text-base  font-semibold text-gray-600">{user?.userName?.name}</p>
+
+          <p className="text-base pt-3 font-semibold text-gray-600">{user?.userName?.name}</p>
         </div>
 
         <div className="  bg-white  p-3 border rounded-md w-full">

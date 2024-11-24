@@ -29,11 +29,11 @@ const Sideber = () => {
     <>
       {" "}
       <div className="flex flex-col gap-3 overflow-y-auto py-4 h-full bg-[#CCD3CA] items-center">
-        <div className="flex justify-items-center mb-5 items-center">
+        <div className="flex justify-items-center mb-3 items-center">
           
-          <h1 className="text-2xl font-bold text-black ">
+          <h1 className="text-3xl font-bold text-black ">
             {" "}
-            MEAL <span className="text-[#0284C7]">MAMA</span>
+            MENA<span className="text-[#0284C7]">GER</span>
           </h1>
         </div>
 
@@ -147,7 +147,7 @@ className={({ isActive, isPending }) =>
      
 
         {/* manager */}
-        {["Super Admin"].some(role => user?.role?.includes(role)) && (
+        {/* {["Super Admin"].some(role => user?.role?.includes(role)) && (
 
 <NavLink
 to="/dashboard/managerlist"
@@ -160,7 +160,7 @@ className={({ isActive, isPending }) =>
   <h1 className="text-lg font-medium"> Manager</h1>
 </div>
 </NavLink>
-        )}
+        )} */}
 
 
 
@@ -232,7 +232,7 @@ className={({ isActive, isPending }) =>
 )}
         
       
-        {["Super Admin","Manager"].some(role => user?.role?.includes(role)) && (
+        {/* {["Super Admin","Manager"].some(role => user?.role?.includes(role)) && (
 
 <NavLink
 to="/dashboard/albumlist"
@@ -247,7 +247,7 @@ className={({ isActive, isPending }) =>
 </NavLink>
 
         )}
-          
+           */}
       
 
           {["Super Admin","Manager"].some(role => user?.role?.includes(role)) && (
@@ -267,7 +267,7 @@ className={({ isActive, isPending }) =>
 
           )}
 
-{["Super Admin"].some(role => user?.role?.includes(role)) && (
+{/* {["Super Admin"].some(role => user?.role?.includes(role)) && (
 
 <NavLink
 to="/dashboard/managerrole"
@@ -282,7 +282,7 @@ className={({ isActive, isPending }) =>
 </NavLink>
 
 )}
-      
+       */}
        
         {/* setting */}
 

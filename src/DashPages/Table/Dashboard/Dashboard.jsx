@@ -152,7 +152,7 @@ const Dashboard = () => {
 
 <div><MdOutlineAccountBalanceWallet className='text-7xl'/></div>
 
- <h1 className='text-3xl font-bold text-[#0284C7]'>{parseInt(stat?.totalBlance) - 2271  || "00"}$</h1>
+ <h1 className='text-3xl font-bold text-[#0284C7]'>{  parseInt(data?.totalTk) - parseInt(addmoney?.totalAddMoney)  || "00"}$</h1>
 
  <h1 className='fon font-semibold  text-xl'>BALANCE</h1>
 
