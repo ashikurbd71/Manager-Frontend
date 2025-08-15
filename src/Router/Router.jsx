@@ -72,87 +72,88 @@ import RoomDetails from "../DashPages/Details/Room/RoomDetails";
 import AddCashout from "../DashPages/Form/Cashout/AddCashout";
 import CashoutInvoice from "../DashPages/Details/Cashout/CashoutInvoice";
 import HostelReport from "../DashPages/Table/HostelReport/HostelReport";
+import Profile from "../DashPages/Profile/Profile";
 
 const router = createBrowserRouter([
 
   // public
 
-   {
+  {
 
     path: "/public",
-    element: <PrivateRoute roles={["Super Admin","Member"]}><PublicLyaout/> </PrivateRoute>, 
-    children:[
+    element: <PrivateRoute roles={["Super Admin", "Member"]}><PublicLyaout /> </PrivateRoute>,
+    children: [
       {
         path: "/public/profilecard",
-        element: <PrivateRoute roles={["Super Admin","Member"]}><ProfileCard/></PrivateRoute>,
-        children:[{
-     path:"/public/profilecard",
-     element : <PrivateRoute roles={["Super Admin","Member"]}><PostDetails/> </PrivateRoute>
+        element: <PrivateRoute roles={["Super Admin", "Member"]}><ProfileCard /></PrivateRoute>,
+        children: [{
+          path: "/public/profilecard",
+          element: <PrivateRoute roles={["Super Admin", "Member"]}><PostDetails /> </PrivateRoute>
         },
 
         {
-          path:"/public/profilecard/about",
-          element : <PrivateRoute roles={["Super Admin","Member"]}> <PostAbout/> </PrivateRoute>
-             },
+          path: "/public/profilecard/about",
+          element: <PrivateRoute roles={["Super Admin", "Member"]}> <PostAbout /> </PrivateRoute>
+        },
 
-             {
-              path:"/public/profilecard/photo",
-              element :  <PrivateRoute roles={["Super Admin","Member"]}> <Postphoto/></PrivateRoute>
-                 }
-          
+        {
+          path: "/public/profilecard/photo",
+          element: <PrivateRoute roles={["Super Admin", "Member"]}> <Postphoto /></PrivateRoute>
+        }
 
 
-      
-      
-      ]
+
+
+
+        ]
       },
       {
         path: "/public/notice",
-        element: <PrivateRoute roles={["Super Admin","Member"]}> <PublicNoitice/></PrivateRoute>
+        element: <PrivateRoute roles={["Super Admin", "Member"]}> <PublicNoitice /></PrivateRoute>
       },
       {
         path: "/public/deatailsnotice/:id",
-        element: <PrivateRoute roles={["Super Admin","Member"]}><NoticeDetailsPub/> </PrivateRoute>
+        element: <PrivateRoute roles={["Super Admin", "Member"]}><NoticeDetailsPub /> </PrivateRoute>
       },
       {
         path: "/public/gallery",
-        element: <PrivateRoute roles={["Super Admin","Member"]}><PublicGallery/> </PrivateRoute>
+        element: <PrivateRoute roles={["Super Admin", "Member"]}><PublicGallery /> </PrivateRoute>
       },
 
       {
         path: "/public/publichnagepass",
-        element: <PrivateRoute roles={["Super Admin","Member",]}><UpdatePubliPass/></PrivateRoute>
+        element: <PrivateRoute roles={["Super Admin", "Member",]}><UpdatePubliPass /></PrivateRoute>
       },
       {
         path: "/public/myreport",
-        element: <PrivateRoute roles={["Super Admin","Member"]}><MyReport/> </PrivateRoute>
+        element: <PrivateRoute roles={["Super Admin", "Member"]}><MyReport /> </PrivateRoute>
       },
 
-      
+
       {
         path: "/public/updatereport/:id",
-        element: <PrivateRoute roles={["Super Admin","Member"]}><UpdateReport/> </PrivateRoute>
+        element: <PrivateRoute roles={["Super Admin", "Member"]}><UpdateReport /> </PrivateRoute>
       },
 
-  
+
 
       {
         path: "/public/myreportdtails/:id",
-        element: <PrivateRoute roles={["Super Admin","Member"]}><MyreportDetails/> </PrivateRoute>
+        element: <PrivateRoute roles={["Super Admin", "Member"]}><MyreportDetails /> </PrivateRoute>
       },
 
       {
         path: "/public/addmyreport",
-        element: <PrivateRoute roles={["Super Admin","Member"]}><AddMyReport/> </PrivateRoute>
+        element: <PrivateRoute roles={["Super Admin", "Member"]}><AddMyReport /> </PrivateRoute>
       },
 
       // post
-      
+
 
 
 
     ]
-   }
+  }
   ,
 
   // dashboard
@@ -160,336 +161,347 @@ const router = createBrowserRouter([
 
   {
     path: "/",
-    element:  <PrivateRoute roles={["Super Admin","Manager"]}><Layout /></PrivateRoute>,
-    children:[
+    element: <PrivateRoute roles={["Super Admin", "Manager"]}><Layout /></PrivateRoute>,
+    children: [
 
       {
         path: "/",
-        element:  <PrivateRoute roles={["Super Admin","Manager"]}><Dashboard/></PrivateRoute>
-    },
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><Dashboard /></PrivateRoute>
+      },
       {
         path: "/dashboard/memberlist",
-        element: <PrivateRoute roles={["Super Admin","Manager"]}><ProductList/></PrivateRoute>
-    },
-    {
-      path: "/dashboard/addmember",
-      element:<PrivateRoute roles={["Super Admin","Manager"]}><AddProduct/></PrivateRoute>
-  },
-  {
-    path: "/dashboard/reports",
-    element:<PrivateRoute roles={["Super Admin","Manager"]}><Report/></PrivateRoute>
-},
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><ProductList /></PrivateRoute>
+      },
+      {
+        path: "/dashboard/addmember",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><AddProduct /></PrivateRoute>
+      },
+      {
+        path: "/dashboard/reports",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><Report /></PrivateRoute>
+      },
 
-{
-  path: "/dashboard/downloadreports",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><DonwloadReport/></PrivateRoute>
-},
-  {
-    path: "/dashboard/updatemember/:id",
-    element: <PrivateRoute roles={["Super Admin","Manager"]}><MemberUpdate/></PrivateRoute>
-},
-        {
-          path: "/dashboard/memberdeatils/:id",
-          element: <PrivateRoute roles={["Super Admin","Manager"]}><MemberDetails/></PrivateRoute>
+      {
+        path: "/dashboard/downloadreports",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><DonwloadReport /></PrivateRoute>
+      },
+      {
+        path: "/dashboard/updatemember/:id",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><MemberUpdate /></PrivateRoute>
+      },
+      {
+        path: "/dashboard/memberdeatils/:id",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><MemberDetails /></PrivateRoute>
       },
       {
         path: "/dashboard/managerlist",
-        element: <PrivateRoute roles={["Super Admin"]}><ManagerList/></PrivateRoute>
-    },
-    {
-      path: "/dashboard/addmanager",
-      element: <PrivateRoute roles={["Super Admin"]}><AddManager/></PrivateRoute>
-  },
-  {
-    path: "/dashboard/updatemanager/:id",
-    element: <PrivateRoute roles={["Super Admin"]}><ManagerUpdate/></PrivateRoute>
-},
-
-{
-  path: "/dashboard/detailsmanager/:id",
-  element: <PrivateRoute roles={["Super Admin"]}><ManagerDetails/></PrivateRoute>
-},
-
-{
-  path: "/dashboard/mealmanagelist",
-  element:<PrivateRoute roles={["Super Admin","Manager"]}><MealManage/></PrivateRoute>
-},
-
-{
-  path: "/dashboard/addmeal",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><AddMeal/></PrivateRoute>
-},
-
-{
-  path: "/dashboard/detailsmeal/:id",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><Mealdetails/></PrivateRoute>
-},
-
-{
-  path: "/dashboard/addextra",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><AddExtra/></PrivateRoute>
-},
+        element: <PrivateRoute roles={["Super Admin"]}><ManagerList /></PrivateRoute>
+      },
+      {
+        path: "/dashboard/addmanager",
+        element: <PrivateRoute roles={["Super Admin"]}><AddManager /></PrivateRoute>
+      },
+      {
+        path: "/dashboard/updatemanager/:id",
+        element: <PrivateRoute roles={["Super Admin"]}><ManagerUpdate /></PrivateRoute>
+      },
 
-{
-  path: "/dashboard/extralist",
-  element:<PrivateRoute roles={["Super Admin","Manager"]}><ExtraMealList/> </PrivateRoute>
-},
+      {
+        path: "/dashboard/detailsmanager/:id",
+        element: <PrivateRoute roles={["Super Admin"]}><ManagerDetails /></PrivateRoute>
+      },
 
-{
-  path: "/dashboard/monthlyreport",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><MonthlyReport/></PrivateRoute>
-},
+      {
+        path: "/dashboard/mealmanagelist",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><MealManage /></PrivateRoute>
+      },
 
-{
-  path: "/dashboard/monthlyreportupdate/:id",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><MonyhlyReportUpdate/></PrivateRoute>
-},
+      {
+        path: "/dashboard/addmeal",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><AddMeal /></PrivateRoute>
+      },
 
+      {
+        path: "/dashboard/detailsmeal/:id",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><Mealdetails /></PrivateRoute>
+      },
 
-// bazarlist
+      {
+        path: "/dashboard/addextra",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><AddExtra /></PrivateRoute>
+      },
 
+      {
+        path: "/dashboard/extralist",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><ExtraMealList /> </PrivateRoute>
+      },
 
+      {
+        path: "/dashboard/monthlyreport",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><MonthlyReport /></PrivateRoute>
+      },
 
+      {
+        path: "/dashboard/monthlyreportupdate/:id",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><MonyhlyReportUpdate /></PrivateRoute>
+      },
 
-{
-  path: "/dashboard/bazalist",
-  element:<PrivateRoute roles={["Super Admin","Manager"]}><Bazarlist/> </PrivateRoute>
-},
 
-{
-  path: "/dashboard/updatebazarlist/:id",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><UpdateBazarlist/> </PrivateRoute>
-},
+      // bazarlist
 
-{
-  path: "/dashboard/albumlist",
-  element:<PrivateRoute roles={["Super Admin","Manager"]}><AlbumList/>  </PrivateRoute>
-},
 
-{
-  path: "/dashboard/albumdetails/:id",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><AlbumDetails/> </PrivateRoute>
-},
 
-{
-  path: "/dashboard/addbazalist",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><AddBazarlist/></PrivateRoute>
-},
 
-{
-  path: "/dashboard/bazarlistdeatils/:id",
-  element:<PrivateRoute roles={["Super Admin","Manager"]}><Bazarlistdetails/> </PrivateRoute>
-},
+      {
+        path: "/dashboard/bazalist",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><Bazarlist /> </PrivateRoute>
+      },
 
+      {
+        path: "/dashboard/updatebazarlist/:id",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><UpdateBazarlist /> </PrivateRoute>
+      },
 
+      {
+        path: "/dashboard/albumlist",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><AlbumList />  </PrivateRoute>
+      },
 
+      {
+        path: "/dashboard/albumdetails/:id",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><AlbumDetails /> </PrivateRoute>
+      },
 
-   
-  
-  // notice
+      {
+        path: "/dashboard/addbazalist",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><AddBazarlist /></PrivateRoute>
+      },
 
-  {
-    path: "/dashboard/noticelist",
-    element: <PrivateRoute roles={["Super Admin","Manager"]}><NoticeList/></PrivateRoute>
-},
-{
-  path: "/dashboard/addnotice",
-  element:<PrivateRoute roles={["Super Admin","Manager"]}><AddNotice/> </PrivateRoute>
-},
+      {
+        path: "/dashboard/bazarlistdeatils/:id",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><Bazarlistdetails /> </PrivateRoute>
+      },
 
-{
-  path: "/dashboard/updatenotice/:id",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><UpdateNotice/></PrivateRoute>
-},
 
-{
-  path: "/dashboard/detailsnotice/:id",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><NoticeDetails/></PrivateRoute>
-},
 
-// chasin
 
 
-{
-  path: "/dashboard/cashinlist",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><CashinList/></PrivateRoute>
-},
 
+      // notice
 
-{
-  path: "/dashboard/addCashin",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><AddCash/></PrivateRoute>
-},
+      {
+        path: "/dashboard/noticelist",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><NoticeList /></PrivateRoute>
+      },
+      {
+        path: "/dashboard/addnotice",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><AddNotice /> </PrivateRoute>
+      },
 
-{
-  path: "/dashboard/Cashininvoice/:id",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><CashinInvoice/></PrivateRoute>
-},
+      {
+        path: "/dashboard/updatenotice/:id",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><UpdateNotice /></PrivateRoute>
+      },
 
+      {
+        path: "/dashboard/detailsnotice/:id",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><NoticeDetails /></PrivateRoute>
+      },
 
-// roomdetails
+      // chasin
 
-{
-  path: "/dashboard/roomlist",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><RoomList/></PrivateRoute>
-},
 
-{
-  path: "/dashboard/addroom",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><AddRoom/></PrivateRoute>
-},
+      {
+        path: "/dashboard/cashinlist",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><CashinList /></PrivateRoute>
+      },
 
 
-{
-  path: "/dashboard/roomdetails/:id",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><RoomDetails/></PrivateRoute>
-},
+      {
+        path: "/dashboard/addCashin",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><AddCash /></PrivateRoute>
+      },
+      {
+        path: "/dashboard/addcash",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><AddCash /></PrivateRoute>
+      },
 
+      {
+        path: "/dashboard/Cashininvoice/:id",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><CashinInvoice /></PrivateRoute>
+      },
 
 
-{
-  path: "/dashboard/hostelreport",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><HostelReport/></PrivateRoute>
-},
+      // roomdetails
 
+      {
+        path: "/dashboard/roomlist",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><RoomList /></PrivateRoute>
+      },
 
+      {
+        path: "/dashboard/addroom",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><AddRoom /></PrivateRoute>
+      },
 
 
-// chasout
+      {
+        path: "/dashboard/roomdetails/:id",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><RoomDetails /></PrivateRoute>
+      },
 
 
-{
-  path: "/dashboard/cashoutlist",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><CashoutList/></PrivateRoute>
-},
 
-{
-  path: "/dashboard/addcashout",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><AddCashout/></PrivateRoute>
-},
+      {
+        path: "/dashboard/hostelreport",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><HostelReport /></PrivateRoute>
+      },
 
-{
-  path: "/dashboard/cashoutdetails/:id",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><CashoutInvoice/></PrivateRoute>
-},
 
-// repoptr
 
-{
-  path: "/dashboard/reportdtails/:id",
-  element: <PrivateRoute roles={["Super Admin","Manager"]}><ReportDetails/></PrivateRoute>
-},
 
-{
-  path: "/dashboard/updateinfo/:id",
-  element: <PrivateRoute roles={["Super Admin"]}><UpdateInfromation/></PrivateRoute>
-},
+      // chasout
 
-{
-  path: "/dashboard/chnagepass",
-  element: <PrivateRoute roles={["Super Admin","Manager",]}><UpdatePass/></PrivateRoute>
-},
 
+      {
+        path: "/dashboard/cashoutlist",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><CashoutList /></PrivateRoute>
+      },
 
-// password
+      {
+        path: "/dashboard/addcashout",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><AddCashout /></PrivateRoute>
+      },
 
+      {
+        path: "/dashboard/cashoutdetails/:id",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><CashoutInvoice /></PrivateRoute>
+      },
 
+      // repoptr
 
-// user
+      {
+        path: "/dashboard/reportdtails/:id",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><ReportDetails /></PrivateRoute>
+      },
 
-{
-  path: "/dashboard/userlist",
-  element: <PrivateRoute roles={["Manager"]}><UserList/></PrivateRoute>
-},
+      {
+        path: "/dashboard/updateinfo/:id",
+        element: <PrivateRoute roles={["Super Admin"]}><UpdateInfromation /></PrivateRoute>
+      },
 
-{
-  path: "/dashboard/adduser",
-  element:<PrivateRoute roles={["Manager"]}><Adduser/> </PrivateRoute>
-},
+      {
+        path: "/dashboard/chnagepass",
+        element: <PrivateRoute roles={["Super Admin", "Manager",]}><UpdatePass /></PrivateRoute>
+      },
 
-{
-  path: "/dashboard/managerrole",
-  element: <PrivateRoute roles={["Super Admin"]}><ManagerRole/></PrivateRoute>
-},
 
+      // password
 
-{
-  path: "/dashboard/addmanagerrole",
-  element: <PrivateRoute roles={["Super Admin"]}><AddManagerRole/></PrivateRoute> },
 
-    // setting
 
-    // departmnet
+      // user
 
-    {
-      path: "/dashboard/setting/departmentlist",
-      element:<PrivateRoute roles={["Super Admin"]}><DepartmnetList/> </PrivateRoute> 
-    },
-    {
-      path: "/dashboard/setting/information",
-      element: <PrivateRoute roles={["Super Admin"]}><Information/> </PrivateRoute> 
-    },
-    {
-      path: "/dashboard/setting/addinformation",
-      element:<PrivateRoute roles={["Super Admin"]}><AddInformation/> </PrivateRoute> 
-    },
-    {
-      path: "/dashboard/setting/adddepartment",
-      element: <PrivateRoute roles={["Super Admin"]}><AddDepartment/> </PrivateRoute> 
-    },
+      {
+        path: "/dashboard/userlist",
+        element: <PrivateRoute roles={["Manager"]}><UserList /></PrivateRoute>
+      },
 
-    // institute
-     
-    {
-      path: "/dashboard/setting/institutelist",
-      element: <PrivateRoute roles={["Super Admin"]}><InstituteList/> </PrivateRoute> 
-    },
-    {
-      path: "/dashboard/setting/addinstitute",
-      element: <PrivateRoute roles={["Super Admin"]}><AddInstitute/></PrivateRoute> 
-    },
+      {
+        path: "/dashboard/adduser",
+        element: <PrivateRoute roles={["Manager"]}><Adduser /> </PrivateRoute>
+      },
 
-    // semister
+      {
+        path: "/dashboard/managerrole",
+        element: <PrivateRoute roles={["Super Admin"]}><ManagerRole /></PrivateRoute>
+      },
 
-    {
-      path: "/dashboard/setting/semisterlist",
-      element: <PrivateRoute roles={["Super Admin"]}><SemisterList/></PrivateRoute> 
-    },
-    {
-      path: "/dashboard/setting/addsemister",
-      element: <PrivateRoute roles={["Super Admin"]}><AddSemister/></PrivateRoute> 
-    },
 
-       // BloodGroup
+      {
+        path: "/dashboard/addmanagerrole",
+        element: <PrivateRoute roles={["Super Admin"]}><AddManagerRole /></PrivateRoute>
+      },
 
-       {
+      // setting
+
+      // departmnet
+
+      {
+        path: "/dashboard/setting/departmentlist",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><DepartmnetList /> </PrivateRoute>
+      },
+      {
+        path: "/dashboard/setting/information",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><Information /> </PrivateRoute>
+      },
+      {
+        path: "/dashboard/setting/addinformation",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><AddInformation /> </PrivateRoute>
+      },
+      {
+        path: "/dashboard/setting/adddepartment",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><AddDepartment /> </PrivateRoute>
+      },
+
+      // institute
+
+      {
+        path: "/dashboard/setting/institutelist",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><InstituteList /> </PrivateRoute>
+      },
+      {
+        path: "/dashboard/setting/addinstitute",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><AddInstitute /></PrivateRoute>
+      },
+
+      // semister
+
+      {
+        path: "/dashboard/setting/semisterlist",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><SemisterList /></PrivateRoute>
+      },
+      {
+        path: "/dashboard/setting/addsemister",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><AddSemister /></PrivateRoute>
+      },
+
+      // BloodGroup
+
+      {
         path: "/dashboard/setting/bloodgrouplist",
-        element: <PrivateRoute roles={["Super Admin"]}><BloodGroupList/></PrivateRoute> 
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><BloodGroupList /></PrivateRoute>
       },
       {
         path: "/dashboard/setting/addbloodgroup",
-        element: <PrivateRoute roles={["Super Admin"]}><AddBloodGroup/></PrivateRoute> 
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><AddBloodGroup /></PrivateRoute>
+      },
+
+      // Profile
+      {
+        path: "/dashboard/profile",
+        element: <PrivateRoute roles={["Super Admin", "Manager"]}><Profile /></PrivateRoute>
       }
 
     ]// Changed the case to match convention and added closing tags
 
-  
+
   },
 
-{
-path:"/login",
-element : <Login/>
-}
-
-,
-
-
-{
-  path:"/forbidden",
-  element : <Forbidden/>
+  {
+    path: "/login",
+    element: <Login />
   }
 
-  
+  ,
+
+
+  {
+    path: "/forbidden",
+    element: <Forbidden />
+  }
+
+
 ]);
 
 export default router;

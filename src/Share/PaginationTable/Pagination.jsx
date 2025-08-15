@@ -1,152 +1,130 @@
-import React, { useState, useEffect } from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import React from 'react';
+import { FaChevronLeft, FaChevronRight, FaAngleDoubleLeft, FaAngleDoubleRight } from 'react-icons/fa';
 
-const Pagination = ({ setRowPerPage, setPage, page, stat }) => {
-  const [perPage, setPerPage] = useState(10);
+const Pagination = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+  totalItems,
+  itemsPerPage,
+  onItemsPerPageChange
+}) => {
+  const getPageNumbers = () => {
+    const pages = [];
+    const maxVisiblePages = 5;
 
-  console.log(perPage);
-  const [totalPages, setTotalPages] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-
-  useEffect(() => {
-    setTotalPages(stat?.totalPages);
-  }, [stat]);
-
-  useEffect(() => {
-    setCurrentPage(page);
-  }, [page]);
-
-  const changePerPage = (value) => {
-    setRowPerPage(value);
-    setPage(1); // Reset to the first page when changing items per page
-  };
-
-  const goToPage = (selectedPage) => {
-    setPage(selectedPage);
-  };
-
-  const goToPreviousPageSet = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prevPage) => prevPage - 1);
-      setPage((prevPage) => prevPage - 1);
-    }
-  };
-
-  const goToNextPageSet = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage((prevPage) => prevPage + 1);
-      setPage((prevPage) => prevPage + 1);
-    }
-  };
-
-  const renderPageNumbers = () => {
-    const pageNumbers = [];
-    const visiblePageCount = 5;
-
-    if (totalPages <= visiblePageCount) {
+    if (totalPages <= maxVisiblePages) {
       for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
+        pages.push(i);
       }
     } else {
-      if (currentPage !== 1) {
-        pageNumbers.push(1);
-      }
-
-      if (currentPage > 3) {
-        pageNumbers.push("...");
-      }
-
-      const maxButtons = Math.min(visiblePageCount - 2, totalPages - 2);
-      let startPage;
-      if (currentPage + maxButtons <= totalPages) {
-        startPage = Math.max(
-          currentPage,
-          Math.min(totalPages - maxButtons, currentPage - 2)
-        );
+      if (currentPage <= 3) {
+        for (let i = 1; i <= 4; i++) {
+          pages.push(i);
+        }
+        pages.push('...');
+        pages.push(totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1);
+        pages.push('...');
+        for (let i = totalPages - 3; i <= totalPages; i++) {
+          pages.push(i);
+        }
       } else {
-        startPage = totalPages - maxButtons;
-      }
-      for (let i = 0; i < maxButtons; i++) {
-        pageNumbers.push(startPage + i);
-      }
-
-      if (currentPage < totalPages - 2) {
-        pageNumbers.push("...");
-      }
-
-      if (currentPage !== totalPages) {
-        pageNumbers.push(totalPages);
+        pages.push(1);
+        pages.push('...');
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+          pages.push(i);
+        }
+        pages.push('...');
+        pages.push(totalPages);
       }
     }
 
-    return pageNumbers;
+    return pages;
   };
 
+  const startItem = (currentPage - 1) * itemsPerPage + 1;
+  const endItem = Math.min(currentPage * itemsPerPage, totalItems);
+
   return (
-    <div className="flex flex-col lg:flex-col 2xl:flex-row items-center  justify-between py-2">
-      <div className="flex items-center space-x-4">
-        <button
-          className="py-2 px-2 border-2 rounded-md bg-slate-300  hover:bg-gray-400 text-[#305edd]"
-          onClick={goToPreviousPageSet}
-          disabled={currentPage === 1}
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-white rounded-xl shadow-soft border border-secondary-100">
+      {/* Items per page selector */}
+      <div className="flex items-center space-x-2">
+        <span className="text-sm text-secondary-600">Show</span>
+        <select
+          value={itemsPerPage}
+          onChange={(e) => onItemsPerPageChange(Number(e.target.value))}
+          className="px-3 py-1 text-sm border border-secondary-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
         >
-          <FaArrowLeft />
-        </button>
-
-        <ul className="flex space-x-4">
-          {renderPageNumbers().map((number, index) => (
-            <li key={index}>
-              {number === "..." ? (
-                <span className="py-2 px-2 cursor-not-allowed">{number}</span>
-              ) : (
-                <a
-                  href="#"
-                  className={`py-1 px-3 border-2 rounded-md ${
-                    number === 1 || number === totalPages
-                      ? "bg-slate-200  text-gray-800"
-                      : currentPage === number
-                      ? "bg-[#305edd] text-white"
-                      : "bg-white text-gray-700"
-                  } hover:bg-slate-300  hover:text-gray-800`}
-                  onClick={() => typeof number === "number" && goToPage(number)}
-                >
-                  {number}
-                </a>
-              )}
-            </li>
-          ))}
-        </ul>
-
-        <button
-          className="py-2 px-2 border-2 rounded-md  bg-slate-300  hover:bg-gray-400 text-[#305edd]"
-          onClick={goToNextPageSet}
-          disabled={currentPage === totalPages}
-        >
-          <FaArrowRight />
-        </button>
+          <option value={5}>5</option>
+          <option value={10}>10</option>
+          <option value={25}>25</option>
+          <option value={50}>50</option>
+          <option value={100}>100</option>
+        </select>
+        <span className="text-sm text-secondary-600">entries</span>
       </div>
 
-      <div className="flex justify-center  gap-4 items-center mt-4">
-        <div className="flex gap-2 flex-row lg:flex-row  items-center justify-center">
-          <h1 className="text-sm">Current Page: {stat?.currentPage}</h1>
-          <h1 className="text-sm">Total Page: {totalPages}</h1>
-          <h1 className="text-sm">Current Item: {stat?.itemCount}</h1>
-          <h1 className="text-sm">Total Item: {stat?.totalItems}</h1>
-        </div>
+      {/* Page info */}
+      <div className="text-sm text-secondary-600">
+        Showing {startItem} to {endItem} of {totalItems} entries
+      </div>
 
-        <div>
-          <select
-            className="p-2 border border-gray-300 rounded-md"
-            onChange={(e) => changePerPage(e.target.value)}
-            defaultValue={perPage}
+      {/* Pagination controls */}
+      <div className="flex items-center space-x-1">
+        {/* First page */}
+        <button
+          onClick={() => onPageChange(1)}
+          disabled={currentPage === 1}
+          className="p-2 text-secondary-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+        >
+          <FaAngleDoubleLeft className="w-4 h-4" />
+        </button>
+
+        {/* Previous page */}
+        <button
+          onClick={() => onPageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="p-2 text-secondary-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+        >
+          <FaChevronLeft className="w-4 h-4" />
+        </button>
+
+        {/* Page numbers */}
+        {getPageNumbers().map((page, index) => (
+          <button
+            key={index}
+            onClick={() => page !== '...' && onPageChange(page)}
+            disabled={page === '...'}
+            className={`px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${page === currentPage
+              ? 'bg-primary-600 text-white shadow-glow'
+              : page === '...'
+                ? 'text-secondary-400 cursor-default'
+                : 'text-secondary-600 hover:text-primary-600 hover:bg-primary-50'
+              }`}
           >
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-            <option value="All">All</option>
-          </select>
-        </div>
+            {page}
+          </button>
+        ))}
+
+        {/* Next page */}
+        <button
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="p-2 text-secondary-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+        >
+          <FaChevronRight className="w-4 h-4" />
+        </button>
+
+        {/* Last page */}
+        <button
+          onClick={() => onPageChange(totalPages)}
+          disabled={currentPage === totalPages}
+          className="p-2 text-secondary-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+        >
+          <FaAngleDoubleRight className="w-4 h-4" />
+        </button>
       </div>
     </div>
   );

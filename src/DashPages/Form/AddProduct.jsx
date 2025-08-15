@@ -1,869 +1,485 @@
-import React, { useState,useRef, useEffect } from "react";
-import DashCustomNav from "../../Share/Formnav";
-import {useFormik } from "formik";
+import React, { useState, useRef, useEffect } from "react";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineFileUpload } from "react-icons/md";
-import Select from 'react-select'
-
+import Select from 'react-select';
 import { Helmet } from "react-helmet";
+import { FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCalendar, FaGraduationCap, FaIdCard, FaSave, FaTimes } from 'react-icons/fa';
+import { Link } from "react-router-dom";
 import axoissecure from './../../Hooks/Axoisscure';
 import { getBlood, getDepartment, getInstitute, getSemister } from "../../Share/Api/SelectorApi/settingselector";
 import { useQuery } from "@tanstack/react-query";
+import { ModernForm, FormField, FormSelect, FormTextarea, ModernCard, ModernAlert } from "../../Share/ModernComponents";
 
 // Validation Schema
 const Schema = Yup.object().shape({
-  // name: Yup.string()
-  // .label('Name')
-  // .required(),
-
-  // fatherName: Yup.string()
-  // .label('Father Name')
-  // .required(),
-
-  // motherName: Yup.string()
-  // .label('Mother Name')
-  // .required(),
-
-  // session: Yup.string()
-  // .label('Session')
-  // .required(),
-
-  // number: Yup.string()
-  // .matches(/^(01[3-9]\d{8})$/, 'Please provide a valid number')
-  //    .typeError('Please Provide Valid Number')
-  //    .label("Number")
-  //   .required(),
-  //   motherNumber: Yup.string()
-  // .matches(/^(01[3-9]\d{8})$/, 'Please provide a valid number')
-  //    .typeError('Please Provide Valid Number')
-  //    .label("Mother Number")
-  //   .required(),
-  //   fatherNumber: Yup.string()
-  // .matches(/^(01[3-9]\d{8})$/, 'Please provide a valid number')
-  //    .typeError('Please Provide Valid Number')
-  //    .label("Father Number")
-  //   .required(),
-  //   institute: Yup.string()
-  //   .label('Institute Name')
-  //   .required(),
-  //   department: Yup.string().required().label('Department'),
-    
-  //   nid: Yup.string()
-  //   .matches( /^\d{17}$/i,"Please Provide Valid Nid Number"),
-
-  //   BrithCertifecate: Yup.string()
-  //   .matches( /^\d{17}$/i,"Please Provide Valid Brith Certifecate Number"),
-
-  //   department: Yup.string()
-  //   .label('Departmnet')
-  //   .required(),
-  //   blood: Yup.string()
-  //   .label('Blood')
-  //   .required(),
-  //   date: Yup.string()
-  //   .label('Joining Date')
-  //   .required(),
-
-  //   address: Yup.string()
-  //   .label('Address')
-  //   .required(),
-
-  //   semister: Yup.string()
-  //   .label('Semister')
-  //   .required(),
-
-  //   email: Yup.string()
-  //   .label('Email')
-  //   .matches( /^[^\s@]+@[^\s@]+\.[^\s@]+$/,'Please provide Valid Email')
-  //   .required(),
-
-  // transaction: Yup.string()
-  // .required("Transaction number is required.")
-  // .min(6, "Transaction number must be at least 6 characters."),
-    
+  name: Yup.string()
+    .label('Name')
+    .required('Name is required'),
+  fatherName: Yup.string()
+    .label('Father Name')
+    .required('Father name is required'),
+  motherName: Yup.string()
+    .label('Mother Name')
+    .required('Mother name is required'),
+  session: Yup.string()
+    .label('Session')
+    .required('Session is required'),
+  number: Yup.string()
+    .matches(/^(01[3-9]\d{8})$/, 'Please provide a valid number')
+    .typeError('Please Provide Valid Number')
+    .label("Number")
+    .required('Phone number is required'),
+  motherNumber: Yup.string()
+    .matches(/^(01[3-9]\d{8})$/, 'Please provide a valid number')
+    .typeError('Please Provide Valid Number')
+    .label("Mother Number")
+    .required('Mother number is required'),
+  fatherNumber: Yup.string()
+    .matches(/^(01[3-9]\d{8})$/, 'Please provide a valid number')
+    .typeError('Please Provide Valid Number')
+    .label("Father Number")
+    .required('Father number is required'),
+  institute: Yup.string()
+    .label('Institute Name')
+    .required('Institute is required'),
+  department: Yup.string()
+    .label('Department')
+    .required('Department is required'),
+  nid: Yup.string()
+    .matches(/^\d{17}$/i, "Please Provide Valid NID Number")
+    .required('NID is required'),
+  BrithCertifecate: Yup.string()
+    .matches(/^\d{17}$/i, "Please Provide Valid Birth Certificate Number")
+    .required('Birth certificate is required'),
+  blood: Yup.string()
+    .label('Blood Group')
+    .required('Blood group is required'),
+  date: Yup.string()
+    .label('Joining Date')
+    .required('Joining date is required'),
+  address: Yup.string()
+    .label('Address')
+    .required('Address is required'),
+  semister: Yup.string()
+    .label('Semester')
+    .required('Semester is required'),
+  email: Yup.string()
+    .label('Email')
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Please provide Valid Email')
+    .required('Email is required'),
+  transaction: Yup.string()
+    .required("Transaction number is required.")
+    .min(6, "Transaction number must be at least 6 characters."),
 });
 
 const AddProduct = () => {
-  const [type,setType] = useState()
+  const [type, setType] = useState();
   const [imagePreview, setImagePreview] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const fileInputRef = useRef();
 
+  // Fetch select options
+  const { data: institutes = [] } = useQuery({
+    queryKey: ["institutes"],
+    queryFn: getInstitute,
+  });
 
+  const { data: departments = [] } = useQuery({
+    queryKey: ["departments"],
+    queryFn: getDepartment,
+  });
 
-  
+  const { data: semisters = [] } = useQuery({
+    queryKey: ["semisters"],
+    queryFn: getSemister,
+  });
+
+  const { data: bloodGroups = [] } = useQuery({
+    queryKey: ["bloodGroups"],
+    queryFn: getBlood,
+  });
+
   const formik = useFormik({
     initialValues: {
       name: "",
-      fatherName : "",
-      motherName : "",
-      fatherNumber : "",
-      motherNumber : "",
-      BrithCertifecate : "",
-      session : "",
+      fatherName: "",
+      motherName: "",
+      session: "",
       number: "",
+      motherNumber: "",
+      fatherNumber: "",
       institute: "",
       department: "",
       nid: "",
-      department : "",
-      blood : "",
-      address : "",
-      date : '',
-      image : '',
-      semister : '',
-      email: ""
+      BrithCertifecate: "",
+      blood: "",
+      date: "",
+      address: "",
+      semister: "",
+      email: "",
+      transaction: "",
+      image: null,
     },
     validationSchema: Schema,
     onSubmit: async (values, { resetForm }) => {
-
-
-    
-
-      console.log(values)
+      setIsSubmitting(true);
       try {
-        await axoissecure.post("/members", {
+        const formData = new FormData();
 
+        // Append all form values
+        Object.keys(values).forEach(key => {
+          if (key === 'image' && values[key]) {
+            formData.append(key, values[key]);
+          } else if (key !== 'image') {
+            formData.append(key, values[key]);
+          }
+        });
 
-          name: values.name,
-          fatherName: values.fatherName || "",
-          motherName: values.motherName || "",
-          fatherNumber: values.fatherNumber || "",
-          motherNumber: values.motherNumber,
-          brithCertifecate: values.BrithCertifecate || "",
-          number: values.number || "",
-          session : values.session || "",
-          instituteName: {
-            id: values?.institute && parseInt(values?.institute),
-          },
+        const response = await axoissecure.post("/members", formData);
 
-          department: {
-            id: values?.department && parseInt(values?.department),
-          },
-          semister: {
-            id: values?.semister && parseInt(values?.semister),
-          },
-
-          bloodGroup: {
-            id: values?.blood && parseInt(values?.blood),
-          },
-          nid : values.nid || "",
-          address : values.address || "",
-          joiningDate : values.date || "",
-          profile : values.image || "",
-          email : values.email || "",
-          code : values.transaction 
-      
-          
-          // date: new Date()?.split("T")[0],
-        },{    headers: {
-          "Content-Type": "multipart/form-data",
-        }});
-        console.log("Product added successfully:", values);
-        toast.success("Member Added  successfully!");
-        resetForm();
-        
+        if (response.status === 201) {
+          toast.success("Member added successfully!");
+          resetForm();
+          setImagePreview(null);
+        }
       } catch (error) {
-        toast.error("Error adding Member");
-        console.error("Error adding Member:", error);
+        console.error("Error adding member:", error);
+        toast.error(error.response?.data?.message || "Failed to add member");
+      } finally {
+        setIsSubmitting(false);
       }
     },
   });
 
-
-
-  const { data: invoices } = useQuery({
-    queryKey: ["invo"],
-    queryFn: async () => {
-      try {
-        const res = await axoissecure.get(`/cashin`);
-        return res.data;
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        throw error;
-      }
-    },
-  });
-
-  const invonnumber = formik.values.transaction;
-
-  const [debouncedTransaction, setDebouncedTransaction] = useState("");
-
-  // Debounce the transaction input
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedTransaction(invonnumber);
-    }, 500); // Adjust delay time as needed (500ms here)
-
-    return () => clearTimeout(handler);
-  }, [invonnumber]);
-
-  // Validate when the debounced value changes
-
-   const [invoName,setInvo] = useState('')
-  useEffect(() => {
-    if (debouncedTransaction && invoices) {
-      const matchedTransaction = invoices?.cashin?.find(
-        (invo) => invo?.code === debouncedTransaction
-      );
-      setInvo(matchedTransaction?.name)
-      if (!matchedTransaction) {
-        setInvo('')
-        toast.error(`Transaction number is invalid . Pay Fast`);
-       
-      } else {
-        toast.success("Transaction number is valid!");
-        console.log("Validated Transaction:", matchedTransaction);
-      }
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      formik.setFieldValue("image", file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
-  }, [debouncedTransaction, invoices]);
-
-  // style
-
-  const customStyles = {
-    control: (provided, state) => ({
-      ...provided,
-      border: "1px solid #979292",
-      borderRadius: "0.30rem",
-      padding: "0.2rem",
-      width: "100%",
-      boxShadow: state.isFocused ? "0 0 0 1px #0284C7" : "none",
-      "&:hover": {
-        borderColor: "#0284C7",
-      },
-    }),
-    option: (provided, state) => ({
-      ...provided,
-      backgroundColor: state.isSelected ? "#0284C7" : "#fff",
-      color: state.isSelected ? "#fff" : "#726f6f",
-      "&:hover": {
-        backgroundColor: "#0284C7",
-        color: "#fff",
-      },
-    }),
-    singleValue: (provided) => ({
-      ...provided,
-      color: "#726f6f",
-    }),
-    menu: (provided) => ({
-      ...provided,
-      border: "1px solid #0284C7",
-      borderRadius: "0.30rem",
-    }),
   };
 
- const[institute,setInstitute] = useState(null)
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getInstitute();
-        console.log(data, "all items here");
-        setInstitute(data);
-      } catch (error) {
-        console.error("Error fetching member types:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const InstituteOptions =
-    (institute &&
-      institute?.map((singleData) => ({
-        value: singleData?.id,
-        label: singleData?.name,
-      }))) ||
-    [];
-
-
-    const[department,setDepartment] = useState(null)
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const data = await getDepartment();
-          console.log(data, "all items here");
-          setDepartment(data);
-        } catch (error) {
-          console.error("Error fetching member types:", error);
-        }
-      };
-  
-      fetchData();
-    }, []);
-  
-    const DepartmentOptions =
-      (department &&
-        department?.map((singleData) => ({
-          value: singleData?.id,
-          label: singleData?.name,
-        }))) ||
-      [];
-
-
-      
-    const[semister,setSemister] = useState(null)
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const data = await getSemister();
-          console.log(data, "all items here");
-          setSemister(data);
-        } catch (error) {
-          console.error("Error fetching member types:", error);
-        }
-      };
-  
-      fetchData();
-    }, []);
-  
-    const SemisterOptions =
-      (semister &&
-        semister?.map((singleData) => ({
-          value: singleData?.id,
-          label: singleData?.name,
-        }))) ||
-      [];
-
-      const[blood,setBlood] = useState(null)
-      useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const data = await getBlood();
-            console.log(data, "all items here");
-            setBlood(data);
-          } catch (error) {
-            console.error("Error fetching member types:", error);
-          }
-        };
-    
-        fetchData();
-      }, []);
-    
-      const BloodOptions =
-        (blood &&
-          blood?.map((singleData) => ({
-            value: singleData?.id,
-            label: singleData?.name,
-          }))) ||
-        [];
-  
-
-        useEffect(() => {
-          if (invoName) {
-              formik.setValues({
-                name: invoName || "",
-    
-              });
-          }
-      }, [invoName]);
-
+  const removeImage = () => {
+    formik.setFieldValue("image", null);
+    setImagePreview(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
 
   return (
     <>
-     <DashCustomNav name={"Add Member"} listroute={'/dashboard/memberlist'} />
-    
-  
-    <div className="p-8">
-       <Helmet><title>Manager || Add Member</title></Helmet>
-  
-     
-      <div>
-        <form
-          onSubmit={formik.handleSubmit}
-          className="w-[700px] bg-white p-8  rounded-md"
-        >
-          <div className="grid  grid-cols-1 gap-4">
+      <Helmet><title>Manager || Add Member</title></Helmet>
 
-
-            
-          <div className="">
-        <label htmlFor="transaction" className="mb-2 text-green-600 font-semibold">
-           Transaction Code{" "}
-          <span className="text-xl font-semibold text-red-500">*</span>
-        </label>
-        <input
-          id="transaction"
-          name="transaction"
-          className={`py-2 text-[#726f6f] border-2 mt-1 rounded-md border-gray-400 px-3 w-full ${
-            formik.touched.transaction && formik.errors.transaction ? "border-red-500" : ""
-          }`}
-          type="text"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.transaction}
-        />
-        {formik.touched.transaction && formik.errors.transaction && (
-          <p className="text-red-500 text-sm">{formik.errors.transaction}</p>
-        )}
+      {/* Header Section */}
+      <div className="mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center">
+              <FaUser className="text-white text-lg" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-secondary-900">Add New Member</h1>
+              <p className="text-secondary-600">Register a new hostel member</p>
+            </div>
+          </div>
+          <Link to="/dashboard/memberlist">
+            <button className="btn btn-outline">
+              <FaTimes className="mr-2" />
+              Cancel
+            </button>
+          </Link>
+        </div>
       </div>
 
+      <ModernForm
+        onSubmit={formik.handleSubmit}
+        title="Member Information"
+        subtitle="Fill in the member details below"
+        submitText="Add Member"
+        cancelText="Cancel"
+        onCancel={() => window.history.back()}
+        loading={isSubmitting}
+        className="max-w-4xl mx-auto"
+      >
+        {/* Personal Information Section */}
+        <ModernCard title="Personal Information" className="mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <FormField
+              label="Full Name"
+              name="name"
+              type="text"
+              placeholder="Enter full name"
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.name && formik.errors.name}
+              icon={FaUser}
+            />
 
-            {/* Product SL */}
-            <div className="flex flex-col">
-              <label htmlFor="name" className="pb-1 text-[#726f6f]">
-                1. Name{" "}
-                <span className="text-xl font-semibold text-red-500">*</span>
-              </label>
-              <input
-              placeholder="Full Name"
-                id="name"
-                name="name"
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
-                type="text"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.name}
-                readOnly
-              />
-              {formik.touched.name && formik.errors.name ? (
-                <div className="text-red-600">{formik.errors.name}</div>
-              ) : null}
-            </div>
+            <FormField
+              label="Father's Name"
+              name="fatherName"
+              type="text"
+              placeholder="Enter father's name"
+              value={formik.values.fatherName}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.fatherName && formik.errors.fatherName}
+              icon={FaUser}
+            />
 
-{/* Product Name */}
-<div className="flex flex-col">
-              <label htmlFor="number" className="pb-1 text-[#726f6f]">
-                2. Phone {" "}
-                <span className="text-xl font-semibold text-red-500">*</span>
-              </label>
-              <input
-                id="number"
-                placeholder="+088-"
-                name="number"
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
-                type="text"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.number}
-              />
-              {formik.touched.number && formik.errors.number ? (
-                <div className="text-red-600">{formik.errors.number}</div>
-              ) : null}
-            </div>
+            <FormField
+              label="Mother's Name"
+              name="motherName"
+              type="text"
+              placeholder="Enter mother's name"
+              value={formik.values.motherName}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.motherName && formik.errors.motherName}
+              icon={FaUser}
+            />
 
-
-
-            <div className="flex flex-col">
-              <label htmlFor="fatherName" className="pb-1 text-[#726f6f]">
-                3. Father Name{" "}
-                <span className="text-xl font-semibold text-red-500">*</span>
-              </label>
-              <input
-              placeholder="Father Name"
-                id="fatherName"
-                name="fatherName"
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
-                type="text"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.fatherName}
-              />
-              {formik.touched.fatherName && formik.errors.fatherName ? (
-                <div className="text-red-600">{formik.errors.fatherName}</div>
-              ) : null}
-            </div>
-
-
-
-
-
-            {/* Product Name */}
-            <div className="flex flex-col">
-              <label htmlFor="fatherNumber" className="pb-1 text-[#726f6f]">
-                4. Father Phone{" "}
-                <span className="text-xl font-semibold text-red-500">*</span>
-              </label>
-              <input
-                id="fatherNumber"
-                placeholder="+088-"
-                name="fatherNumber"
-                className="py-2 border-2 text-[#726f6f] rounded-md border-[#0284C7] px-3 w-full"
-                type="text"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.fatherNumber}
-              />
-              {formik.touched.fatherNumber && formik.errors.fatherNumber ? (
-                <div className="text-red-600">{formik.errors.fatherNumber}</div>
-              ) : null}
-            </div>
-
-            <div className="flex flex-col">
-              <label htmlFor="motherName" className="pb-1 text-[#726f6f]">
-                5. Mother Name{" "}
-                <span className="text-xl font-semibold text-red-500">*</span>
-              </label>
-              <input
-              placeholder="Mother Name"
-                id="motherName"
-                name="motherName"
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
-                type="text"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.motherName}
-              />
-              {formik.touched.motherName && formik.errors.motherName ? (
-                <div className="text-red-600">{formik.errors.motherName}</div>
-              ) : null}
-            </div>
-
-
-              {/* Product Name */}
-              <div className="flex flex-col">
-              <label htmlFor="motherNumber" className="pb-1 text-[#726f6f]">
-                6. Mother Phone{" "}
-                <span className="text-xl font-semibold text-red-500">*</span>
-              </label>
-              <input
-                id="motherNumber"
-                placeholder="+088-"
-                name="motherNumber"
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
-                type="text"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.motherNumber}
-              />
-              {formik.touched.motherNumber && formik.errors.motherNumber ? (
-                <div className="text-red-600">{formik.errors.motherNumber}</div>
-              ) : null}
-            </div>
-
-
-             {/* Cost */}
-             <div className="flex flex-col">
-              <label htmlFor="institute" className="pb-1 text-[#726f6f]">
-                7. Institute Name{" "}
-                <span className="text-xl font-semibold text-red-500">*</span>
-              </label>
-              <Select
-              placeholder="Select Instutite"
-                id="institute"
-                name="institute"
-                styles={customStyles}
-                className="text-[#726f6f]"
-                options={InstituteOptions}
-                onChange={(option) => formik.setFieldValue("institute", option.value)}
-                onBlur={formik.handleBlur}
-                value={InstituteOptions.find(option => option.value === formik.values.institute)}
-              />
-              {formik.touched.institute && formik.errors.institute ? (
-                <div className="text-red-600">{formik.errors.institute}</div>
-              ) : null}
-            </div>
-
-            <div className="flex flex-col">
-              <label htmlFor="session" className="pb-1 text-[#726f6f]">
-                8. Session (Year){" "}
-                <span className="text-xl font-semibold text-red-500">*</span>
-              </label>
-              <input
-              placeholder="Session 22-23"
-                id="session"
-                name="session"
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
-                type="text"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.session}
-              />
-              {formik.touched.session && formik.errors.session ? (
-                <div className="text-red-600">{formik.errors.session}</div>
-              ) : null}
-            </div>
-
-                       {/* Cost */}
-                       <div className="flex flex-col">
-              <label htmlFor="department" className="pb-1 text-[#726f6f]">
-                9. Department{" "}
-                <span className="text-xl font-semibold text-red-500">*</span>
-              </label>
-              <Select
-              placeholder="Select Department"
-                id="department"
-                name="department"
-                styles={customStyles}
-                className="text-[#726f6f]"
-                options={DepartmentOptions}
-                onChange={(option) => formik.setFieldValue("department", option.value)}
-                onBlur={formik.handleBlur}
-                value={DepartmentOptions.find(option => option.value === formik.values.department)}
-              />
-              {formik.touched.department && formik.errors.department ? (
-                <div className="text-red-600">{formik.errors.department}</div>
-              ) : null}
-            </div>
-
-
-{/* semister */}
-            <div className="flex mt-2 flex-col">
-              <label htmlFor="semister"  className="pb-1 text-[#726f6f]">
-                10. Semister{" "}
-                <span className="text-xl font-semibold text-red-500">*</span>
-              </label>
-              <Select
-              placeholder="Select Semister"
-                id="semister"
-                name="semister"
-                className="text-[#726f6f]"
-                styles={customStyles}
-                options={SemisterOptions}
-                onChange={(option) => formik.setFieldValue("semister", option.value)}
-                onBlur={formik.handleBlur}
-                value={SemisterOptions.find(option => option.value === formik.values.semister)}
-              />
-              {formik.touched.semister && formik.errors.semister ? (
-                <div className="text-red-600">{formik.errors.semister}</div>
-              ) : null}
-            </div>
-
-            <label htmlFor="name" className="-mb-4 text-[#726f6f]">
-                  11. Identy{" "}
-                  <span className="text-xl font-semibold text-red-500">*</span>
-                </label>
-              <div className="flex gap-16 justify-start">
-                  <div className="flex items-center ">
-                    <div className="form-control">
-                      <label className="label cursor-pointer">
-                        <input
-                         
-                          type="radio"
-                          name="radio-10"
-                          value="NID"
-                          className="radio checked:bg-[#499ce0] checked:min-w-[24.93px] rounded-lg min-w-6 bg-slate-200 min-h-[24.96px]"
-                          checked={type === "NID"}
-                          onChange={() => setType("NID")}
-                        />
-
-                        <span className="text-[#777777] text-[16px] ml-2">
-                          NID
-                        </span>
-                      </label>
-                      {/* <p className="text-red-500 text-sm font-medium">
-                            {errors.gender?.message}
-                          </p> */}
-                    </div>
-                  </div>
-                  <div className="flex items-center h-[41px]">
-                    <div className="form-control">
-                      <label className="label cursor-pointer">
-                        <input
-                       
-                          type="radio"
-                          name="radio-10"
-                          value="Brith Certifecate"
-                          className="radio checked:bg-[#499ce0] checked:min-w-[24.93px] min-w-6 rounded-lg bg-slate-200 min-h-[24.96px]"
-                          checked={type === "Brith Certifecate"}
-                          onChange={() => setType("Brith Certifecate")}
-                        />
-
-                        <span className="text-[#777777] text-[16px] ml-2">
-                          Brith Certifecate
-                        </span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-             
-                {
-                  type === 'NID' && <>
-                  
-                     {/* Sell Amount */}
-            <div className="flex flex-col">
-             
-              <input
-                placeholder="Nid Number"
-                id="nid"
-                name="nid"
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
-                type="text"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.nid}
-              />
-             
-            </div>
-                  
-                  </>
-                }
-
-                {
-                  type === "Brith Certifecate" && <>
-                   <div className="flex flex-col">
-             
-             <input
-               placeholder="Brith Certifecate Number"
-               id="BrithCertifecate"
-               name="BrithCertifecate"
-                    className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
-               type="text"
-               onChange={formik.handleChange}
-               onBlur={formik.handleBlur}
-               value={formik.values.BrithCertifecate}
-             />
-      
-           </div>
-                  
-                  </>
-                }
-
-         
-
-     
-
-{/* blood */}
-
-
-                       {/* Cost */}
-                       <div className="flex mt-2 flex-col">
-              <label htmlFor="department"    className="pb-1 text-[#726f6f]">
-                12. Blood Group{" "}
-                <span className="text-xl font-semibold text-red-500">*</span>
-              </label>
-              <Select
-              placeholder="Select Blood Group"
-                id="blood"
-                name="blood"
-                   className="text-[#726f6f]"
-                styles={customStyles}
-                options={BloodOptions}
-                onChange={(option) => formik.setFieldValue("blood", option.value)}
-                onBlur={formik.handleBlur}
-                value={BloodOptions.find(option => option.value === formik.values.blood)}
-              />
-              {formik.touched.blood && formik.errors.blood ? (
-                <div className="text-red-600">{formik.errors.blood}</div>
-              ) : null}
-            </div>
-
-{/* Adress */}
-            <div className="flex pt-2 flex-col">
-              <label htmlFor="nid"    className="pb-1 text-[#726f6f]">
-                13. Address <span className="text-xl font-semibold text-red-500">*</span>
-               
-              </label>
-              <input
-                placeholder="Full Address"
-                id="address"
-                name="address"
-     
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
-                type="text"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.address}
-              />
-              {formik.touched.address && formik.errors.address ? (
-                <div className="text-red-600">{formik.errors.address}</div>
-              ) : null}
-            </div>
-
-
-            {/* date */}
-            <div className="flex pt-2 flex-col">
-              <label htmlFor="nid" className="pb-1 text-[#726f6f]">
-                14. Joining Date <span className="text-xl font-semibold text-red-500">*</span>
-               
-              </label>
-              <input
-                
-                id="date"
-                name="date"
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
-                type="date"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.date}
-              />
-              {formik.touched.date && formik.errors.date ? (
-                <div className="text-red-600">{formik.errors.date}</div>
-              ) : null}
-            </div>
-
+            <FormField
+              label="Session"
+              name="session"
+              type="text"
+              placeholder="Enter session (e.g., 2023-24)"
+              value={formik.values.session}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.session && formik.errors.session}
+              icon={FaGraduationCap}
+            />
           </div>
+        </ModernCard>
 
-           {/* Cost */}
-      
+        {/* Contact Information Section */}
+        <ModernCard title="Contact Information" className="mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <FormField
+              label="Phone Number"
+              name="number"
+              type="tel"
+              placeholder="01XXXXXXXXX"
+              value={formik.values.number}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.number && formik.errors.number}
+              icon={FaPhone}
+            />
 
+            <FormField
+              label="Email Address"
+              name="email"
+              type="email"
+              placeholder="Enter email address"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.email && formik.errors.email}
+              icon={FaEnvelope}
+            />
 
-            <div className="flex mt-4 flex-col">
-              <label htmlFor="number" className="pb-1 text-[#726f6f]">
-                15. Email{" "}
-                <span className="text-xl font-semibold text-red-500">*</span>
-              </label>
-              <input
-                id="email"
-                placeholder="ovi@gmail.com"
-                name="email"
-                     className="py-2  text-[#726f6f] border-2 rounded-md border-gray-400 px-3 w-full"
-                type="text"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.email}
-              />
-              {formik.touched.email && formik.errors.email ? (
-                <div className="text-red-600">{formik.errors.email}</div>
-              ) : null}
+            <FormField
+              label="Father's Phone"
+              name="fatherNumber"
+              type="tel"
+              placeholder="01XXXXXXXXX"
+              value={formik.values.fatherNumber}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.fatherNumber && formik.errors.fatherNumber}
+              icon={FaPhone}
+            />
+
+            <FormField
+              label="Mother's Phone"
+              name="motherNumber"
+              type="tel"
+              placeholder="01XXXXXXXXX"
+              value={formik.values.motherNumber}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.motherNumber && formik.errors.motherNumber}
+              icon={FaPhone}
+            />
+          </div>
+        </ModernCard>
+
+        {/* Academic Information Section */}
+        <ModernCard title="Academic Information" className="mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <FormSelect
+              label="Institute"
+              name="institute"
+              value={formik.values.institute}
+              onChange={(value) => formik.setFieldValue("institute", value)}
+              onBlur={formik.handleBlur}
+              error={formik.touched.institute && formik.errors.institute}
+              options={institutes.map(inst => ({ value: inst._id, label: inst.name }))}
+              placeholder="Select institute"
+              icon={FaGraduationCap}
+            />
+
+            <FormSelect
+              label="Department"
+              name="department"
+              value={formik.values.department}
+              onChange={(value) => formik.setFieldValue("department", value)}
+              onBlur={formik.handleBlur}
+              error={formik.touched.department && formik.errors.department}
+              options={departments.map(dept => ({ value: dept._id, label: dept.name }))}
+              placeholder="Select department"
+              icon={FaGraduationCap}
+            />
+
+            <FormSelect
+              label="Semester"
+              name="semister"
+              value={formik.values.semister}
+              onChange={(value) => formik.setFieldValue("semister", value)}
+              onBlur={formik.handleBlur}
+              error={formik.touched.semister && formik.errors.semister}
+              options={semisters.map(sem => ({ value: sem._id, label: sem.name }))}
+              placeholder="Select semester"
+              icon={FaGraduationCap}
+            />
+
+            <FormField
+              label="Joining Date"
+              name="date"
+              type="date"
+              value={formik.values.date}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.date && formik.errors.date}
+              icon={FaCalendar}
+            />
+          </div>
+        </ModernCard>
+
+        {/* Identity Information Section */}
+        <ModernCard title="Identity Information" className="mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <FormField
+              label="NID Number"
+              name="nid"
+              type="text"
+              placeholder="Enter 17-digit NID number"
+              value={formik.values.nid}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.nid && formik.errors.nid}
+              icon={FaIdCard}
+            />
+
+            <FormField
+              label="Birth Certificate Number"
+              name="BrithCertifecate"
+              type="text"
+              placeholder="Enter 17-digit birth certificate number"
+              value={formik.values.BrithCertifecate}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.BrithCertifecate && formik.errors.BrithCertifecate}
+              icon={FaIdCard}
+            />
+
+            <FormSelect
+              label="Blood Group"
+              name="blood"
+              value={formik.values.blood}
+              onChange={(value) => formik.setFieldValue("blood", value)}
+              onBlur={formik.handleBlur}
+              error={formik.touched.blood && formik.errors.blood}
+              options={bloodGroups.map(bg => ({ value: bg._id, label: bg.name }))}
+              placeholder="Select blood group"
+              icon={FaIdCard}
+            />
+
+            <FormField
+              label="Transaction Number"
+              name="transaction"
+              type="text"
+              placeholder="Enter transaction number"
+              value={formik.values.transaction}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.transaction && formik.errors.transaction}
+              icon={FaIdCard}
+            />
+          </div>
+        </ModernCard>
+
+        {/* Address Section */}
+        <ModernCard title="Address Information" className="mb-6">
+          <FormTextarea
+            label="Address"
+            name="address"
+            placeholder="Enter full address"
+            value={formik.values.address}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.address && formik.errors.address}
+            icon={FaMapMarkerAlt}
+            rows={3}
+          />
+        </ModernCard>
+
+        {/* Profile Image Section */}
+        <ModernCard title="Profile Image" className="mb-6">
+          <div className="space-y-4">
+            <div className="flex items-center space-x-4">
+              <div className="relative">
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="hidden"
+                />
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="btn btn-outline"
+                >
+                  <MdOutlineFileUpload className="mr-2" />
+                  Choose Image
+                </button>
+              </div>
+              {imagePreview && (
+                <button
+                  type="button"
+                  onClick={removeImage}
+                  className="btn btn-error"
+                >
+                  <FaTimes className="mr-2" />
+                  Remove
+                </button>
+              )}
             </div>
 
-            <div className="flex pt-4  flex-col">
-              <label htmlFor="image" className="pb-1 text-[#726f6f]">
-                16. Photo{" "}
-                <span className="text-xl font-semibold text-red-500">*</span>
-              </label>
-              <input
-                ref={fileInputRef}
-                id="image"
-                name="image"
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={(e) => {
-                  const file = e.target.files[0];
-                  formik.setFieldValue("image", file);
-                  setImagePreview(URL.createObjectURL(file));
-                }}
-              />
-              {imagePreview && (
+            {imagePreview && (
+              <div className="mt-4">
                 <img
                   src={imagePreview}
                   alt="Preview"
-                  className="mt-2 max-w-[200px] border-2 border-black  border-dashed h-[150px]"
+                  className="w-32 h-32 object-cover rounded-lg border-2 border-secondary-200"
                 />
-              )}
-              <button
-                type="button"
-                className="border-blue-500 border-2 border-dashed text-black px-3 py-2 rounded mt-2"
-                onClick={() => fileInputRef.current.click()}
-              >
-                <MdOutlineFileUpload className="flex justify-items-center text-[30px] w-[300px] mx-auto"/>
-              </button>
-            </div>
-
-
-                 {/* photo */}
-            
-
-          <div className="flex justify-end items-center gap-4">
-            <button
-              className="w-[100px] bg-[#0284C7] text-white mt-10 rounded-lg h-[40px] border-2 font-bold"
-              type="submit"
-            >
-              Save
-            </button>
-            <button
-              className="w-[100px] bg-red-600 font-semibold mt-10 rounded-lg h-[40px] border-2 text-white"
-              type="button"
-              onClick={formik.handleReset}
-            >
-              Cancel
-            </button>
+              </div>
+            )}
           </div>
-        </form>
-      </div>
-    </div>
-
+        </ModernCard>
+      </ModernForm>
     </>
   );
 };

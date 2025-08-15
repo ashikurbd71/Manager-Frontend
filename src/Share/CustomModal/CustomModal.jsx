@@ -1,57 +1,63 @@
-import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
+import React from 'react';
+import { FaTimes } from 'react-icons/fa';
 
-export default function Modal({isOpen,setIsOpen,title,children}) {
+const CustomModal = ({
+  isOpen,
+  onClose,
+  title,
+  children,
+  size = 'md',
+  showCloseButton = true,
+  closeOnBackdrop = true
+}) => {
+  if (!isOpen) return null;
 
+  const sizeClasses = {
+    sm: 'max-w-md',
+    md: 'max-w-lg',
+    lg: 'max-w-2xl',
+    xl: 'max-w-4xl',
+    full: 'max-w-full mx-4'
+  };
 
-  function closeModal() {
-    setIsOpen(false)
-  }
-
+  const handleBackdropClick = (e) => {
+    if (closeOnBackdrop && e.target === e.currentTarget) {
+      onClose();
+    }
+  };
 
   return (
-    <>
-     
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black/25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
-                  >
-                    {title}
-                  </Dialog.Title>
-                   {children}
-               
-                </Dialog.Panel>
-              </Transition.Child>
+    <div
+      className="modal-overlay"
+      onClick={handleBackdropClick}
+    >
+      <div className={`modal-content ${sizeClasses[size]}`}>
+        {/* Header */}
+        {title && (
+          <div className="card-header">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-secondary-900">
+                {title}
+              </h3>
+              {showCloseButton && (
+                <button
+                  onClick={onClose}
+                  className="p-2 text-secondary-400 hover:text-secondary-600 hover:bg-secondary-100 rounded-lg transition-all duration-200"
+                >
+                  <FaTimes className="w-5 h-5" />
+                </button>
+              )}
             </div>
           </div>
-        </Dialog>
-      </Transition>
-    </>
-  )
-}
+        )}
+
+        {/* Body */}
+        <div className="card-body">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CustomModal;
