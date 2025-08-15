@@ -10,7 +10,7 @@ export const AuthContext = createContext(null);
 const Provider = ({ children }) => {
   const [user, setUser] = useState(null);
 
- 
+
   const { data, refetch, isLoading, error } = useQuery({
     queryKey: ["getuser"],
     queryFn: async () => {
@@ -30,7 +30,7 @@ const Provider = ({ children }) => {
   useEffect(() => {
     if (data && !isLoading) {
       setUser(data || null);
-      console.log(data,"kkhkhuguhg")
+      console.log(data, "kkhkhuguhg")
     }
   }, [data, isLoading]);
 
@@ -44,7 +44,7 @@ const Provider = ({ children }) => {
         isLoading,
         error,
         setUser
-    
+
       }}
     >
       {children}

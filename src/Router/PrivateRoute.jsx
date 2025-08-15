@@ -8,15 +8,15 @@ import { CgSearchLoading } from "react-icons/cg";
 
 
 const PrivateRoute = ({ children, roles = [] }) => {
-    const { user, isLoading: userLoading } = useAuth();
+  const { user, isLoading: userLoading } = useAuth();
 
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const location = useLocation();
 
-   console.log(user,roles)
+  console.log(user, roles)
 
-//   const { user, isLoading: userLoading } = useAuth();
+  //   const { user, isLoading: userLoading } = useAuth();
   const token = getTokenFromLocalStorage();
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const PrivateRoute = ({ children, roles = [] }) => {
   if (isLoading || userLoading) {
     return (
       <div className="min-h-screen flex justify-center items-center">
-        <CgSearchLoading  className="text-[70px] animate-ping text-[#0284C7]" />
+        <CgSearchLoading className="text-[70px] animate-ping text-[#0284C7]" />
       </div>
     );
   }
