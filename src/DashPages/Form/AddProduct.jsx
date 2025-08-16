@@ -28,51 +28,34 @@ const Schema = Yup.object().shape({
     .label('Session')
     .required('Session is required'),
   number: Yup.string()
-    .matches(/^(01[3-9]\d{8})$/, 'Please provide a valid number')
-    .typeError('Please Provide Valid Number')
-    .label("Number")
-    .required('Phone number is required'),
-  motherNumber: Yup.string()
-    .matches(/^(01[3-9]\d{8})$/, 'Please provide a valid number')
-    .typeError('Please Provide Valid Number')
-    .label("Mother Number")
-    .required('Mother number is required'),
+  ,
+  motherNumber: Yup.string(),
+
   fatherNumber: Yup.string()
-    .matches(/^(01[3-9]\d{8})$/, 'Please provide a valid number')
-    .typeError('Please Provide Valid Number')
-    .label("Father Number")
-    .required('Father number is required'),
+  ,
   institute: Yup.string()
-    .label('Institute Name')
-    .required('Institute is required'),
+  ,
   department: Yup.string()
-    .label('Department')
-    .required('Department is required'),
+  ,
   nid: Yup.string()
-    .matches(/^\d{17}$/i, "Please Provide Valid NID Number")
-    .required('NID is required'),
+  ,
   BrithCertifecate: Yup.string()
-    .matches(/^\d{17}$/i, "Please Provide Valid Birth Certificate Number")
-    .required('Birth certificate is required'),
+  ,
   blood: Yup.string()
-    .label('Blood Group')
-    .required('Blood group is required'),
+  ,
   date: Yup.string()
-    .label('Joining Date')
-    .required('Joining date is required'),
+  ,
   address: Yup.string()
-    .label('Address')
-    .required('Address is required'),
+  ,
   semister: Yup.string()
-    .label('Semester')
-    .required('Semester is required'),
+    .label('Semester'),
+
   email: Yup.string()
     .label('Email')
     .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Please provide Valid Email')
     .required('Email is required'),
   transaction: Yup.string()
-    .required("Transaction number is required.")
-    .min(6, "Transaction number must be at least 6 characters."),
+
 });
 
 const AddProduct = () => {
